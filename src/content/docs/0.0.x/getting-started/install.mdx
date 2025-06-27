@@ -1,0 +1,208 @@
+---
+title: Rawi (راوي) Documentation | Getting Started Install
+description: Welcome to the comprehensive documentation for Rawi (راوي), a
+  developer-friendly AI-powered CLI tool for your terminal.
+slug: 0.0.x/getting-started/install
+---
+
+import {Tabs, TabItem} from '@astrojs/starlight/components';
+
+# Installing or Updating Rawi CLI
+
+The Rawi Command Line Interface (Rawi CLI) is an open source tool that enables you to interact with AI providers and manage your Rawi configuration directly from your terminal. With minimal setup, you can start running commands to ask questions, manage profiles, and view history—all from your command-line shell.
+
+## Supported Platforms
+
+* **Linux shells** – Use bash, zsh, or other common shells.
+* **macOS** – Use Terminal or iTerm.
+* **Windows** – Use Command Prompt or PowerShell.
+
+## Prerequisites
+
+* **Node.js 18+** is required. We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node.js versions.
+* A supported package manager: `npm` or `pnpm`.
+
+## Install or Update Rawi CLI
+
+### Installation
+
+<Tabs>
+  <TabItem label="pnpm" icon="pnpm">
+    ```bash
+    pnpm add -g rawi
+    ```
+  </TabItem>
+
+  <TabItem label="npm" icon="npm">
+    ```bash
+    npm install -g rawi
+    ```
+  </TabItem>
+
+  <TabItem label="yarn" icon="seti:yarn">
+    ```bash
+    yarn global add rawi
+    ```
+  </TabItem>
+</Tabs>
+
+### Updating
+
+To update Rawi CLI to the latest version, use the same command you used for installation. The package manager will handle the update automatically.
+
+<Tabs>
+  <TabItem label="pnpm" icon="pnpm">
+    ```bash
+    pnpm update -g rawi
+    ```
+  </TabItem>
+
+  <TabItem label="npm" icon="npm">
+    ```bash
+    npm update -g rawi
+    ```
+  </TabItem>
+
+  <TabItem label="yarn" icon="seti:yarn">
+    ```bash
+    yarn global upgrade rawi
+    ```
+  </TabItem>
+</Tabs>
+
+### Verify Installation
+
+Check your installed version:
+
+<Tabs>
+  <TabItem label="Linux" icon="linux">
+    ```bash withOutput
+    > rawi --version
+
+    rawi/0.0.0-beta.12 linux-x64 node-18.20.2
+    ```
+  </TabItem>
+
+  <TabItem label="macOS">
+    ```bash withOutput
+    > rawi --version
+
+    rawi/0.0.0-beta.12 darwin-x64 node-18.20.2
+    ```
+  </TabItem>
+
+  <TabItem label="Windows" icon="seti:windows">
+    ```powershell withOutput
+    > rawi --version
+
+    rawi/0.0.0-beta.12 win32-x64 node-18.20.2
+    ```
+  </TabItem>
+</Tabs>
+
+If the `rawi` command is not found, ensure your package manager's global bin directory is in your `PATH`. Use the appropriate instructions for your OS and package manager:
+
+<Tabs>
+  <TabItem label="Linux/macOS - Global Bin" icon="linux">
+    <Tabs>
+      <TabItem label="pnpm" icon="pnpm">
+        ```bash
+        # Find the global pnpm bin directory
+        pnpm bin -g
+        # Add it to your PATH (if not already present)
+        export PATH="$PATH:$(pnpm bin -g)"
+        # Optionally, add the above line to your ~/.bashrc, ~/.zshrc, or shell profile
+        ```
+      </TabItem>
+
+      <TabItem label="npm" icon="npm">
+        ```bash
+        # Find the global npm bin directory
+        npm config get prefix
+        # Add it to your PATH (if not already present)
+        export PATH="$PATH:$(npm config get prefix)/bin"
+        # Optionally, add the above line to your ~/.bashrc, ~/.zshrc, or shell profile
+        ```
+      </TabItem>
+
+      <TabItem label="yarn" icon="seti:yarn">
+        ```bash
+        # Find the global yarn bin directory
+        yarn global bin
+        # Add it to your PATH (if not already present)
+        export PATH="$PATH:$(yarn global bin)"
+        # Optionally, add the above line to your ~/.bashrc, ~/.zshrc, or shell profile
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+
+  <TabItem label="Windows - Global Bin" icon="seti:windows">
+    <Tabs>
+      <TabItem label="pnpm" icon="pnpm">
+        ```powershell
+        # Find the global pnpm bin directory
+        pnpm bin -g
+        # Add it to your PATH (in System Properties > Environment Variables)
+        # Example (in PowerShell):
+        $env:Path += ";$(pnpm bin -g)"
+        ```
+      </TabItem>
+
+      <TabItem label="npm" icon="npm">
+        ```powershell
+        # Find the global npm bin directory
+        npm config get prefix
+        # Add it to your PATH (in System Properties > Environment Variables)
+        # Example (in PowerShell):
+        $env:Path += ";$(npm config get prefix)\bin"
+        ```
+      </TabItem>
+
+      <TabItem label="yarn" icon="seti:yarn">
+        ```powershell
+        # Find the global yarn bin directory
+        yarn global bin
+        # Add it to your PATH (in System Properties > Environment Variables)
+        # Example (in PowerShell):
+        $env:Path += ";$(yarn global bin)"
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
+## Uninstall Rawi CLI
+
+<Tabs>
+  <TabItem label="pnpm" icon="pnpm">
+    ```bash
+    pnpm remove -g rawi
+    ```
+  </TabItem>
+
+  <TabItem label="npm" icon="npm">
+    ```bash
+    npm uninstall -g rawi
+    ```
+  </TabItem>
+
+  <TabItem label="yarn" icon="seti:yarn">
+    ```bash
+    yarn global remove rawi
+    ```
+  </TabItem>
+</Tabs>
+
+## Troubleshooting
+
+If you encounter issues, see the Troubleshooting Guide for solutions to common installation and configuration problems.
+
+***
+
+**Next steps:**\
+After installing Rawi CLI, run the following to configure your first provider:
+
+```bash
+rawi configure
+```

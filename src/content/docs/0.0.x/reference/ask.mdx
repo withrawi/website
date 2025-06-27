@@ -1,0 +1,108 @@
+---
+title: Rawi (راوي) Documentation | Reference `ask` Command
+description: Welcome to the comprehensive documentation for Rawi (راوي), a
+  developer-friendly AI-powered CLI tool for your terminal.
+slug: 0.0.x/reference/ask
+---
+
+# ask
+
+## Description
+
+Ask AI a question and get a response. Supports piped input from stdin. You can specify a profile, continue or start chat sessions, and use act templates for specialized prompts.
+
+See also: Rawi Documentation
+
+## Synopsis
+
+```
+rawi ask [options] [query]
+```
+
+* `query`\
+  The question or prompt to send to the AI (can be combined with piped input).
+
+## Options
+
+* `-p, --profile <profile>` (string)\
+  Profile to use for AI configuration (default: "default").
+
+* `--session <sessionId>` (string)\
+  Continue an existing chat session.
+
+* `--new-session` (boolean)\
+  Start a new chat session.
+
+* `--act <template>` (string)\
+  Use an act template (e.g., ethereum-developer).
+
+* `--list-acts` (boolean)\
+  List all available act templates.
+
+* `--show` (boolean)\
+  Show details of the specified act template (use with --act).
+
+* `--verbose` (boolean)\
+  Show detailed status and debug information.
+
+* `-h, --help` (boolean)\
+  Display help for command.
+
+## Global Options
+
+* `--version` (boolean)\
+  Display the version of this tool.
+
+## Examples
+
+**Ask a question directly:**
+
+```bash
+$ rawi ask "What is the capital of France?"
+```
+
+**Pipe input from another command:**
+
+```bash
+$ echo "Summarize this text" | rawi ask
+```
+
+**Use a specific profile:**
+
+```bash
+$ rawi ask -p work "Generate a Python script for data analysis"
+```
+
+**Continue a chat session:**
+
+```bash
+$ rawi ask --session 12345 "Continue our previous conversation"
+```
+
+**Start a new chat session:**
+
+```bash
+$ rawi ask --new-session "Start a new topic"
+```
+
+**Use an act template:**
+
+```bash
+$ rawi ask --act ethereum-developer "Write a smart contract"
+```
+
+**List all available act templates:**
+
+```bash
+$ rawi ask --list-acts
+```
+
+**Show details of a specific act template:**
+
+```bash
+$ rawi ask --act ethereum-developer --show
+```
+
+***
+
+For more information, see the Rawi documentation or run `rawi ask --help`.
