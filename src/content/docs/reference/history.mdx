@@ -1,0 +1,100 @@
+---
+title: Rawi (راوي) Documentation | Reference `history` Command
+description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+---
+
+# history
+
+## Description
+
+Manage chat history, including listing, searching, exporting, and cleaning up chat sessions. Supports filtering by profile, provider, model, and date.
+
+See also: Rawi Documentation
+
+## Synopsis
+
+```bash
+rawi history [options] [command]
+```
+
+## Options
+
+- `-p, --profile <profile>` (string)  
+  Profile to show history for (default: "default").
+
+- `-l, --limit <number>` (number)  
+  Number of sessions to show (default: "50").
+
+- `-s, --search <query>` (string)  
+  Search messages containing text.
+
+- `--provider <provider>` (string)  
+  Filter by AI provider.
+
+- `--model <model>` (string)  
+  Filter by AI model.
+
+- `--from <date>` (string)  
+  Show sessions from date (YYYY-MM-DD).
+
+- `--to <date>` (string)  
+  Show sessions to date (YYYY-MM-DD).
+
+- `-h, --help` (boolean)  
+  Display help for command.
+
+## Commands
+
+- `sessions [options]`  
+  List and manage chat sessions.
+
+- `show <sessionId>`  
+  Show all messages in a specific session.
+
+- `delete <sessionId>`  
+  Delete a specific session.
+
+- `stats [options]`  
+  Show usage statistics.
+
+- `cleanup [options]`  
+  Clean up old sessions.
+
+- `export [options]`  
+  Export chat history to JSON.
+
+## Examples
+
+**Show chat history:**
+
+```bash
+$ rawi history
+```
+
+**Search messages containing text:**
+
+```bash
+$ rawi history --search "Node.js"
+```
+
+**Show all messages in a specific session:**
+
+```bash
+$ rawi history show 515e566d-146b-4d55-aaa5-b4a4c82f92c2
+```
+
+**Delete a specific session:**
+
+```bash
+$ rawi history delete 515e566d-146b-4d55-aaa5-b4a4c82f92c2
+```
+
+**Export chat history to JSON:**
+
+```bash
+$ rawi history export --profile default
+```
+
+---
+
+For more information, see the Rawi documentation or run `rawi history --help`.

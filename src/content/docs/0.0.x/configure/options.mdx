@@ -1,0 +1,140 @@
+---
+title: Rawi (راوي) Documentation | Command Line Options
+description: Welcome to the comprehensive documentation for Rawi (راوي), a
+  developer-friendly AI-powered CLI tool for your terminal.
+slug: 0.0.x/configure/options
+---
+
+import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
+
+# Command Line Options in the Rawi CLI
+
+Rawi CLI supports global and command-specific options to override default configuration, profile, or environment variable settings for a single command. You can specify which profile to use, set output verbosity, and more.
+
+## How to Use Command Line Options
+
+Most options are simple flags or key-value pairs. For options that take arguments, use a space or equals sign (`=`) between the option and its value. If the value contains spaces, wrap it in quotes.
+
+**Examples:**
+
+<Tabs>
+  <TabItem label="Switch Profile" icon="person">
+    <Steps>
+      1. **Use a specific profile:**
+
+         ```bash
+         rawi ask "What is TypeScript?" --profile work
+         ```
+    </Steps>
+  </TabItem>
+
+  <TabItem label="Verbose Output" icon="gear">
+    <Steps>
+      1. **Set verbose output:**
+
+         ```bash
+         rawi ask "Show debug info" --verbose
+         ```
+    </Steps>
+  </TabItem>
+
+  <TabItem label="Act Template" icon="terminal">
+    <Steps>
+      1. **Use an act template:**
+
+         ```bash
+         rawi ask --act linux-terminal "ls -la /home"
+         ```
+    </Steps>
+  </TabItem>
+</Tabs>
+
+## Supported Global Command Line Options
+
+These options can be used with any Rawi command:
+
+| Option      | Description                                |
+| ----------- | ------------------------------------------ |
+| `--help`    | Show help for the command                  |
+| `--version` | Show version information                   |
+| `--profile` | Use a specific configuration profile       |
+| `--verbose` | Show detailed status and debug information |
+
+**Example:**
+
+```bash
+rawi --version
+rawi ask --help
+rawi configure --profile work
+```
+
+## Command-Specific Options
+
+Each command supports its own set of options. For example:
+
+### `ask` Command
+
+| Option                | Alias | Description                                |
+| --------------------- | ----- | ------------------------------------------ |
+| `--profile <profile>` | `-p`  | Profile to use for AI configuration        |
+| `--session <id>`      |       | Continue an existing chat session          |
+| `--new-session`       |       | Start a new chat session                   |
+| `--act <template>`    |       | Use an act template by ID                  |
+| `--list-acts`         |       | List all available act templates           |
+| `--show`              |       | Show act template details (with --act)     |
+| `--verbose`           |       | Show detailed status and debug information |
+
+### `configure` Command
+
+| Option                     | Description                           |
+| -------------------------- | ------------------------------------- |
+| `--profile <profile>`      | Configuration profile name            |
+| `--provider <provider>`    | AI provider (openai, anthropic, etc.) |
+| `--model <model>`          | AI model name                         |
+| `--api-key <apiKey>`       | API key for the provider              |
+| `--base-url <baseURL>`     | Custom base URL                       |
+| `--temperature <value>`    | Temperature value (0-2)               |
+| `--max-tokens <number>`    | Maximum tokens                        |
+| `--language <language>`    | Language (english, arabic)            |
+| `--show`                   | Show current configuration            |
+| `--list`                   | List all profiles                     |
+| `--list-providers`         | List all available AI providers       |
+| `--list-models <provider>` | List models for specific provider     |
+| `--delete <profile>`       | Delete a configuration profile        |
+
+### `history` Command
+
+| Option                  | Alias | Description                          |
+| ----------------------- | ----- | ------------------------------------ |
+| `--profile <profile>`   | `-p`  | Profile to show history for          |
+| `--limit <number>`      | `-l`  | Number of sessions to show           |
+| `--search <query>`      | `-s`  | Search messages containing text      |
+| `--provider <provider>` |       | Filter by AI provider                |
+| `--model <model>`       |       | Filter by AI model                   |
+| `--from <date>`         |       | Show sessions from date (YYYY-MM-DD) |
+| `--to <date>`           |       | Show sessions to date (YYYY-MM-DD)   |
+
+## Precedence of Options
+
+* **Command line options** override environment variables and profile settings.
+* **Environment variables** override profile settings.
+* **Profile settings** are used if not overridden.
+
+## Common Usage Patterns
+
+* **Switch profiles for a single command:**
+  ```bash
+  rawi ask "Review this code" --profile work
+  ```
+* **Change output verbosity:**
+  ```bash
+  rawi ask "Debug this" --verbose
+  ```
+* **Chain commands and use pipes:**
+  ```bash
+  cat README.md | rawi ask "Summarize this documentation"
+  ```
+
+***
+
+**Tip:** Use `rawi <command> --help` to see all options for any command.

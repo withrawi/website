@@ -1,0 +1,92 @@
+{
+  "sidebar": [
+    {
+      "label": "User Guide",
+      "items": [
+        {
+          "label": "Introduction",
+          "slug": "userguide"
+        },
+        {
+          "label": "Examples",
+          "slug": "userguide/welcome-examples"
+        }
+      ]
+    },
+    {
+      "label": "Get Started",
+      "items": [
+        {
+          "label": "Introduction",
+          "slug": "getting-started"
+        },
+        {
+          "label": "Installation/Upgrade",
+          "slug": "getting-started/install"
+        },
+        {
+          "label": "Past releases",
+          "slug": "getting-started/version"
+        },
+        {
+          "label": "Build and install from source",
+          "slug": "getting-started/getting-started-source-install"
+        }
+      ]
+    },
+    {
+      "label": "Configure the rawi CLI",
+      "items": [
+        {
+          "label": "Introduction",
+          "slug": "configure"
+        },
+        {
+          "label": "Configuration settings",
+          "slug": "configure/settings"
+        },
+        {
+          "label": "Environment Variables",
+          "slug": "configure/envvars"
+        },
+        {
+          "label": "Command Line Options",
+          "slug": "configure/options"
+        },
+        {
+          "label": "Supported AI Providers",
+          "slug": "configure/providers"
+        },
+        {
+          "label": "Act Templates",
+          "slug": "configure/act-templates"
+        }
+      ]
+    },
+    {
+      "label": "rawi CLI Command Reference",
+      "items": [
+        {
+          "label": "Introduction",
+          "slug": "reference"
+        },
+        {
+          "label": "ask",
+          "slug": "reference/ask"
+        },
+        {
+          "label": "configure",
+          "slug": "reference/configure"
+        },
+        {
+          "label": "history",
+          "slug": "reference/history"
+        },
+        {
+          "label": "info",
+          "slug": "reference/info"
+        }
+      ]
+    }
+  ]
+}

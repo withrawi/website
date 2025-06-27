@@ -1,0 +1,90 @@
+---
+title: Rawi (راوي) Documentation | Reference
+description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+---
+
+# rawi
+
+## Description
+
+Rawi (راوي) is a unified command-line tool to interact with multiple AI providers, manage chat sessions, and automate AI-powered workflows directly from your terminal.
+
+## Synopsis
+
+```bash
+rawi [options] <command> [subcommand] [parameters]
+```
+
+Use `rawi <command> --help` for information on a specific command. Use `rawi help` to view a list of available commands and topics. The synopsis for each command shows its parameters and their usage. Optional parameters are shown in square brackets.
+
+---
+
+## Global Options
+
+| Option                 | Type    | Description                                                                                           |
+| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| `--debug`              | boolean | Turn on debug logging.                                                                                |
+| `--profile <profile>`  | string  | Use a specific profile from your configuration.                                                       |
+| `--output <format>`    | string  | The formatting style for command output. <br/>Options: `json`, `text`, `table`, `yaml`, `yaml-stream` |
+| `--region <region>`    | string  | The region to use (for cloud providers). Overrides config/env settings.                               |
+| `--color <mode>`       | string  | Turn on/off color output. Options: `on`, `off`, `auto`                                                |
+| `--version`            |         | Display the version of this tool.                                                                     |
+| `--no-paginate`        | boolean | Disable automatic pagination for commands that support it.                                            |
+| `--no-cli-pager`       | boolean | Disable CLI pager for output.                                                                         |
+| `--cli-auto-prompt`    | boolean | Automatically prompt for CLI input parameters.                                                        |
+| `--no-cli-auto-prompt` | boolean | Disable automatic prompt for CLI input parameters.                                                    |
+| `--ca-bundle <file>`   | string  | The CA certificate bundle to use when verifying SSL certificates.                                     |
+| `--endpoint-url <url>` | string  | Override the default API endpoint URL.                                                                |
+| `--no-verify-ssl`      | boolean | Do not verify SSL certificates.                                                                       |
+| `--no-sign-request`    | boolean | Do not sign requests (for local providers).                                                           |
+
+---
+
+## Available Commands
+
+| Command     | Description                                  |
+| ----------- | -------------------------------------------- |
+| `ask`       | Ask AI a question and get a response         |
+| `configure` | Configure AI provider settings and profiles  |
+| `history`   | Manage chat history and sessions             |
+| `info`      | Display system and configuration information |
+
+Use `rawi <command> --help` for detailed usage and options.
+
+---
+
+## Supported AI Providers
+
+| Provider       | API Key Required | Local | Best For                    |
+| -------------- | ---------------- | ----- | --------------------------- |
+| OpenAI         | Yes              | No    | General, coding, creative   |
+| Anthropic      | Yes              | No    | Safety, long-form           |
+| Google Gemini  | Yes              | No    | Fast, multimodal            |
+| Ollama         | No               | Yes   | Privacy, offline, free      |
+| Azure OpenAI   | Yes              | No    | Enterprise, compliance      |
+| Amazon Bedrock | Yes (AWS creds)  | No    | AWS integration, enterprise |
+| Qwen           | Yes              | No    | Multilingual, Chinese       |
+| xAI            | Yes              | No    | Real-time, conversational   |
+
+See `rawi configure --list-providers` for a full list and setup instructions.
+
+---
+
+## Example Usage
+
+```bash
+# Ask a question using the default profile
+rawi ask "What is TypeScript?"
+
+# Use a specific profile
+rawi ask "Summarize this code" --profile work
+
+# Configure a new provider profile
+rawi configure --profile openai --provider openai --model gpt-4o --api-key sk-...
+
+# List all chat sessions
+rawi history
+
+# Show system info
+rawi info
+```

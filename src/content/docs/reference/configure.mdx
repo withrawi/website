@@ -1,0 +1,119 @@
+---
+title: Rawi (راوي) Documentation | Reference `configure` Command
+description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+---
+
+# configure
+
+## Description
+
+Configure Rawi AI settings, including provider, model, API keys, and advanced options for different AI backends. Supports multiple profiles and provider-specific settings.
+
+See also: Rawi Documentation
+
+## Synopsis
+
+```bash
+rawi configure [options]
+```
+
+## Options
+
+- `-p, --profile <profile>` (string)  
+  Configuration profile name (default: "default").
+
+- `--provider <provider>` (string)  
+  AI provider (openai, anthropic, google, ollama, xai, azure, bedrock, qwen).
+
+- `--model <model>` (string)  
+  AI model name.
+
+- `--api-key <apiKey>` (string)  
+  API key for the provider (not needed for Ollama).
+
+- `--base-url <baseURL>` (string)  
+  Base URL for Ollama (default: http://localhost:11434/api), OpenAI (default: https://api.openai.com/v1), Anthropic (default: https://api.anthropic.com), Google (default: https://generativelanguage.googleapis.com/v1beta), Qwen (default: https://dashscope-intl.aliyuncs.com/compatible-mode/v1), or xAI (default: https://api.x.ai/v1).
+
+- `--resource-name <resourceName>` (string)  
+  Resource name for Azure OpenAI (required for Azure).
+
+- `--api-version <apiVersion>` (string)  
+  API version for Azure OpenAI (default: 2024-10-01-preview).
+
+- `--region <region>` (string)  
+  AWS region for Amazon Bedrock (default: us-east-1).
+
+- `--access-key-id <accessKeyId>` (string)  
+  AWS access key ID for Amazon Bedrock.
+
+- `--secret-access-key <secretAccessKey>` (string)  
+  AWS secret access key for Amazon Bedrock.
+
+- `--session-token <sessionToken>` (string)  
+  AWS session token for Amazon Bedrock (optional).
+
+- `--use-provider-chain` (boolean)  
+  Use AWS credential provider chain instead of explicit credentials.
+
+- `--temperature <temperature>` (number)  
+  Temperature value (0-2).
+
+- `--max-tokens <maxTokens>` (number)  
+  Maximum tokens.
+
+- `--language <language>` (string)  
+  Language setting (english, arabic) (default: "english").
+
+- `--show` (boolean)  
+  Show current configuration.
+
+- `--list` (boolean)  
+  List all profiles.
+
+- `--list-providers` (boolean)  
+  List all available AI providers.
+
+- `--list-models <provider>` (string)  
+  List all models for a specific provider.
+
+- `--delete <profile>` (string)  
+  Delete a configuration profile.
+
+- `-h, --help` (boolean)  
+  Display help for command.
+
+## Examples
+
+**Configure OpenAI with a new profile:**
+
+```bash
+$ rawi configure --provider openai --model gpt-4o --api-key sk-xxxx
+```
+
+**Configure Ollama with a custom base URL:**
+
+```bash
+$ rawi configure --provider ollama --base-url http://localhost:11434/api
+```
+
+**Show current configuration:**
+
+```bash
+$ rawi configure --show
+```
+
+**List all available providers:**
+
+```bash
+$ rawi configure --list-providers
+```
+
+**Delete a profile:**
+
+```bash
+$ rawi configure --delete myprofile
+```
+
+---
+
+For more information, see the Rawi documentation or run `rawi configure --help`.

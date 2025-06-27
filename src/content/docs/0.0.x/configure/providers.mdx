@@ -1,0 +1,166 @@
+---
+title: Rawi (راوي) Documentation | Providers
+description: Welcome to the comprehensive documentation for Rawi (راوي), a
+  developer-friendly AI-powered CLI tool for your terminal.
+slug: 0.0.x/configure/providers
+---
+
+import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
+
+# Supported AI Providers in Rawi CLI
+
+Rawi CLI supports multiple AI providers, enabling you to access a wide range of models and capabilities directly from your terminal. With minimal configuration, you can switch between providers, manage profiles, and leverage the best model for your use case.
+
+## Overview
+
+Rawi CLI enables seamless integration with leading AI providers, including OpenAI, Anthropic, Google, Ollama (local), Azure OpenAI, Amazon Bedrock, Qwen, and xAI. Each provider offers unique models, features, and configuration options.
+
+| Provider           | Models                                          | API Key Required | Local Support |
+| ------------------ | ----------------------------------------------- | ---------------- | ------------- |
+| **OpenAI**         | GPT-4o, GPT-4, GPT-3.5, O1, O3                  | ✅               | ❌            |
+| **Anthropic**      | Claude 3.5 Sonnet, Claude 4, Haiku              | ✅               | ❌            |
+| **Google**         | Gemini 2.0 Flash, Gemini 1.5 Pro/Flash          | ✅               | ❌            |
+| **Ollama**         | Llama 3.2, Mistral, CodeLlama, Qwen + 100+ more | ❌               | ✅            |
+| **Azure OpenAI**   | Enterprise OpenAI models                        | ✅               | ❌            |
+| **Amazon Bedrock** | Claude, Llama, Titan                            | ✅               | ❌            |
+| **Qwen**           | Qwen-Max, Qwen-Plus, Qwen-Turbo                 | ✅               | ❌            |
+| **xAI**            | Grok-Beta, Grok-2                               | ✅               | ❌            |
+
+## Key Features
+
+* **Multi-provider support**: Easily switch between providers and models.
+* **Profile management**: Store multiple configurations for different projects or use cases.
+* **Local and cloud models**: Use local models for privacy or cloud models for advanced capabilities.
+* **Unified CLI experience**: Consistent commands and options across all providers.
+
+## Example: Listing Supported Providers
+
+To view all supported providers and their available models:
+
+```bash
+rawi info --providers
+```
+
+Sample output:
+
+```bash
+🤖 Supported AI Providers (8)
+
+🟣 Anthropic (Claude) (anthropic)
+  Models: 12 available
+    • claude-4-opus-20250514
+    • claude-4-sonnet-20250514
+    • claude-3-7-sonnet-20250219
+    ... and 9 more
+
+🔷 Azure OpenAI (azure)
+  Models: 0 available
+
+🟠 Amazon Bedrock (bedrock)
+  Models: 32 available
+    • amazon.titan-tg1-large
+    • amazon.titan-text-express-v1
+    • amazon.titan-text-lite-v1
+    ... and 29 more
+
+🔴 Google (Gemini) (google)
+  Models: 24 available
+    • gemini-1.5-flash
+    • gemini-1.5-flash-latest
+    • gemini-1.5-flash-001
+    ... and 21 more
+
+🟢 Ollama (ollama)
+  Models: 180 available
+    • athene-v2
+    • athene-v2:72b
+    • aya-expanse
+    ... and 177 more
+
+🔵 OpenAI (GPT) (openai)
+  Models: 44 available
+    • o1
+    • o1-2024-12-17
+    • o1-mini
+    ... and 41 more
+
+🟡 Qwen (Alibaba Cloud) (qwen)
+  Models: 21 available
+    • qwen2.5-14b-instruct-1m
+    • qwen2.5-72b-instruct
+    • qwen2.5-32b-instruct
+    ... and 18 more
+
+🤖 xAI (Grok) (xai)
+  Models: 19 available
+    • grok-3
+    • grok-3-latest
+    • grok-3-fast
+    ... and 16 more
+
+Run "rawi configure --list-models <provider>" for all models
+```
+
+## Example: Configuring a Provider
+
+<Tabs>
+  <TabItem label="OpenAI" icon="openai">
+    <Steps>
+      1. **Configure OpenAI provider:**
+
+         ```bash
+         rawi configure --provider openai --model gpt-4o --api-key sk-your-key
+         ```
+    </Steps>
+  </TabItem>
+
+  <TabItem label="Ollama (local)" icon="ollama">
+    <Steps>
+      1. **Configure Ollama (local) provider:**
+
+         ```bash
+         rawi configure --provider ollama --model llama3.2
+         ```
+    </Steps>
+  </TabItem>
+</Tabs>
+
+## Example: Switching Providers
+
+<Tabs>
+  <TabItem label="OpenAI" icon="openai">
+    <Steps>
+      1. **Switch to OpenAI profile:**
+
+         ```bash
+         rawi ask "Summarize this code" --profile openai
+         ```
+    </Steps>
+  </TabItem>
+
+  <TabItem label="Ollama (local)" icon="ollama">
+    <Steps>
+      1. **Switch to Ollama profile:**
+
+         ```bash
+         rawi ask "Summarize this code" --profile ollama
+         ```
+    </Steps>
+  </TabItem>
+</Tabs>
+
+## Best Practices
+
+* Use provider-specific profiles for different projects.
+* Choose local models (Ollama) for privacy-sensitive tasks.
+* Use cloud providers for the latest and most capable models.
+* Check available models with `rawi configure --list-models <provider>`.
+
+## Troubleshooting
+
+If you encounter issues with a provider, run:
+
+```bash
+rawi info --providers
+rawi configure --show --profile <profile>
+```

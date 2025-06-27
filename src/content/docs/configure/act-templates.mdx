@@ -1,0 +1,115 @@
+---
+title: Rawi (راوي) Documentation | Act Templates
+description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+---
+
+import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
+
+Rawi CLI provides advanced features for customizing your AI interactions, including **Act Templates** for prompt engineering and **Profiles** for managing multiple provider configurations. These features enable you to tailor your AI experience for different projects, teams, or workflows—directly from your terminal.
+
+---
+
+## Act Templates
+
+**Act Templates** are reusable prompt patterns that help you instruct the AI to behave in a specific way (e.g., code reviewer, security auditor, technical writer). You can list, show, and apply act templates to your queries.
+
+### Listing Available Act Templates
+
+<Tabs>
+  <TabItem label="List Act Templates">
+
+```bash
+$ rawi ask --list-acts
+🎭 Available Act Templates:
+
+📁 Code Review:
+  • code-review - Review code for bugs and improvements
+
+📁 Documentation:
+  • doc-writer - Generate documentation from code
+
+Usage: rawi ask --act <template-id> "your question"
+Show template: rawi ask --act <template-id> --show
+```
+
+  </TabItem>
+  <TabItem label="Show Template Details">
+
+```bash
+$ rawi ask --act code-review --show
+🎭 Act Template: Code Review
+ID: code-review
+Category: Code Review
+Template: "You are a code reviewer. Review the following code for bugs and improvements."
+```
+
+  </TabItem>
+  <TabItem label="Use an Act Template">
+
+```bash
+$ rawi ask --act code-review "Review this function for security issues"
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## Profile Management
+
+Profiles let you save and switch between different provider configurations (e.g., OpenAI for work, Ollama for local, Anthropic for research).
+
+### Creating and Using Profiles
+
+```bash
+# Create a new profile for OpenAI
+$ rawi configure --profile work --provider openai --model gpt-4o --api-key sk-...
+
+# Use a profile when asking a question
+$ rawi ask "Summarize this code" --profile work
+```
+
+### Listing and Managing Profiles
+
+```bash
+# List all profiles
+$ rawi configure --list
+
+# Show details for a profile
+$ rawi configure --show --profile work
+
+# Delete a profile
+$ rawi configure --delete personal
+```
+
+### Default Profile
+
+If you do not specify a profile, Rawi uses the `default` profile.
+
+```bash
+$ rawi ask "What is TypeScript?"
+# Uses the 'default' profile
+```
+
+---
+
+## Example Workflow
+
+```bash
+# List act templates
+$ rawi ask --list-acts
+
+# Show a template
+$ rawi ask --act doc-writer --show
+
+# Use a template with a specific profile
+$ rawi ask --act code-review "Review this code" --profile work
+```
+
+---
+
+For more details, see the Providers Guide, Configuration Guide, and CLI Commands Reference.
+
+---
+
+**Tip:** Use profiles to separate work and personal API keys, and act templates to standardize your prompts for repeatable results.
