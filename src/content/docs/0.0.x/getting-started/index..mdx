@@ -5,7 +5,10 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/getting-started
 ---
 
+import Clarity from '../@/components/clarity.astro';
 import {Steps} from '@astrojs/starlight/components';
+
+<Clarity />
 
 # Prerequisites to Use the Rawi CLI
 
@@ -13,9 +16,9 @@ To use the Rawi CLI, you need to meet a few prerequisites depending on the AI pr
 
 ## System Requirements
 
-* **Node.js**: Version 18.0.0 or higher
-* **Package Manager**: npm, pnpm, or yarn
-* **Operating System**: Linux, macOS, or Windows
+- **Node.js**: Version 18.0.0 or higher
+- **Package Manager**: npm, pnpm, or yarn
+- **Operating System**: Linux, macOS, or Windows
 
 ## Provider Credentials
 
@@ -34,10 +37,10 @@ To access AI services with Rawi, you need credentials for the provider you want 
 
 ## Security Best Practices
 
-* **Do not use root or admin credentials for daily tasks.**
-* **Create provider-specific users or API keys with least privilege.**
-* **Store credentials securely (Rawi stores them encrypted in `~/.rawi/`).**
-* **For AWS Bedrock, use IAM roles or the AWS credential provider chain.**
+- **Do not use root or admin credentials for daily tasks.**
+- **Create provider-specific users or API keys with least privilege.**
+- **Store credentials securely (Rawi stores them encrypted in `~/.rawi/`).**
+- **For AWS Bedrock, use IAM roles or the AWS credential provider chain.**
 
 ## Next Steps
 
@@ -50,27 +53,27 @@ After you have the required credentials:
      npm install -g rawi
      ```
 
-  2. **Configure your first provider (interactive):**
+2. **Configure your first provider (interactive):**
 
-     ```bash
-     rawi configure
-     ```
+   ```bash
+   rawi configure
+   ```
 
-     Or configure via command line for automation:
+   Or configure via command line for automation:
 
-     ```bash
-     rawi configure --provider openai --api-key <your-key> --model gpt-4o
-     ```
+   ```bash
+   rawi configure --provider openai --api-key <your-key> --model gpt-4o
+   ```
 
-  3. **Verify installation:**
+3. **Verify installation:**
 
-     ```bash
-     rawi --version
-     rawi info
-     ```
+   ```bash
+   rawi --version
+   rawi info
+   ```
 
-  4. **Start using Rawi:**
-     ```bash
+4. **Start using Rawi:**
+   `bash
      rawi ask "What is TypeScript?"
-     ```
-</Steps>
+     `
+   </Steps>

@@ -5,18 +5,22 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/configure
 ---
 
+import Clarity from '../@/components/clarity.astro';
 import {Tabs, TabItem, Steps, Aside} from '@astrojs/starlight/components';
+
+<Clarity />
 
 # Configuring settings for the Rawi CLI
 
 The Rawi Command Line Interface (Rawi CLI) uses configuration settings to determine how it interacts with AI providers and manages your sessions. These settings include:
 
-* **Credentials**: Identify who is calling the API. API keys or tokens are used to authenticate your requests and determine your access permissions.
-* **Provider and Model**: Specify which AI provider and model to use for your requests.
-* **Other options**: Such as default profile, output format, and custom endpoints.
+- **Credentials**: Identify who is calling the API. API keys or tokens are used to authenticate your requests and determine your access permissions.
+- **Provider and Model**: Specify which AI provider and model to use for your requests.
+- **Other options**: Such as default profile, output format, and custom endpoints.
 
 <Aside>
-  Ensure your system’s date and time are set correctly. Some providers require signed requests with accurate timestamps.
+  Ensure your system’s date and time are set correctly. Some providers require
+  signed requests with accurate timestamps.
 </Aside>
 
 ## Configuration and credentials precedence
@@ -52,6 +56,7 @@ Rawi CLI reads configuration and credentials from several locations, in the foll
          # API Key [None]: sk-...
          ```
     </Steps>
+
   </TabItem>
 
   <TabItem label="Manual (CLI)" icon="gear">
@@ -62,6 +67,7 @@ Rawi CLI reads configuration and credentials from several locations, in the foll
          rawi configure --provider openai --model gpt-4o --api-key sk-your-key
          ```
     </Steps>
+
   </TabItem>
 
   <TabItem label="Environment Variables" icon="key">
@@ -73,6 +79,7 @@ Rawi CLI reads configuration and credentials from several locations, in the foll
          rawi ask "Hello, world!"
          ```
     </Steps>
+
   </TabItem>
 
   <TabItem label="Switching Profiles" icon="person">
@@ -85,14 +92,15 @@ Rawi CLI reads configuration and credentials from several locations, in the foll
          rawi configure --profile work --provider anthropic --model claude-3-sonnet-20240229
          ```
     </Steps>
+
   </TabItem>
 </Tabs>
 
 ## Configuration file locations
 
-* **Linux/macOS**: `~/.rawi/credentials`
-* **Windows**: `%USERPROFILE%\.rawi\credentials`
+- **Linux/macOS**: `~/.rawi/credentials`
+- **Windows**: `%USERPROFILE%\.rawi\credentials`
 
-***
+---
 
 For more details, see the Troubleshooting Guide or run `rawi configure --help`.

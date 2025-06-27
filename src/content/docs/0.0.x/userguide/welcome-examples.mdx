@@ -5,15 +5,19 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/userguide/welcome-examples
 ---
 
+import Clarity from '../@/components/clarity.astro';
+
+<Clarity />
+
 ## About the Examples in the Rawi CLI Documentation
 
 The Rawi CLI documentation uses consistent formatting conventions for all command-line examples:
 
-* **Prompt** – The Linux shell prompt is shown as `$`. For Windows-specific commands, `C:\>` is used. Do not type the prompt character when entering commands.
-* **Directory** – If a command must be run from a specific directory, the directory path is shown before the prompt.
-* **User Input** – Commands you type are shown as user input.
-* **Replaceable Text** – Variable text (such as file names, profile names, or API keys) is shown in *italic* or `<angle brackets>`. Replace these with your own values.
-* **Output** – Output from Rawi or the shell is shown below the command, formatted as computer output.
+- **Prompt** – The Linux shell prompt is shown as `$`. For Windows-specific commands, `C:\>` is used. Do not type the prompt character when entering commands.
+- **Directory** – If a command must be run from a specific directory, the directory path is shown before the prompt.
+- **User Input** – Commands you type are shown as user input.
+- **Replaceable Text** – Variable text (such as file names, profile names, or API keys) is shown in _italic_ or `<angle brackets>`. Replace these with your own values.
+- **Output** – Output from Rawi or the shell is shown below the command, formatted as computer output.
 
 ### Example: Configuring a Provider
 
@@ -70,6 +74,6 @@ You can pipe files or command output into Rawi:
 $ cat app.js | rawi ask "Review this code for security issues"
 ```
 
-***
+---
 
 **Tip:** For more usage patterns and advanced examples, see the Usage Examples and FAQ.

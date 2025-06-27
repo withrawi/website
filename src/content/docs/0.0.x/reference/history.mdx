@@ -5,6 +5,10 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/reference/history
 ---
 
+import Clarity from '../@/components/clarity.astro';
+
+<Clarity />
+
 # history
 
 ## Description
@@ -21,48 +25,48 @@ rawi history [options] [command]
 
 ## Options
 
-* `-p, --profile <profile>` (string)\
+- `-p, --profile <profile>` (string)\
   Profile to show history for (default: "default").
 
-* `-l, --limit <number>` (number)\
+- `-l, --limit <number>` (number)\
   Number of sessions to show (default: "50").
 
-* `-s, --search <query>` (string)\
+- `-s, --search <query>` (string)\
   Search messages containing text.
 
-* `--provider <provider>` (string)\
+- `--provider <provider>` (string)\
   Filter by AI provider.
 
-* `--model <model>` (string)\
+- `--model <model>` (string)\
   Filter by AI model.
 
-* `--from <date>` (string)\
+- `--from <date>` (string)\
   Show sessions from date (YYYY-MM-DD).
 
-* `--to <date>` (string)\
+- `--to <date>` (string)\
   Show sessions to date (YYYY-MM-DD).
 
-* `-h, --help` (boolean)\
+- `-h, --help` (boolean)\
   Display help for command.
 
 ## Commands
 
-* `sessions [options]`\
+- `sessions [options]`\
   List and manage chat sessions.
 
-* `show <sessionId>`\
+- `show <sessionId>`\
   Show all messages in a specific session.
 
-* `delete <sessionId>`\
+- `delete <sessionId>`\
   Delete a specific session.
 
-* `stats [options]`\
+- `stats [options]`\
   Show usage statistics.
 
-* `cleanup [options]`\
+- `cleanup [options]`\
   Clean up old sessions.
 
-* `export [options]`\
+- `export [options]`\
   Export chat history to JSON.
 
 ## Examples
@@ -97,6 +101,6 @@ $ rawi history delete 515e566d-146b-4d55-aaa5-b4a4c82f92c2
 $ rawi history export --profile default
 ```
 
-***
+---
 
 For more information, see the Rawi documentation or run `rawi history --help`.

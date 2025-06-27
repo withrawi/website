@@ -6,26 +6,31 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/getting-started/getting-started-source-install
 ---
 
+import Clarity from '../@/components/clarity.astro';
 import {Aside, Tabs, TabItem, Steps} from '@astrojs/starlight/components';
+
+<Clarity />
 
 # Building and Installing Rawi CLI from Source
 
 This guide describes how to build and install the latest release of the Rawi CLI from source on supported operating systems.
 
 <Aside>
-  Most users should install Rawi via npm, pnpm, or yarn. Building from source is recommended for contributors, package maintainers, or users with special requirements.
+  Most users should install Rawi via npm, pnpm, or yarn. Building from source is
+  recommended for contributors, package maintainers, or users with special
+  requirements.
 </Aside>
 
-***
+---
 
 ## Why Build from Source?
 
-* You want to contribute to Rawi or test unreleased features.
-* You need to patch or customize the CLI.
-* You are packaging Rawi for a distribution.
-* You require a build for a non-standard environment.
+- You want to contribute to Rawi or test unreleased features.
+- You need to patch or customize the CLI.
+- You are packaging Rawi for a distribution.
+- You require a build for a non-standard environment.
 
-***
+---
 
 ## Quick Steps
 
@@ -37,111 +42,104 @@ All commands are assumed to run from the root of the Rawi source directory.
      * **pnpm** (recommended), or npm/yarn
      * **Git** (to clone the repository)
 
-  2. **Clone the Repository**
+2.  **Clone the Repository**
 
-     ```bash
-     git clone https://github.com/withrawi/rawi.git
-     cd rawi
-     ```
+    ```bash
+    git clone https://github.com/withrawi/rawi.git
+    cd rawi
+    ```
 
-  3. **Install Dependencies**
+3.  **Install Dependencies**
 
-     <Tabs>
-       <TabItem label="pnpm" icon="pnpm">
+    <Tabs>
+  <TabItem label="pnpm" icon="pnpm">
+    ```bash
+    pnpm install
+    ```
+  </TabItem>
+
+    <TabItem label="npm" icon="npm">
+      ```bash npm install ```
+    </TabItem>
+
+      <TabItem label="yarn" icon="seti:yarn">
+    ```bash
+    yarn install
+    ```
+  </TabItem>
+</Tabs>
+
+4.  **Build the CLI**
+
+    <Tabs>
+  <TabItem label="pnpm" icon="pnpm">
+    ```bash
+    pnpm build
+    ```
+  </TabItem>
+
+    <TabItem label="npm" icon="npm">
+      ```bash npm run build ```
+    </TabItem>
+
+      <TabItem label="yarn" icon="seti:yarn">
+    ```bash
+    yarn build
+    ```
+  </TabItem>
+</Tabs>
+
+5.  **(Optional) Run Tests**
+
+    <Tabs>
+  <TabItem label="pnpm" icon="pnpm">
+    ```bash
+    pnpm test
+    ```
+  </TabItem>
+
+    <TabItem label="npm" icon="npm">
+      ```bash npm test ```
+    </TabItem>
+
+      <TabItem label="yarn" icon="seti:yarn">
+    ```bash
+    yarn test
+    ```
+  </TabItem>
+</Tabs>
+
+6.  **Link the CLI Locally**
+    This makes the `rawi` command available globally on your system for development and testing.
+
+    <Tabs>
+  <TabItem label="pnpm" icon="pnpm">
+    ```bash
+    pnpm link --global
+    ```
+  </TabItem>
+
+    <TabItem label="npm" icon="npm">
+      ```bash npm link ```
+    </TabItem>
+
+      <TabItem label="yarn" icon="seti:yarn">
+    ```bash
+    yarn link
+    ```
+  </TabItem>
+</Tabs>
+
+7.  **Verify Installation**
+
          ```bash
-         pnpm install
+         rawi --version
+         rawi info
          ```
-       </TabItem>
 
-       <TabItem label="npm" icon="npm">
-         ```bash
-         npm install
-         ```
-       </TabItem>
+    </Steps>
 
-       <TabItem label="yarn" icon="seti:yarn">
-         ```bash
-         yarn install
-         ```
-       </TabItem>
-     </Tabs>
-
-  4. **Build the CLI**
-
-     <Tabs>
-       <TabItem label="pnpm" icon="pnpm">
-         ```bash
-         pnpm build
-         ```
-       </TabItem>
-
-       <TabItem label="npm" icon="npm">
-         ```bash
-         npm run build
-         ```
-       </TabItem>
-
-       <TabItem label="yarn" icon="seti:yarn">
-         ```bash
-         yarn build
-         ```
-       </TabItem>
-     </Tabs>
-
-  5. **(Optional) Run Tests**
-
-     <Tabs>
-       <TabItem label="pnpm" icon="pnpm">
-         ```bash
-         pnpm test
-         ```
-       </TabItem>
-
-       <TabItem label="npm" icon="npm">
-         ```bash
-         npm test
-         ```
-       </TabItem>
-
-       <TabItem label="yarn" icon="seti:yarn">
-         ```bash
-         yarn test
-         ```
-       </TabItem>
-     </Tabs>
-
-  6. **Link the CLI Locally**
-     This makes the `rawi` command available globally on your system for development and testing.
-
-     <Tabs>
-       <TabItem label="pnpm" icon="pnpm">
-         ```bash
-         pnpm link --global
-         ```
-       </TabItem>
-
-       <TabItem label="npm" icon="npm">
-         ```bash
-         npm link
-         ```
-       </TabItem>
-
-       <TabItem label="yarn" icon="seti:yarn">
-         ```bash
-         yarn link
-         ```
-       </TabItem>
-     </Tabs>
-
-  7. **Verify Installation**
-
-     ```bash
-     rawi --version
-     rawi info
-     ```
-</Steps>
-
-***
+---
 
 ## Advanced: Custom Build/Install Locations
 
@@ -155,7 +153,7 @@ pnpm install && pnpm build
 npx rawi ask "Hello from source build!"
 ```
 
-***
+---
 
 ## Workflow Example
 
@@ -171,10 +169,10 @@ pnpm link --global
 rawi ask "What is AstroJS Starlight?"
 ```
 
-***
+---
 
 ## Troubleshooting
 
-* If you encounter issues, see Troubleshooting Guide.
-* For permission errors, try running with `sudo` or adjust your npm global directory.
-* For dependency issues, ensure you are using Node.js 18+ and a supported package manager.
+- If you encounter issues, see Troubleshooting Guide.
+- For permission errors, try running with `sudo` or adjust your npm global directory.
+- For dependency issues, ensure you are using Node.js 18+ and a supported package manager.

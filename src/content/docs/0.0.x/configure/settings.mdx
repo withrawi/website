@@ -5,7 +5,10 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/configure/settings
 ---
 
+import Clarity from '../@/components/clarity.astro';
 import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
+
+<Clarity />
 
 # Configuration and Credential File Settings in Rawi CLI
 
@@ -13,8 +16,8 @@ Rawi CLI allows you to save your frequently used configuration settings and cred
 
 ## Where Are Configuration Settings Stored?
 
-* **Credentials** are stored in a file named `credentials` in the `~/.rawi/` directory.
-* **Configuration** options are stored in a file named `config` in the same directory.
+- **Credentials** are stored in a file named `credentials` in the `~/.rawi/` directory.
+- **Configuration** options are stored in a file named `config` in the same directory.
 
 You can override the default location by setting environment variables (e.g., `RAWI_CONFIG_FILE`, `RAWI_CREDENTIALS_FILE`).
 
@@ -29,6 +32,7 @@ You can override the default location by setting environment variables (e.g., `R
          rawi ask --profile work "What is the weather today?"
          ```
     </Steps>
+
   </TabItem>
 
   <TabItem label="Environment Variable" icon="key">
@@ -39,6 +43,7 @@ You can override the default location by setting environment variables (e.g., `R
          export RAWI_PROFILE=work
          ```
     </Steps>
+
   </TabItem>
 </Tabs>
 
@@ -88,6 +93,7 @@ There is no `~/.rawi/config` file by default. All configuration is managed throu
          rawi configure
          ```
     </Steps>
+
   </TabItem>
 
   <TabItem label="Direct CLI" icon="gear">
@@ -98,6 +104,7 @@ There is no `~/.rawi/config` file by default. All configuration is managed throu
          rawi configure --provider openai --model gpt-4o --api-key sk-xxxxxx
          ```
     </Steps>
+
   </TabItem>
 
   <TabItem label="List Profiles" icon="list">
@@ -108,6 +115,7 @@ There is no `~/.rawi/config` file by default. All configuration is managed throu
          rawi configure --list
          ```
     </Steps>
+
   </TabItem>
 
   <TabItem label="Show Profile" icon="person">
@@ -118,17 +126,18 @@ There is no `~/.rawi/config` file by default. All configuration is managed throu
          rawi configure --show --profile work
          ```
     </Steps>
+
   </TabItem>
 </Tabs>
 
 ## Supported Config File Settings
 
-* `provider`: The AI provider (e.g., openai, anthropic, google, ollama, etc.)
-* `model`: The model to use (e.g., gpt-4o, claude-3-sonnet-20240229)
-* `output`: Output format (`json`, `text`, `markdown`)
-* `api_key`: Your API key (store in credentials file)
-* `base_url`: (Optional) Custom API endpoint
-* `profile`: Profile name
+- `provider`: The AI provider (e.g., openai, anthropic, google, ollama, etc.)
+- `model`: The model to use (e.g., gpt-4o, claude-3-sonnet-20240229)
+- `output`: Output format (`json`, `text`, `markdown`)
+- `api_key`: Your API key (store in credentials file)
+- `base_url`: (Optional) Custom API endpoint
+- `profile`: Profile name
 
 ## Configuration Precedence
 
@@ -142,15 +151,16 @@ Settings are resolved in the following order:
 ## Example: Switching Profiles
 
 <Steps>
-  1. **Switch and use a profile in one command:** `bash rawi configure   --profile work --provider anthropic --model claude-3-sonnet-20240229 --api-key
-       sk-ant-yyyyyy rawi ask --profile work "Summarize this document." `
+  1. **Switch and use a profile in one command:** `bash rawi configure --profile
+  work --provider anthropic --model claude-3-sonnet-20240229 --api-key
+  sk-ant-yyyyyy rawi ask --profile work "Summarize this document." `
 </Steps>
 
 ## Notes
 
-* Keep your API keys secure. Do not share your `~/.rawi/credentials` file.
-* For troubleshooting configuration issues, see the Troubleshooting Guide.
+- Keep your API keys secure. Do not share your `~/.rawi/credentials` file.
+- For troubleshooting configuration issues, see the Troubleshooting Guide.
 
-***
+---
 
 This format provides clear, AWS CLI-style documentation for your users, making it easy to understand and manage Rawi CLI configuration.

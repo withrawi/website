@@ -5,7 +5,10 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/getting-started/install
 ---
 
+import Clarity from '../@/components/clarity.astro';
 import {Tabs, TabItem} from '@astrojs/starlight/components';
+
+<Clarity />
 
 # Installing or Updating Rawi CLI
 
@@ -13,14 +16,14 @@ The Rawi Command Line Interface (Rawi CLI) is an open source tool that enables y
 
 ## Supported Platforms
 
-* **Linux shells** – Use bash, zsh, or other common shells.
-* **macOS** – Use Terminal or iTerm.
-* **Windows** – Use Command Prompt or PowerShell.
+- **Linux shells** – Use bash, zsh, or other common shells.
+- **macOS** – Use Terminal or iTerm.
+- **Windows** – Use Command Prompt or PowerShell.
 
 ## Prerequisites
 
-* **Node.js 18+** is required. We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node.js versions.
-* A supported package manager: `npm` or `pnpm`.
+- **Node.js 18+** is required. We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node.js versions.
+- A supported package manager: `npm` or `pnpm`.
 
 ## Install or Update Rawi CLI
 
@@ -33,11 +36,9 @@ The Rawi Command Line Interface (Rawi CLI) is an open source tool that enables y
     ```
   </TabItem>
 
-  <TabItem label="npm" icon="npm">
-    ```bash
-    npm install -g rawi
-    ```
-  </TabItem>
+<TabItem label="npm" icon="npm">
+  ```bash npm install -g rawi ```
+</TabItem>
 
   <TabItem label="yarn" icon="seti:yarn">
     ```bash
@@ -57,11 +58,9 @@ To update Rawi CLI to the latest version, use the same command you used for inst
     ```
   </TabItem>
 
-  <TabItem label="npm" icon="npm">
-    ```bash
-    npm update -g rawi
-    ```
-  </TabItem>
+<TabItem label="npm" icon="npm">
+  ```bash npm update -g rawi ```
+</TabItem>
 
   <TabItem label="yarn" icon="seti:yarn">
     ```bash
@@ -81,6 +80,7 @@ Check your installed version:
 
     rawi/0.0.0-beta.12 linux-x64 node-18.20.2
     ```
+
   </TabItem>
 
   <TabItem label="macOS">
@@ -89,6 +89,7 @@ Check your installed version:
 
     rawi/0.0.0-beta.12 darwin-x64 node-18.20.2
     ```
+
   </TabItem>
 
   <TabItem label="Windows" icon="seti:windows">
@@ -97,6 +98,7 @@ Check your installed version:
 
     rawi/0.0.0-beta.12 win32-x64 node-18.20.2
     ```
+
   </TabItem>
 </Tabs>
 
@@ -135,6 +137,7 @@ If the `rawi` command is not found, ensure your package manager's global bin dir
         ```
       </TabItem>
     </Tabs>
+
   </TabItem>
 
   <TabItem label="Windows - Global Bin" icon="seti:windows">
@@ -169,6 +172,7 @@ If the `rawi` command is not found, ensure your package manager's global bin dir
         ```
       </TabItem>
     </Tabs>
+
   </TabItem>
 </Tabs>
 
@@ -181,11 +185,9 @@ If the `rawi` command is not found, ensure your package manager's global bin dir
     ```
   </TabItem>
 
-  <TabItem label="npm" icon="npm">
-    ```bash
-    npm uninstall -g rawi
-    ```
-  </TabItem>
+<TabItem label="npm" icon="npm">
+  ```bash npm uninstall -g rawi ```
+</TabItem>
 
   <TabItem label="yarn" icon="seti:yarn">
     ```bash
@@ -198,7 +200,7 @@ If the `rawi` command is not found, ensure your package manager's global bin dir
 
 If you encounter issues, see the Troubleshooting Guide for solutions to common installation and configuration problems.
 
-***
+---
 
 **Next steps:**\
 After installing Rawi CLI, run the following to configure your first provider:
