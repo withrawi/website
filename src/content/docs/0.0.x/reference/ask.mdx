@@ -5,7 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/reference/ask
 ---
 
-import Clarity from '../@/components/clarity.astro';
+import Clarity from '../../../../components/clarity.astro';
 
 <Clarity />
 
@@ -23,38 +23,38 @@ See also: Rawi Documentation
 rawi ask [options] [query]
 ```
 
-- `query`\
+* `query`\
   The question or prompt to send to the AI (can be combined with piped input).
 
 ## Options
 
-- `-p, --profile <profile>` (string)\
+* `-p, --profile <profile>` (string)\
   Profile to use for AI configuration (default: "default").
 
-- `--session <sessionId>` (string)\
+* `--session <sessionId>` (string)\
   Continue an existing chat session.
 
-- `--new-session` (boolean)\
+* `--new-session` (boolean)\
   Start a new chat session.
 
-- `--act <template>` (string)\
+* `--act <template>` (string)\
   Use an act template (e.g., ethereum-developer).
 
-- `--list-acts` (boolean)\
+* `--list-acts` (boolean)\
   List all available act templates.
 
-- `--show` (boolean)\
+* `--show` (boolean)\
   Show details of the specified act template (use with --act).
 
-- `--verbose` (boolean)\
+* `--verbose` (boolean)\
   Show detailed status and debug information.
 
-- `-h, --help` (boolean)\
+* `-h, --help` (boolean)\
   Display help for command.
 
 ## Global Options
 
-- `--version` (boolean)\
+* `--version` (boolean)\
   Display the version of this tool.
 
 ## Examples
@@ -107,6 +107,6 @@ $ rawi ask --list-acts
 $ rawi ask --act ethereum-developer --show
 ```
 
----
+***
 
 For more information, see the Rawi documentation or run `rawi ask --help`.

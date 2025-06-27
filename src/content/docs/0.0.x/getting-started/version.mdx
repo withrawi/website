@@ -5,7 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/getting-started/version
 ---
 
-import Clarity from '../@/components/clarity.astro';
+import Clarity from '../../../../components/clarity.astro';
 import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
 
 <Clarity />
@@ -16,9 +16,9 @@ This topic describes how to install previous releases of the Rawi Command Line I
 
 ## System Requirements
 
-- **Node.js**: 18.0.0 or higher
-- **Package Manager**: npm, pnpm, or yarn
-- **Operating System**: Windows, macOS, or Linux
+* **Node.js**: 18.0.0 or higher
+* **Package Manager**: npm, pnpm, or yarn
+* **Operating System**: Windows, macOS, or Linux
 
 ## Installation Instructions
 
@@ -66,7 +66,6 @@ This topic describes how to install previous releases of the Rawi Command Line I
          rawi info
          ```
     </Steps>
-
   </TabItem>
 
   <TabItem label="Windows" icon="seti:windows">
@@ -100,7 +99,6 @@ This topic describes how to install previous releases of the Rawi Command Line I
          rawi info
          ```
     </Steps>
-
   </TabItem>
 </Tabs>
 
@@ -140,7 +138,6 @@ This topic describes how to install previous releases of the Rawi Command Line I
     ```bash
     rawi/0.0.0-beta.12 linux-x64 node-18.20.2
     ```
-
   </TabItem>
 
   <TabItem label="Windows" icon="seti:windows">
@@ -154,7 +151,6 @@ This topic describes how to install previous releases of the Rawi Command Line I
     ```powershell
     rawi/0.0.0-beta.12 win32-x64 node-18.20.2
     ```
-
   </TabItem>
 </Tabs>
 
@@ -167,7 +163,6 @@ This topic describes how to install previous releases of the Rawi Command Line I
     ```bash
     npx rawi@<version> ask "Hello, world!"
     ```
-
   </TabItem>
 
   <TabItem label="pnpm dlx" icon="pnpm">
@@ -176,7 +171,6 @@ This topic describes how to install previous releases of the Rawi Command Line I
     ```bash
     pnpm dlx rawi@<version> configure
     ```
-
   </TabItem>
 </Tabs>
 
@@ -191,9 +185,11 @@ For troubleshooting installation issues, see the [Troubleshooting Guide](./docs/
     ```
   </TabItem>
 
-<TabItem label="pnpm" icon="pnpm">
-  ```bash pnpm remove -g rawi ```
-</TabItem>
+  <TabItem label="pnpm" icon="pnpm">
+    ```bash
+    pnpm remove -g rawi
+    ```
+  </TabItem>
 
   <TabItem label="yarn" icon="seti:yarn">
     ```bash
@@ -202,7 +198,7 @@ For troubleshooting installation issues, see the [Troubleshooting Guide](./docs/
   </TabItem>
 </Tabs>
 
----
+***
 
 ## Version Management
 
@@ -215,11 +211,10 @@ For troubleshooting installation issues, see the [Troubleshooting Guide](./docs/
       * **MINOR**: New features (backwards compatible)
       * **PATCH**: Bug fixes (backwards compatible)
         For more details, see the [Release Process](./docs/development.md#release-process).
-
   </TabItem>
 </Tabs>
 
----
+***
 
 ## Example: Checking Installed Version
 
@@ -239,21 +234,21 @@ For troubleshooting installation issues, see the [Troubleshooting Guide](./docs/
   </TabItem>
 </Tabs>
 
----
+***
 
 ## Additional Resources
 
-- [Rawi Releases on GitHub](https://github.com/MKAbuMattar/rawi/releases)
-- [Troubleshooting Guide](./docs/troubleshooting.md)
-- [Getting Started](./docs/getting-started.md)
-- [Development Guide](./docs/development.md)
+* [Rawi Releases on GitHub](https://github.com/MKAbuMattar/rawi/releases)
+* [Troubleshooting Guide](./docs/troubleshooting.md)
+* [Getting Started](./docs/getting-started.md)
+* [Development Guide](./docs/development.md)
 
----
+***
 
 ## Troubleshooting
 
 If you encounter issues after installing or uninstalling Rawi CLI, see the [Troubleshooting Guide](./docs/troubleshooting.md) for solutions to common problems such as:
 
-- Command not found errors
-- Version mismatch after upgrade/downgrade
-- Permission issues on macOS/Linux/Windows
+* Command not found errors
+* Version mismatch after upgrade/downgrade
+* Permission issues on macOS/Linux/Windows

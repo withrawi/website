@@ -5,7 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/reference/configure
 ---
 
-import Clarity from '../@/components/clarity.astro';
+import Clarity from '../../../../components/clarity.astro';
 
 <Clarity />
 
@@ -25,67 +25,67 @@ rawi configure [options]
 
 ## Options
 
-- `-p, --profile <profile>` (string)\
+* `-p, --profile <profile>` (string)\
   Configuration profile name (default: "default").
 
-- `--provider <provider>` (string)\
+* `--provider <provider>` (string)\
   AI provider (openai, anthropic, google, ollama, xai, azure, bedrock, qwen).
 
-- `--model <model>` (string)\
+* `--model <model>` (string)\
   AI model name.
 
-- `--api-key <apiKey>` (string)\
+* `--api-key <apiKey>` (string)\
   API key for the provider (not needed for Ollama).
 
-- `--base-url <baseURL>` (string)\
+* `--base-url <baseURL>` (string)\
   Base URL for Ollama (default: http://localhost:11434/api), OpenAI (default: https://api.openai.com/v1), Anthropic (default: https://api.anthropic.com), Google (default: https://generativelanguage.googleapis.com/v1beta), Qwen (default: https://dashscope-intl.aliyuncs.com/compatible-mode/v1), or xAI (default: https://api.x.ai/v1).
 
-- `--resource-name <resourceName>` (string)\
+* `--resource-name <resourceName>` (string)\
   Resource name for Azure OpenAI (required for Azure).
 
-- `--api-version <apiVersion>` (string)\
+* `--api-version <apiVersion>` (string)\
   API version for Azure OpenAI (default: 2024-10-01-preview).
 
-- `--region <region>` (string)\
+* `--region <region>` (string)\
   AWS region for Amazon Bedrock (default: us-east-1).
 
-- `--access-key-id <accessKeyId>` (string)\
+* `--access-key-id <accessKeyId>` (string)\
   AWS access key ID for Amazon Bedrock.
 
-- `--secret-access-key <secretAccessKey>` (string)\
+* `--secret-access-key <secretAccessKey>` (string)\
   AWS secret access key for Amazon Bedrock.
 
-- `--session-token <sessionToken>` (string)\
+* `--session-token <sessionToken>` (string)\
   AWS session token for Amazon Bedrock (optional).
 
-- `--use-provider-chain` (boolean)\
+* `--use-provider-chain` (boolean)\
   Use AWS credential provider chain instead of explicit credentials.
 
-- `--temperature <temperature>` (number)\
+* `--temperature <temperature>` (number)\
   Temperature value (0-2).
 
-- `--max-tokens <maxTokens>` (number)\
+* `--max-tokens <maxTokens>` (number)\
   Maximum tokens.
 
-- `--language <language>` (string)\
+* `--language <language>` (string)\
   Language setting (english, arabic) (default: "english").
 
-- `--show` (boolean)\
+* `--show` (boolean)\
   Show current configuration.
 
-- `--list` (boolean)\
+* `--list` (boolean)\
   List all profiles.
 
-- `--list-providers` (boolean)\
+* `--list-providers` (boolean)\
   List all available AI providers.
 
-- `--list-models <provider>` (string)\
+* `--list-models <provider>` (string)\
   List all models for a specific provider.
 
-- `--delete <profile>` (string)\
+* `--delete <profile>` (string)\
   Delete a configuration profile.
 
-- `-h, --help` (boolean)\
+* `-h, --help` (boolean)\
   Display help for command.
 
 ## Examples
@@ -120,6 +120,6 @@ $ rawi configure --list-providers
 $ rawi configure --delete myprofile
 ```
 
----
+***
 
 For more information, see the Rawi documentation or run `rawi configure --help`.

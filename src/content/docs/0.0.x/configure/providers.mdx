@@ -5,7 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/configure/providers
 ---
 
-import Clarity from '../@/components/clarity.astro';
+import Clarity from '../../../../components/clarity.astro';
 import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
 
 <Clarity />
@@ -31,10 +31,10 @@ Rawi CLI enables seamless integration with leading AI providers, including OpenA
 
 ## Key Features
 
-- **Multi-provider support**: Easily switch between providers and models.
-- **Profile management**: Store multiple configurations for different projects or use cases.
-- **Local and cloud models**: Use local models for privacy or cloud models for advanced capabilities.
-- **Unified CLI experience**: Consistent commands and options across all providers.
+* **Multi-provider support**: Easily switch between providers and models.
+* **Profile management**: Store multiple configurations for different projects or use cases.
+* **Local and cloud models**: Use local models for privacy or cloud models for advanced capabilities.
+* **Unified CLI experience**: Consistent commands and options across all providers.
 
 ## Example: Listing Supported Providers
 
@@ -115,7 +115,6 @@ Run "rawi configure --list-models <provider>" for all models
          rawi configure --provider openai --model gpt-4o --api-key sk-your-key
          ```
     </Steps>
-
   </TabItem>
 
   <TabItem label="Ollama (local)" icon="ollama">
@@ -126,7 +125,6 @@ Run "rawi configure --list-models <provider>" for all models
          rawi configure --provider ollama --model llama3.2
          ```
     </Steps>
-
   </TabItem>
 </Tabs>
 
@@ -141,7 +139,6 @@ Run "rawi configure --list-models <provider>" for all models
          rawi ask "Summarize this code" --profile openai
          ```
     </Steps>
-
   </TabItem>
 
   <TabItem label="Ollama (local)" icon="ollama">
@@ -152,16 +149,15 @@ Run "rawi configure --list-models <provider>" for all models
          rawi ask "Summarize this code" --profile ollama
          ```
     </Steps>
-
   </TabItem>
 </Tabs>
 
 ## Best Practices
 
-- Use provider-specific profiles for different projects.
-- Choose local models (Ollama) for privacy-sensitive tasks.
-- Use cloud providers for the latest and most capable models.
-- Check available models with `rawi configure --list-models <provider>`.
+* Use provider-specific profiles for different projects.
+* Choose local models (Ollama) for privacy-sensitive tasks.
+* Use cloud providers for the latest and most capable models.
+* Check available models with `rawi configure --list-models <provider>`.
 
 ## Troubleshooting
 

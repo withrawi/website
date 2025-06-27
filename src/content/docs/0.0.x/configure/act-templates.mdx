@@ -5,7 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/configure/act-templates
 ---
 
-import Clarity from '../@/components/clarity.astro';
+import Clarity from '../../../../components/clarity.astro';
 import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
 
 <Clarity />
@@ -31,14 +31,17 @@ import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
     Usage: rawi ask --act <template-id> "your question"
     Show template: rawi ask --act <template-id> --show
     ```
-
   </TabItem>
 
-<TabItem label="Show Template Details">
-  ```bash $ rawi ask --act code-review --show 🎭 Act Template: Code Review ID:
-  code-review Category: Code Review Template: "You are a code reviewer. Review
-  the following code for bugs and improvements." ```
-</TabItem>
+  <TabItem label="Show Template Details">
+    ```bash
+    $ rawi ask --act code-review --show
+    🎭 Act Template: Code Review
+    ID: code-review
+    Category: Code Review
+    Template: "You are a code reviewer. Review the following code for bugs and improvements."
+    ```
+  </TabItem>
 
   <TabItem label="Use an Act Template">
     ```bash
@@ -47,7 +50,7 @@ import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
   </TabItem>
 </Tabs>
 
----
+***
 
 ## Profile Management
 
@@ -85,7 +88,7 @@ $ rawi ask "What is TypeScript?"
 # Uses the 'default' profile
 ```
 
----
+***
 
 ## Example Workflow
 
@@ -100,10 +103,10 @@ $ rawi ask --act doc-writer --show
 $ rawi ask --act code-review "Review this code" --profile work
 ```
 
----
+***
 
 For more details, see the Providers Guide, Configuration Guide, and CLI Commands Reference.
 
----
+***
 
 **Tip:** Use profiles to separate work and personal API keys, and act templates to standardize your prompts for repeatable results.

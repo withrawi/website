@@ -5,7 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/configure/options
 ---
 
-import Clarity from '../@/components/clarity.astro';
+import Clarity from '../../../../components/clarity.astro';
 import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
 
 <Clarity />
@@ -29,7 +29,6 @@ Most options are simple flags or key-value pairs. For options that take argument
          rawi ask "What is TypeScript?" --profile work
          ```
     </Steps>
-
   </TabItem>
 
   <TabItem label="Verbose Output" icon="gear">
@@ -40,7 +39,6 @@ Most options are simple flags or key-value pairs. For options that take argument
          rawi ask "Show debug info" --verbose
          ```
     </Steps>
-
   </TabItem>
 
   <TabItem label="Act Template" icon="terminal">
@@ -51,7 +49,6 @@ Most options are simple flags or key-value pairs. For options that take argument
          rawi ask --act linux-terminal "ls -la /home"
          ```
     </Steps>
-
   </TabItem>
 </Tabs>
 
@@ -122,25 +119,25 @@ Each command supports its own set of options. For example:
 
 ## Precedence of Options
 
-- **Command line options** override environment variables and profile settings.
-- **Environment variables** override profile settings.
-- **Profile settings** are used if not overridden.
+* **Command line options** override environment variables and profile settings.
+* **Environment variables** override profile settings.
+* **Profile settings** are used if not overridden.
 
 ## Common Usage Patterns
 
-- **Switch profiles for a single command:**
+* **Switch profiles for a single command:**
   ```bash
   rawi ask "Review this code" --profile work
   ```
-- **Change output verbosity:**
+* **Change output verbosity:**
   ```bash
   rawi ask "Debug this" --verbose
   ```
-- **Chain commands and use pipes:**
+* **Chain commands and use pipes:**
   ```bash
   cat README.md | rawi ask "Summarize this documentation"
   ```
 
----
+***
 
 **Tip:** Use `rawi <command> --help` to see all options for any command.

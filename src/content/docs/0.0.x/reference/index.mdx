@@ -5,7 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/reference
 ---
 
-import Clarity from '../@/components/clarity.astro';
+import Clarity from '../../../../components/clarity.astro';
 
 <Clarity />
 
@@ -23,28 +23,28 @@ rawi [options] <command> [subcommand] [parameters]
 
 Use `rawi <command> --help` for information on a specific command. Use `rawi help` to view a list of available commands and topics. The synopsis for each command shows its parameters and their usage. Optional parameters are shown in square brackets.
 
----
+***
 
 ## Global Options
 
-| Option                 | Type    | Description                                                                                            |
-| ---------------------- | ------- | ------------------------------------------------------------------------------------------------------ |
-| `--debug`              | boolean | Turn on debug logging.                                                                                 |
-| `--profile <profile>`  | string  | Use a specific profile from your configuration.                                                        |
+| Option                 | Type    | Description                                                                                           |
+| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| `--debug`              | boolean | Turn on debug logging.                                                                                |
+| `--profile <profile>`  | string  | Use a specific profile from your configuration.                                                       |
 | `--output <format>`    | string  | The formatting style for command output. <br />Options: `json`, `text`, `table`, `yaml`, `yaml-stream` |
-| `--region <region>`    | string  | The region to use (for cloud providers). Overrides config/env settings.                                |
-| `--color <mode>`       | string  | Turn on/off color output. Options: `on`, `off`, `auto`                                                 |
-| `--version`            |         | Display the version of this tool.                                                                      |
-| `--no-paginate`        | boolean | Disable automatic pagination for commands that support it.                                             |
-| `--no-cli-pager`       | boolean | Disable CLI pager for output.                                                                          |
-| `--cli-auto-prompt`    | boolean | Automatically prompt for CLI input parameters.                                                         |
-| `--no-cli-auto-prompt` | boolean | Disable automatic prompt for CLI input parameters.                                                     |
-| `--ca-bundle <file>`   | string  | The CA certificate bundle to use when verifying SSL certificates.                                      |
-| `--endpoint-url <url>` | string  | Override the default API endpoint URL.                                                                 |
-| `--no-verify-ssl`      | boolean | Do not verify SSL certificates.                                                                        |
-| `--no-sign-request`    | boolean | Do not sign requests (for local providers).                                                            |
+| `--region <region>`    | string  | The region to use (for cloud providers). Overrides config/env settings.                               |
+| `--color <mode>`       | string  | Turn on/off color output. Options: `on`, `off`, `auto`                                                |
+| `--version`            |         | Display the version of this tool.                                                                     |
+| `--no-paginate`        | boolean | Disable automatic pagination for commands that support it.                                            |
+| `--no-cli-pager`       | boolean | Disable CLI pager for output.                                                                         |
+| `--cli-auto-prompt`    | boolean | Automatically prompt for CLI input parameters.                                                        |
+| `--no-cli-auto-prompt` | boolean | Disable automatic prompt for CLI input parameters.                                                    |
+| `--ca-bundle <file>`   | string  | The CA certificate bundle to use when verifying SSL certificates.                                     |
+| `--endpoint-url <url>` | string  | Override the default API endpoint URL.                                                                |
+| `--no-verify-ssl`      | boolean | Do not verify SSL certificates.                                                                       |
+| `--no-sign-request`    | boolean | Do not sign requests (for local providers).                                                           |
 
----
+***
 
 ## Available Commands
 
@@ -57,7 +57,7 @@ Use `rawi <command> --help` for information on a specific command. Use `rawi hel
 
 Use `rawi <command> --help` for detailed usage and options.
 
----
+***
 
 ## Supported AI Providers
 
@@ -74,7 +74,7 @@ Use `rawi <command> --help` for detailed usage and options.
 
 See `rawi configure --list-providers` for a full list and setup instructions.
 
----
+***
 
 ## Example Usage
 

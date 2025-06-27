@@ -5,7 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a
 slug: 0.0.x/configure/envvars
 ---
 
-import Clarity from '../@/components/clarity.astro';
+import Clarity from '../../../../components/clarity.astro';
 import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
 
 <Clarity />
@@ -24,7 +24,7 @@ Rawi CLI loads configuration in the following order (highest to lowest):
 
 If you set a value in multiple places, the command-line option takes precedence over environment variables, which take precedence over profile settings.
 
----
+***
 
 ## How to Set Environment Variables
 
@@ -44,7 +44,6 @@ If you set a value in multiple places, the command-line option takes precedence 
          export RAWI_LANGUAGE=english
          ```
     </Steps>
-
   </TabItem>
 
   <TabItem label="Windows (Command Prompt)" icon="seti:windows">
@@ -62,7 +61,6 @@ If you set a value in multiple places, the command-line option takes precedence 
          set RAWI_LANGUAGE=english
          ```
     </Steps>
-
   </TabItem>
 
   <TabItem label="Windows (PowerShell)" icon="seti:windows">
@@ -80,11 +78,10 @@ If you set a value in multiple places, the command-line option takes precedence 
          $env:RAWI_LANGUAGE="english"
          ```
     </Steps>
-
   </TabItem>
 </Tabs>
 
----
+***
 
 ## Supported Environment Variables
 
@@ -108,7 +105,7 @@ If you set a value in multiple places, the command-line option takes precedence 
 
 > **Note:** Not all variables are required for every provider. See the [Configuration Guide](./configuration.md) and [Providers Guide](./providers.md) for details.
 
----
+***
 
 ## Example: Using Environment Variables
 
@@ -123,13 +120,13 @@ rawi ask "Summarize this S3 bucket policy"
 
 This will use the `work` profile, Amazon Bedrock provider, and the AWS credential provider chain for authentication.
 
----
+***
 
 ## Making Environment Variables Persistent
 
 To make environment variables available in every terminal session, add the `export` lines to your shell's startup file (e.g. `~/.bashrc`, `~/.zshrc`).
 
----
+***
 
 ## Overriding with Command-Line Options
 
@@ -139,12 +136,12 @@ You can always override environment variables by specifying options directly:
 rawi ask "What is TypeScript?" --profile personal --provider openai --model gpt-4o
 ```
 
----
+***
 
 ## Troubleshooting
 
-- If a required variable is missing, Rawi will prompt for configuration or show an error.
-- To view the current configuration, run:
+* If a required variable is missing, Rawi will prompt for configuration or show an error.
+* To view the current configuration, run:
 
 ```bash
 rawi configure --show
