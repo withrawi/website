@@ -1,6 +1,6 @@
 ---
-title: Rawi (راوي) Documentation | Getting Started Install
-description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+title: Installation & Setup
+description: Get Rawi up and running on your system in just a few minutes.
 ---
 
 import Clarity from '../../../components/clarity.astro';
@@ -8,37 +8,45 @@ import {Tabs, TabItem} from '@astrojs/starlight/components';
 
 <Clarity />
 
-# Installing or Updating Rawi CLI
+# Installation & Setup
 
-The Rawi Command Line Interface (Rawi CLI) is an open source tool that enables you to interact with AI providers and manage your Rawi configuration directly from your terminal. With minimal setup, you can start running commands to ask questions, manage profiles, and view history—all from your command-line shell.
+Get Rawi up and running on your system in just a few minutes.
 
-## Supported Platforms
+## System Requirements
 
-- **Linux shells** – Use bash, zsh, or other common shells.
-- **macOS** – Use Terminal or iTerm.
-- **Windows** – Use Command Prompt or PowerShell.
+Before installing Rawi, ensure your system meets these requirements:
 
-## Prerequisites
+- **Node.js**: Version 18.0.0 or higher
+- **Operating System**: Windows, macOS, or Linux
+- **Terminal**: Any modern terminal (Terminal.app, iTerm2, Windows Terminal, PowerShell, etc.)
+- **Internet Connection**: Required for cloud AI providers (optional for local providers like Ollama)
 
-- **Node.js 18+** is required. We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage Node.js versions.
-- A supported package manager: `npm` or `pnpm`.
+### Check Your Node.js Version
 
-## Install or Update Rawi CLI
+```bash
+node --version
+```
 
-### Installation
+If you need to install or update Node.js, visit [nodejs.org](https://nodejs.org/).
+
+## Installation Methods
+
+### NPM (Recommended)
+
+The easiest way to install Rawi globally:
 
 <Tabs>
-  <TabItem label="pnpm" icon="pnpm">
-
-    ```bash
-    pnpm add -g rawi
-    ```
-
-  </TabItem>
   <TabItem label="npm" icon="npm">
 
     ```bash
     npm install -g rawi
+    ```
+
+  </TabItem>
+  <TabItem label="pnpm" icon="pnpm">
+
+    ```bash
+    pnpm add -g rawi
     ```
 
   </TabItem>
@@ -49,7 +57,343 @@ The Rawi Command Line Interface (Rawi CLI) is an open source tool that enables y
     ```
 
   </TabItem>
+  <TabItem label="bun" icon="bun">
+
+    ```bash
+    bun add -g rawi
+    ```
+
+  </TabItem>
 </Tabs>
+
+### Alternative Installation Methods
+
+#### Using npx (No Installation)
+
+Run Rawi without installing globally:
+
+```bash
+# Ask a question without installing
+npx rawi ask "What is Docker?"
+
+# Configure without installing
+npx rawi configure
+```
+
+#### Development Installation
+
+For contributing or development:
+
+```bash
+# Clone the repository
+git clone https://github.com/mkabumattar/rawi.git
+cd rawi
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Link for global usage
+npm link
+```
+
+## Verification
+
+After installation, verify that Rawi is working correctly:
+
+### Check Installation
+
+```bash
+# Verify installation
+rawi --version
+
+# Check available commands
+rawi --help
+
+# Test basic functionality
+rawi info
+```
+
+### Expected Output
+
+```bash
+$ rawi --version
+rawi/1.0.0 darwin-arm64 node-v20.11.0
+
+$ rawi info
+🚀 About Rawi (راوي)  https://rawi.mkabumattar.com
+├─ Version: 1.0.0
+├─ Author: Mahmoud Kabumattar
+├─ License: MIT
+└─ Description: AI-powered CLI tool for developers
+
+📊 Configuration Status
+├─ Profiles: 0 configured
+├─ Default Profile: Not set
+├─ Providers: 9 available
+└─ Templates: 200+ expert prompts
+```
+
+## Post-Installation Setup
+
+### Initial Configuration
+
+After installation, configure your first AI provider:
+
+```bash
+# Interactive setup (recommended)
+rawi configure
+
+# Manual setup example
+rawi configure --provider openai --model gpt-4o --api-key sk-your-key
+```
+
+### Shell Integration (Optional)
+
+Add shell integration for enhanced experience:
+
+#### Bash
+
+Add to your `~/.bashrc`:
+
+```bash
+# Rawi shell integration
+eval "$(rawi completion bash)"
+
+# Useful aliases
+alias ask='rawi ask'
+alias chat='rawi ask --continue'
+```
+
+#### Zsh
+
+Add to your `~/.zshrc`:
+
+```bash
+# Rawi shell integration
+eval "$(rawi completion zsh)"
+
+# Useful aliases
+alias ask='rawi ask'
+alias chat='rawi ask --continue'
+```
+
+#### PowerShell
+
+Add to your PowerShell profile:
+
+```powershell
+# Rawi shell integration
+Invoke-Expression (&rawi completion powershell)
+
+# Useful aliases
+Set-Alias ask rawi ask
+```
+
+## Updating Rawi
+
+### Update Global Installation
+
+<Tabs>
+  <TabItem label="npm" icon="npm">
+
+    ```bash
+    npm update -g rawi
+    ```
+
+  </TabItem>
+  <TabItem label="pnpm" icon="pnpm">
+
+    ```bash
+    pnpm update -g rawi
+    ```
+
+  </TabItem>
+  <TabItem label="yarn" icon="seti:yarn">
+
+    ```bash
+    yarn global upgrade rawi
+    ```
+
+  </TabItem>
+  <TabItem label="bun" icon="bun">
+
+    ```bash
+    bun upgrade -g rawi
+    ```
+
+  </TabItem>
+</Tabs>
+
+### Check for Updates
+
+```bash
+# Check current version
+rawi --version
+```
+
+## Troubleshooting Installation
+
+### Common Issues
+
+#### Permission Errors
+
+If you encounter permission errors during global installation:
+
+```bash
+# Use sudo (Linux/macOS)
+sudo npm install -g rawi
+
+# Or configure npm to use a different directory
+npm config set prefix '~/.npm-global'
+export PATH=~/.npm-global/bin:$PATH
+```
+
+#### Node.js Version Issues
+
+If you have an older Node.js version:
+
+```bash
+# Install Node Version Manager
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# Install latest LTS Node.js
+nvm install --lts
+nvm use --lts
+```
+
+#### Command Not Found
+
+If `rawi` command is not found after installation:
+
+```bash
+# Check if globally installed packages are in PATH
+npm list -g --depth=0
+
+# Add npm global directory to PATH
+export PATH=$(npm config get prefix)/bin:$PATH
+
+# For permanent solution, add to your shell profile
+echo 'export PATH=$(npm config get prefix)/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+```
+
+#### Network Issues
+
+If installation fails due to network issues:
+
+```bash
+# Use different registry
+npm install -g rawi --registry https://registry.npmjs.org/
+
+# Clear npm cache
+npm cache clean --force
+
+# Try with increased timeout
+npm install -g rawi --timeout=60000
+```
+
+### Platform-Specific Issues
+
+#### Windows
+
+```powershell
+# Set execution policy for PowerShell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Install using Chocolatey (alternative)
+choco install nodejs
+npm install -g rawi
+```
+
+#### macOS
+
+```bash
+# Install using Homebrew (alternative)
+brew install node
+npm install -g rawi
+
+# Fix potential permission issues
+sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+```
+
+#### Linux
+
+```bash
+# Install Node.js on Ubuntu/Debian
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Install Rawi
+npm install -g rawi
+```
+
+## Uninstallation
+
+If you need to remove Rawi:
+
+### Remove Global Installation
+
+<Tabs>
+  <TabItem label="npm" icon="npm">
+
+    ```bash
+    npm uninstall -g rawi
+    ```
+
+  </TabItem>
+  <TabItem label="pnpm" icon="pnpm">
+
+    ```bash
+    pnpm remove -g rawi
+    ```
+
+  </TabItem>
+  <TabItem label="yarn" icon="seti:yarn">
+
+    ```bash
+    yarn global remove rawi
+    ```
+
+  </TabItem>
+  <TabItem label="bun" icon="bun">
+
+    ```bash
+    bun remove -g rawi
+    ```
+
+  </TabItem>
+</Tabs>
+
+### Remove Configuration
+
+```bash
+# Remove all configuration and data
+rm -rf ~/.config/rawi/
+
+# Remove shell integration (manual removal from shell profile)
+# Edit ~/.bashrc, ~/.zshrc, or PowerShell profile
+```
+
+## Next Steps
+
+After successful installation:
+
+1. **Configure your first provider**: `rawi configure`
+2. **Ask your first question**: `rawi ask "Hello, world!"`
+3. **Explore features**: `rawi help`
+4. **Read the documentation**: Continue with the [Quick Start Guide](./quickstart)
+
+## Getting Help
+
+If you encounter issues during installation:
+
+- **Documentation**: Check our [troubleshooting guide](../help/troubleshooting)
+- **Community**: Visit our [GitHub discussions](https://github.com/mkabumattar/rawi/discussions)
+- **Issues**: Report bugs on [GitHub issues](https://github.com/mkabumattar/rawi/issues)
+- **Support**: Contact support at [support@rawi.mkabumattar.com](mailto:support@rawi.mkabumattar.com)
 
 ### Updating
 
@@ -77,6 +421,13 @@ To update Rawi CLI to the latest version, use the same command you used for inst
     ```
 
   </TabItem>
+  <TabItem label="bun" icon="bun">
+
+    ```bash
+    bun upgrade -g rawi
+    ```
+
+  </TabItem>
 </Tabs>
 
 ### Verify Installation
@@ -89,7 +440,7 @@ Check your installed version:
     ```bash withOutput
     > rawi --version
 
-    rawi/0.0.0-beta.12 linux-x64 node-18.20.2
+    rawi/x.x.x linux-x64 node-18.20.2
     ```
 
   </TabItem>
@@ -98,7 +449,7 @@ Check your installed version:
     ```bash withOutput
     > rawi --version
 
-    rawi/0.0.0-beta.12 darwin-x64 node-18.20.2
+    rawi/x.x.x darwin-x64 node-18.20.2
     ```
 
   </TabItem>
@@ -107,7 +458,7 @@ Check your installed version:
     ```powershell withOutput
     > rawi --version
 
-    rawi/0.0.0-beta.12 win32-x64 node-18.20.2
+    rawi/x.x.x win32-x64 node-18.20.2
     ```
 
   </TabItem>
@@ -155,6 +506,18 @@ If the `rawi` command is not found, ensure your package manager's global bin dir
         ```
 
       </TabItem>
+
+      <TabItem label="bun" icon="bun">
+
+        ```bash
+        # Find the global bun bin directory
+        bun bin
+        # Add it to your PATH (if not already present)
+        export PATH="$PATH:$(bun bin)"
+        # Optionally, add the above line to your ~/.bashrc, ~/.zshrc, or shell profile
+        ```
+
+      </TabItem>
     </Tabs>
 
   </TabItem>
@@ -196,6 +559,18 @@ If the `rawi` command is not found, ensure your package manager's global bin dir
         ```
 
       </TabItem>
+
+      <TabItem label="bun" icon="bun">
+
+        ```powershell
+        # Find the global bun bin directory
+        bun bin
+        # Add it to your PATH (in System Properties > Environment Variables)
+        # Example (in PowerShell):
+        $env:Path += ";$(bun bin)"
+        ```
+
+      </TabItem>
     </Tabs>
 
   </TabItem>
@@ -226,17 +601,40 @@ If the `rawi` command is not found, ensure your package manager's global bin dir
     ```
 
   </TabItem>
+
+  <TabItem label="bun" icon="bun">
+
+    ```bash
+    bun remove -g rawi
+    ```
+
+  </TabItem>
 </Tabs>
 
-## Troubleshooting
-
-If you encounter issues, see the Troubleshooting Guide for solutions to common installation and configuration problems.
-
----
-
-**Next steps:**  
-After installing Rawi CLI, run the following to configure your first provider:
+### Remove Configuration
 
 ```bash
-rawi configure
+# Remove all configuration and data
+rm -rf ~/.config/rawi/
+
+# Remove shell integration (manual removal from shell profile)
+# Edit ~/.bashrc, ~/.zshrc, or PowerShell profile
 ```
+
+## Next Steps
+
+After successful installation:
+
+1. **Configure your first provider**: `rawi configure`
+2. **Ask your first question**: `rawi ask "Hello, world!"`
+3. **Explore features**: `rawi help`
+4. **Read the documentation**: Continue with the [Quick Start Guide](./quickstart)
+
+## Getting Help
+
+If you encounter issues during installation:
+
+- **Documentation**: Check our [troubleshooting guide](../help/troubleshooting)
+- **Community**: Visit our [GitHub discussions](https://github.com/mkabumattar/rawi/discussions)
+- **Issues**: Report bugs on [GitHub issues](https://github.com/mkabumattar/rawi/issues)
+- **Support**: Contact support at [support@rawi.mkabumattar.com](mailto:support@rawi.mkabumattar.com)

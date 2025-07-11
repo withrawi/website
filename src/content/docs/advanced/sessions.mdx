@@ -1,0 +1,315 @@
+---
+title: Session Management
+description: Learn how to manage persistent AI conversations and maintain context across multiple interactions.
+---
+
+Session management in Rawi allows you to maintain persistent conversations with AI, keeping context and conversation history across multiple commands.
+
+## What Are Sessions?
+
+Sessions are persistent conversations that maintain context between multiple AI interactions. When you start a session, Rawi remembers:
+
+- Previous questions and responses
+- Conversation context and topics
+- Code snippets and examples discussed
+- Follow-up questions and clarifications
+
+## Basic Session Commands
+
+### Starting a New Session
+
+```bash
+# Start a new session with your first question
+rawi ask --new-session "I'm building a REST API in Node.js"
+
+# Start a named session
+rawi ask --new-session --session my-project "Let's discuss authentication patterns"
+```
+
+### Continuing a Session
+
+```bash
+# Continue the conversation (Rawi remembers the context)
+rawi ask "What's the best way to handle JWT tokens?"
+rawi ask "How do I implement rate limiting?"
+rawi ask "Can you show me a middleware example?"
+```
+
+### Using Specific Sessions
+
+```bash
+# Continue a specific session by ID
+rawi ask --session abc123 "Let's continue our API discussion"
+
+# List all your sessions
+rawi history --sessions
+
+# Show session details
+rawi history --session abc123 --show
+```
+
+## Session Management
+
+### Listing Sessions
+
+```bash
+# List all sessions
+rawi history --sessions
+
+# List sessions with details
+rawi history --sessions --verbose
+
+# Filter sessions by date
+rawi history --sessions --since "2024-01-01"
+```
+
+Example output:
+
+```
+Sessions:
+┌─────────┬────────────────────┬─────────────────────┬───────────┐
+│ ID      │ Started            │ Last Updated        │ Messages  │
+├─────────┼────────────────────┼─────────────────────┼───────────┤
+│ abc123  │ 2024-01-15 10:30   │ 2024-01-15 11:45    │ 8         │
+│ def456  │ 2024-01-14 14:20   │ 2024-01-14 15:30    │ 12        │
+│ ghi789  │ 2024-01-13 09:15   │ 2024-01-13 10:00    │ 4         │
+└─────────┴────────────────────┴─────────────────────┴───────────┘
+```
+
+### Session Details
+
+```bash
+# Show full session conversation
+rawi history --session abc123 --show
+
+# Export session to file
+rawi history --session abc123 --export > api-discussion.md
+
+# Search within a session
+rawi history --session abc123 --search "authentication"
+```
+
+## Practical Session Examples
+
+### Code Development Session
+
+```bash
+# Start a development session
+rawi ask --new-session "I'm building a user authentication system in Express.js"
+
+# Continue developing
+rawi ask "How do I hash passwords securely?"
+rawi ask "What's the best way to store JWT tokens?"
+rawi ask "Can you show me a complete login route?"
+rawi ask "How do I handle password reset functionality?"
+```
+
+### Learning Session
+
+```bash
+# Start learning about a new technology
+rawi ask --new-session "I want to learn Docker. Can you explain the basics?"
+
+# Progressive learning
+rawi ask "What's the difference between images and containers?"
+rawi ask "How do I create a Dockerfile?"
+rawi ask "Can you show me a real example?"
+rawi ask "How do I handle environment variables?"
+```
+
+### Debugging Session
+
+```bash
+# Start with an error
+rawi ask --new-session "I'm getting a 'Cannot read property of undefined' error in my React app"
+
+# Iterative debugging
+rawi ask "Here's my component code: [paste code]"
+rawi ask "The error happens when I click the submit button"
+rawi ask "I tried your suggestion, but now I get a different error"
+```
+
+## Session Best Practices
+
+### 1. Use Descriptive Starting Questions
+
+**Good:**
+
+```bash
+rawi ask --new-session "I'm building a React e-commerce app and need help with state management"
+```
+
+**Better context than:**
+
+```bash
+rawi ask --new-session "Help me with React"
+```
+
+### 2. Keep Sessions Focused
+
+- Use separate sessions for different topics
+- Start new sessions when switching projects
+- Don't mix unrelated questions in one session
+
+### 3. Reference Previous Context
+
+```bash
+# Good follow-up questions
+rawi ask "Can you modify the authentication code you showed earlier to use bcrypt?"
+rawi ask "What about the database schema we discussed?"
+```
+
+### 4. Use Sessions with Templates
+
+```bash
+# Start a specialized session
+rawi ask --new-session --act software-engineer "I'm designing a microservices architecture"
+
+# Continue with the same expertise
+rawi ask "How do I handle service-to-service communication?"
+```
+
+## Advanced Session Features
+
+### Session with Profiles
+
+```bash
+# Use different profiles for different sessions
+rawi ask --new-session --profile work "Let's discuss the API redesign"
+rawi ask --new-session --profile personal "Help me with my side project"
+```
+
+### Session Export and Sharing
+
+```bash
+# Export session as markdown
+rawi history --session abc123 --export --format markdown > discussion.md
+
+# Export as JSON for processing
+rawi history --session abc123 --export --format json > session.json
+
+# Export specific date range
+rawi history --since "2024-01-01" --until "2024-01-31" --export
+```
+
+### Session Search and Analysis
+
+```bash
+# Search across all sessions
+rawi history --search "authentication JWT"
+
+# Find sessions about specific topics
+rawi history --search "React hooks" --sessions-only
+
+# Get session statistics
+rawi history --stats
+```
+
+## Session Workflow Patterns
+
+### Project-Based Sessions
+
+```bash
+# Main project session
+rawi ask --new-session --session main-project "Working on the user dashboard feature"
+
+# Feature-specific sessions
+rawi ask --new-session --session auth-feature "Implementing OAuth2 integration"
+rawi ask --new-session --session ui-redesign "Updating the component library"
+```
+
+### Daily Development Sessions
+
+```bash
+# Morning planning session
+rawi ask --new-session --session daily-$(date +%Y%m%d) "Today I'm working on [feature]"
+
+# Reference throughout the day
+rawi ask --session daily-$(date +%Y%m%d) "I'm stuck on this implementation"
+```
+
+### Code Review Sessions
+
+```bash
+# Start review session
+rawi ask --new-session --act code-reviewer "I need to review this pull request"
+
+# Iterative review
+rawi ask "Here's the first file: [code]"
+rawi ask "And here's the test file: [code]"
+rawi ask "What about the overall architecture?"
+```
+
+## Session Configuration
+
+### Default Session Behavior
+
+```bash
+# Configure default session settings
+rawi configure --auto-session true  # Auto-create sessions
+rawi configure --session-timeout 24h  # Session expiry time
+rawi configure --max-sessions 50  # Maximum stored sessions
+```
+
+### Session Cleanup
+
+```bash
+# Clean up old sessions
+rawi history --cleanup --older-than "30d"
+
+# Archive important sessions
+rawi history --session abc123 --archive
+```
+
+## Troubleshooting Sessions
+
+### Common Session Issues
+
+**Session not found:**
+
+```bash
+# List all sessions to find the correct ID
+rawi history --sessions
+```
+
+**Session context lost:**
+
+```bash
+# Check session details
+rawi history --session abc123 --show
+```
+
+**Too many sessions:**
+
+```bash
+# Clean up old sessions
+rawi history --cleanup
+```
+
+## Integration with Other Features
+
+### Sessions + Shell Integration
+
+```bash
+# Start session with file analysis
+cat app.js | rawi ask --new-session --act code-reviewer "Review this file"
+
+# Continue session with more files
+cat tests.js | rawi ask "Now review the tests for the same functionality"
+```
+
+### Sessions + Workflows
+
+```bash
+# Development workflow session
+rawi ask --new-session "Starting feature: user profile management"
+# ... development continues ...
+rawi ask "Feature complete, now I need deployment instructions"
+```
+
+## See Also
+
+- [ask command](../reference/ask) — Basic AI interactions
+- [history command](../reference/history) — Managing conversation history
+- [Workflows](../workflows) — Real-world usage patterns
+- [Shell Integration](./shell-integration) — Using sessions with shell commands

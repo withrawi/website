@@ -1,0 +1,542 @@
+---
+title: Content Creation Workflow
+description: Use Rawi for writing, editing, and optimizing content including blog posts, documentation, and creative writing.
+---
+
+This guide demonstrates how to use Rawi for content creation, including writing, editing, and research tasks.
+
+## Overview
+
+Rawi excels at content creation tasks:
+
+- Writing and editing articles, blogs, documentation
+- Research and fact-checking
+- Content optimization and SEO
+- Creative writing assistance
+- Technical writing and tutorials
+
+## Setup for Content Creation
+
+### 1. Configure Content Profile
+
+```bash
+# Create a profile optimized for writing
+rawi configure --profile writing --provider anthropic --model claude-3-5-sonnet --temperature 0.7
+
+# Creative writing profile
+rawi configure --profile creative --provider openai --model gpt-4 --temperature 0.9
+
+# Technical writing profile
+rawi configure --profile technical --provider openai --model gpt-4 --temperature 0.3
+```
+
+### 2. Content-Specific Templates
+
+```bash
+# Use built-in writing templates
+rawi ask --act technical-writer "Help me write a blog post about AI in software development"
+rawi ask --act editor "Please edit this draft for clarity and flow" < draft.md
+rawi ask --act copywriter "Create marketing copy for our new product launch"
+```
+
+## Content Types and Workflows
+
+### Blog Posts and Articles
+
+#### Planning Phase
+
+```bash
+# Start with topic research
+rawi ask --new-session --act content-strategist "I want to write a blog post about sustainable technology for developers"
+
+# Generate ideas
+rawi ask "Generate 10 compelling blog post ideas about green coding practices"
+
+# Develop outline
+rawi ask "Create a detailed outline for a 2000-word article about reducing carbon footprint in software development"
+
+# Research key points
+rawi ask --act researcher "What are the latest statistics on energy consumption in data centers?"
+```
+
+#### Writing Phase
+
+```bash
+# Start writing session
+rawi ask --act technical-writer "Help me write an engaging introduction for my blog post about sustainable coding practices"
+
+# Develop sections
+rawi ask "Write a 400-word section about energy-efficient programming languages and frameworks"
+
+# Add examples and data
+rawi ask --act data-analyst "Provide real-world examples of companies that have reduced their software carbon footprint"
+
+# Create compelling content
+rawi ask --act copywriter "Write a section that explains complex technical concepts about green coding in simple terms"
+```
+
+#### Editing and Polish
+
+```bash
+# Content review
+cat blog-draft.md | rawi ask --act editor "Edit this draft for clarity, flow, engagement, and readability"
+
+# SEO optimization
+cat blog-post.md | rawi ask --act seo-expert "Suggest SEO improvements including meta description, keywords, and heading structure"
+
+# Fact-checking
+cat article.md | rawi ask --act fact-checker "Review this article for accuracy and suggest areas that need citation"
+```
+
+### Technical Documentation
+
+#### API Documentation
+
+```bash
+# Generate comprehensive API docs
+cat api-routes.js | rawi ask --act api-documentation-expert "Create complete API documentation with examples, error codes, and authentication details"
+
+# User guide creation
+cat api-spec.json | rawi ask --act technical-writer "Write a beginner-friendly user guide for this API with step-by-step tutorials"
+
+# Code example generation
+rawi ask --act developer-advocate "Create code examples in JavaScript, Python, and curl for these API endpoints" < endpoints.md
+```
+
+#### Tutorial Creation
+
+```bash
+# Step-by-step tutorials
+rawi ask --act technical-writer --new-session "Create a comprehensive tutorial for setting up a React development environment with TypeScript"
+
+# Interactive tutorials
+rawi ask "Add hands-on exercises and checkpoints to this tutorial to make it more engaging"
+
+# Troubleshooting guides
+rawi ask "Create a troubleshooting section for common issues developers might face with this setup"
+```
+
+#### Documentation Maintenance
+
+```bash
+# Update existing docs
+cat old-docs.md | rawi ask --act technical-writer "Update this documentation to reflect the latest version changes and best practices"
+
+# Consistency check
+cat doc1.md doc2.md doc3.md | rawi ask --act editor "Review these documentation files for consistency in style, tone, and terminology"
+```
+
+### Creative Writing
+
+#### Story Development
+
+```bash
+# Character development
+rawi ask --act creative-writer --new-session "Help me develop a complex character: a programmer in 2040 working on AI ethics"
+
+# Plot assistance
+rawi ask "Suggest plot twists for a sci-fi story about AI consciousness"
+
+# World building
+rawi ask "Create a detailed setting for a cyberpunk story set in a sustainable future city"
+
+# Dialogue writing
+rawi ask "Write realistic dialogue between two software engineers debating the ethics of AI development"
+```
+
+#### Poetry and Creative Text
+
+```bash
+# Poetry assistance
+rawi ask --act poet "Help me write a poem about the relationship between code and creativity"
+
+# Creative descriptions
+rawi ask --act creative-writer "Write a vivid description of a data center powered entirely by renewable energy"
+
+# Style experiments
+rawi ask --act creative-writer "Rewrite this technical explanation in the style of a nature documentary" < technical-text.md
+```
+
+## Advanced Content Workflows
+
+### Research-Driven Content
+
+#### Comprehensive Research Workflow
+
+```bash
+#!/bin/bash
+# research-workflow.sh - Comprehensive content research
+
+TOPIC="$1"
+OUTPUT_DIR="research-$(date +%Y%m%d)"
+mkdir -p "$OUTPUT_DIR"
+
+echo "🔍 Starting research for: $TOPIC"
+
+# 1. Initial research
+rawi ask --act researcher \
+    "Conduct comprehensive research on '$TOPIC'. Provide key facts, recent developments, and statistics" \
+    > "$OUTPUT_DIR/initial-research.md"
+
+# 2. Find trending aspects
+rawi ask --act trend-analyst \
+    "What are the current trends and hot topics related to '$TOPIC'?" \
+    > "$OUTPUT_DIR/trends.md"
+
+# 3. Identify expert sources
+rawi ask --act journalist \
+    "Who are the leading experts, researchers, and thought leaders in '$TOPIC'?" \
+    > "$OUTPUT_DIR/experts.md"
+
+# 4. Generate content angles
+rawi ask --act content-strategist \
+    "Based on the research, suggest 5 unique content angles for '$TOPIC'" \
+    > "$OUTPUT_DIR/content-angles.md"
+
+echo "✅ Research complete. Results in $OUTPUT_DIR/"
+```
+
+#### Fact-Checking and Verification
+
+```bash
+# Verify claims
+cat claims.txt | rawi ask --act fact-checker "Fact-check these statements and provide sources for verification"
+
+# Cross-reference information
+rawi ask --act researcher "Cross-check these facts against recent studies and reports" < article-draft.md
+
+# Source validation
+cat source-list.txt | rawi ask --act librarian "Evaluate the credibility and reliability of these sources"
+```
+
+### Content Optimization
+
+#### SEO and Readability
+
+```bash
+# SEO analysis workflow
+analyze_seo() {
+    local content_file="$1"
+
+    # Keyword analysis
+    cat "$content_file" | rawi ask --act seo-expert \
+        "Analyze this content for SEO opportunities and suggest primary and secondary keywords" \
+        > seo-analysis.md
+
+    # Readability check
+    cat "$content_file" | rawi ask --act editor \
+        "Analyze readability and suggest improvements for better user engagement" \
+        >> seo-analysis.md
+
+    # Meta content generation
+    cat "$content_file" | rawi ask --act seo-expert \
+        "Generate compelling meta title, description, and social media previews" \
+        >> seo-analysis.md
+}
+```
+
+#### Multi-Platform Adaptation
+
+```bash
+# Content adaptation workflow
+adapt_content() {
+    local source_content="$1"
+
+    # LinkedIn version
+    cat "$source_content" | rawi ask --act professional-writer \
+        "Adapt this content for LinkedIn: professional tone, business insights focus" \
+        > linkedin-version.md
+
+    # Twitter thread
+    cat "$source_content" | rawi ask --act social-media-manager \
+        "Create a Twitter thread from this content, max 10 tweets with engaging hooks" \
+        > twitter-thread.md
+
+    # Newsletter format
+    cat "$source_content" | rawi ask --act newsletter-writer \
+        "Adapt this for an email newsletter: scannable format, clear call-to-action" \
+        > newsletter-version.md
+}
+```
+
+### Collaborative Writing
+
+#### Multi-Author Projects
+
+```bash
+# Style consistency
+maintain_consistency() {
+    local new_chapter="$1"
+    local style_guide="$2"
+
+    cat "$new_chapter" "$style_guide" | rawi ask --act editor \
+        "Review this chapter for consistency with the established style guide and suggest revisions"
+}
+
+# Merge different writing styles
+harmonize_styles() {
+    cat section-a.md section-b.md | rawi ask --act editor \
+        "Harmonize the writing style between these sections from different authors while preserving their unique insights"
+}
+```
+
+#### Review and Feedback Integration
+
+```bash
+# Incorporate feedback
+revise_content() {
+    local content="$1"
+    local feedback="$2"
+
+    rawi ask --act editor \
+        "Revise this content based on this feedback: $(cat "$feedback")" < "$content" \
+        > revised-content.md
+}
+
+# Peer review assistance
+generate_review() {
+    local article="$1"
+
+    cat "$article" | rawi ask --act writing-coach \
+        "Provide constructive feedback on structure, clarity, engagement, and areas for improvement"
+}
+```
+
+## Content Management Workflows
+
+### Version Control for Writing
+
+```bash
+#!/bin/bash
+# writing-git-hooks.sh - Git hooks for writing projects
+
+# Pre-commit hook for writing projects
+if git diff --cached --name-only | grep -E '\.(md|txt|tex)$'; then
+    echo "📝 Checking writing quality..."
+
+    for file in $(git diff --cached --name-only | grep -E '\.(md|txt)$'); do
+        # Style check
+        cat "$file" | rawi ask --act editor \
+            "Quick style and grammar check - any obvious issues?" \
+            --profile quick-edit
+    done
+fi
+```
+
+### Content Calendar Management
+
+```bash
+# Content planning
+plan_content_calendar() {
+    local theme="$1"
+    local duration="$2"
+
+    rawi ask --act content-strategist \
+        "Create a $duration content calendar focused on '$theme' with posting schedule and topic distribution"
+}
+
+# Content gap analysis
+analyze_content_gaps() {
+    cat existing-content-list.txt | rawi ask --act content-strategist \
+        "Analyze this content inventory and identify gaps in topic coverage and content types"
+}
+```
+
+### Publishing Workflow
+
+```bash
+#!/bin/bash
+# publish-workflow.sh - Complete publishing workflow
+
+CONTENT_FILE="$1"
+PLATFORM="${2:-blog}"
+
+echo "📤 Preparing content for publishing..."
+
+# 1. Final review
+cat "$CONTENT_FILE" | rawi ask --act editor \
+    "Final publication review: check for errors, flow, and completeness" \
+    > final-review.md
+
+# 2. Platform-specific formatting
+case "$PLATFORM" in
+    "blog")
+        cat "$CONTENT_FILE" | rawi ask --act web-writer \
+            "Format this for web publication with appropriate headings, lists, and callouts" \
+            > formatted-content.md
+        ;;
+    "newsletter")
+        cat "$CONTENT_FILE" | rawi ask --act newsletter-writer \
+            "Format for email newsletter with scannable sections and clear CTAs" \
+            > newsletter-ready.md
+        ;;
+    "social")
+        cat "$CONTENT_FILE" | rawi ask --act social-media-manager \
+            "Create social media posts for multiple platforms from this content" \
+            > social-posts.md
+        ;;
+esac
+
+# 3. Generate promotional content
+cat "$CONTENT_FILE" | rawi ask --act marketing-writer \
+    "Create promotional snippets and teasers for this content" \
+    > promotional-content.md
+
+echo "✅ Content ready for publication!"
+```
+
+## Content Analytics and Improvement
+
+### Performance Analysis
+
+```bash
+# Analyze content performance
+analyze_content_performance() {
+    local analytics_data="$1"
+
+    cat "$analytics_data" | rawi ask --act data-analyst \
+        "Analyze this content performance data and suggest improvements for future content"
+}
+
+# A/B testing insights
+compare_content_versions() {
+    local version_a="$1"
+    local version_b="$2"
+    local performance_data="$3"
+
+    rawi ask --act conversion-optimizer \
+        "Compare these two content versions and explain why one performed better:
+        Version A: $(cat "$version_a")
+        Version B: $(cat "$version_b")
+        Performance: $(cat "$performance_data")"
+}
+```
+
+### Content Refresh and Updates
+
+```bash
+# Update old content
+refresh_content() {
+    local old_content="$1"
+
+    cat "$old_content" | rawi ask --act content-strategist \
+        "Update this content with current information, trends, and best practices while preserving its core value" \
+        > refreshed-content.md
+}
+
+# Repurpose content
+repurpose_content() {
+    local source_content="$1"
+    local new_format="$2"
+
+    cat "$source_content" | rawi ask --act content-strategist \
+        "Repurpose this content into a $new_format while maintaining key insights and value"
+}
+```
+
+## Best Practices
+
+### Effective Content Prompting
+
+1. **Specify Target Audience**
+
+   ```bash
+   rawi ask --act technical-writer "Write about Docker containers for junior developers with 1-2 years experience"
+   ```
+
+2. **Define Content Goals**
+
+   ```bash
+   rawi ask --act copywriter "Create content that educates and converts visitors to our API documentation"
+   ```
+
+3. **Provide Style Guidelines**
+   ```bash
+   rawi ask --act editor "Edit this content to match our brand voice: friendly, authoritative, but not overly technical" < draft.md
+   ```
+
+### Content Quality Assurance
+
+```bash
+# Multi-stage review process
+quality_check() {
+    local content="$1"
+
+    # Grammar and style
+    cat "$content" | rawi ask --act proofreader "Check for grammar, spelling, and style issues"
+
+    # Fact verification
+    cat "$content" | rawi ask --act fact-checker "Verify claims and suggest where citations are needed"
+
+    # Readability assessment
+    cat "$content" | rawi ask --act editor "Assess readability and suggest improvements for target audience"
+}
+```
+
+## Integration with Content Tools
+
+### CMS Integration
+
+```bash
+# WordPress preparation
+prepare_for_wordpress() {
+    local content="$1"
+
+    cat "$content" | rawi ask --act web-writer \
+        "Format this content for WordPress with appropriate HTML tags, featured image suggestions, and SEO fields"
+}
+
+# Ghost blog preparation
+prepare_for_ghost() {
+    local content="$1"
+
+    cat "$content" | rawi ask --act blogger \
+        "Format this content for Ghost blog with proper markdown, card layouts, and member-gated sections"
+}
+```
+
+### Email Marketing Integration
+
+```bash
+# Newsletter formatting
+format_for_newsletter() {
+    local content="$1"
+
+    cat "$content" | rawi ask --act email-marketer \
+        "Convert this content into an engaging email newsletter with subject line, preview text, and clear sections"
+}
+```
+
+## Troubleshooting Content Creation
+
+### Common Issues
+
+**Writer's block:**
+
+```bash
+rawi ask --act creative-coach "I'm stuck writing about '$TOPIC'. Give me 5 different angles to approach this subject"
+```
+
+**Complex technical topics:**
+
+```bash
+rawi ask --act technical-writer "Explain this complex concept in simple terms that a general audience can understand" < technical-explanation.md
+```
+
+**Content length adjustment:**
+
+```bash
+# Expand content
+rawi ask --act writer "Expand this outline into a detailed 2000-word article" < outline.md
+
+# Condense content
+rawi ask --act editor "Condense this article to 500 words while keeping key points" < long-article.md
+```
+
+## See Also
+
+- [Technical Writing Workflow](../workflows) — Specialized documentation patterns
+- [Research Workflow](./research) — Research and analysis techniques
+- [Shell Integration](../advanced/shell-integration) — Automation for content creation
+- [Act Templates](../configure/act-templates) — Writing and editing templates
+- [Usage Patterns](../advanced/usage) — General productivity patterns

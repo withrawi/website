@@ -7,35 +7,189 @@ hero:
   image:
     file: ../../assets/rawi.png
   actions:
-    - text: Get Started
+    - text: User Guide
       primary: true
       link: /userguide
+      icon: rocket
+    - text: Command Reference
+      link: /reference
       icon: right-arrow
 ---
 
 import Clarity from '../../components/clarity.astro';
-import {Card, CardGrid} from '@astrojs/starlight/components';
+import {Card, CardGrid, LinkButton} from '@astrojs/starlight/components';
 
 <Clarity />
 
-# Rawi (راوي) Command Line Interface Documentation
+## What is Rawi?
 
-Rawi (راوي) is a unified, developer-friendly AI-powered CLI tool that provides a consistent interface for interacting with your development workflow. Rawi delivers clear answers, summaries, and analyses directly in your terminal, inspired by the rich Jordanian storytelling tradition.
+**Rawi (راوي)** is a developer-friendly AI-powered CLI tool that brings multiple AI providers directly to your terminal. Whether you're debugging code, writing documentation, analyzing data, or learning new technologies, Rawi provides intelligent assistance through a simple command-line interface.
+
+### Key Features
+
+- 🤖 **9 AI Providers** — OpenAI, Anthropic, Google, Ollama, LM Studio, Azure, Bedrock, Qwen, and xAI
+- 🛡️ **Privacy First** — Local AI support with Ollama and LM Studio
+- ⚡ **Developer Optimized** — Built specifically for coding workflows
+- 🎯 **200+ Templates** — Expert-level prompt templates
+- 🔄 **Shell Integration** — Perfect pipes, redirects, and script automation
+- 📊 **Smart Sessions** — Persistent conversations with context awareness
+- 🌍 **Multilingual** — Full support for English and Arabic
+- 📚 **Rich History** — Search, export, and manage conversations
 
 ---
 
-## Latest version
+## Quick Navigation
 
-<CardGrid>
-  <Card title="User Guide" href="/userguide" icon="open-book">
+<CardGrid stagger>
+  <Card title="🚀 Get Started" href="/getting-started">
+    New to Rawi? Start here with installation and basic setup.
 
-    Explore the user guide to learn how to use Rawi (راوي) effectively in your development workflow.
+    <LinkButton href="/getting-started" variant="secondary">
+      Get Started 🚀
+    </LinkButton>
 
   </Card>
 
-  <Card title="Command Reference" href="/usage/commands" icon="document">
+  <Card title="⚡ Quick Start" href="/getting-started/quickstart">
+    Jump right in with a 5-minute guide to your first AI conversation.
 
-    Access the command reference for detailed information on Rawi (راوي) commands and their usage.
+    <LinkButton href="/getting-started/quickstart" variant="secondary">
+      Quick Start Guide ⚡
+    </LinkButton>
 
+  </Card>
+
+  <Card title="⚙️ Configuration" href="/configure">
+    Set up AI providers, profiles, and customize Rawi for your needs.
+
+    <LinkButton href="/configure" variant="secondary">
+      Configure ⚙️
+    </LinkButton>
+
+  </Card>
+
+  <Card title="📖 Commands" href="/reference">
+    Complete reference for all Rawi commands and options.
+
+    <LinkButton href="/reference" variant="secondary">
+      Command Reference 📖
+    </LinkButton>
+
+  </Card>
+
+  <Card title="🎯 Act Templates" href="/configure/act-templates">
+    Discover 200+ expert templates for specialized AI assistance.
+
+    <LinkButton href="/configure/act-templates" variant="secondary">
+      Explore Templates 🎯
+    </LinkButton>
+
+  </Card>
+
+  <Card title="🔄 Workflows" href="/workflows">
+    Real-world examples and automation patterns for daily tasks.
+
+    <LinkButton href="/workflows" variant="secondary" icon="list-format">
+      View Workflows
+    </LinkButton>
+
+  </Card>
+
+  <Card title="🤖 Providers" href="/configure/providers">
+    Set up and configure AI providers like OpenAI, Claude, and Ollama.
+    
+    <LinkButton href="/configure/providers" variant="secondary" icon="cloud-download">
+      Configure Providers
+    </LinkButton>
   </Card>
 </CardGrid>
+
+---
+
+## Popular Use Cases
+
+### Development Workflow
+
+```bash
+# Code review with AI
+git diff | rawi ask --act code-reviewer "Review these changes"
+
+# Debug assistance
+cat error.log | rawi ask --act debugging-expert "Help me understand this error"
+
+# Generate documentation
+cat api.js | rawi ask --act technical-writer "Document this API"
+```
+
+### Data Analysis
+
+```bash
+# Log analysis
+tail -f app.log | rawi ask "Monitor for critical errors"
+
+# CSV data insights
+cat data.csv | rawi ask --act data-scientist "Analyze trends in this data"
+```
+
+### Content Creation
+
+```bash
+# Technical writing
+rawi ask --act technical-writer "Explain Docker containers for beginners"
+
+# Code examples
+rawi ask --act software-engineer "Show me Express.js authentication examples"
+```
+
+---
+
+## Why Choose Rawi?
+
+### Terminal-Native Experience
+
+Unlike web-based AI tools, Rawi integrates seamlessly with your existing terminal workflow:
+
+- Pipe data in and out of other commands
+- Use in shell scripts and automation
+- No context switching from your development environment
+
+### Multiple AI Providers
+
+Access the best AI models for different tasks:
+
+- **OpenAI GPT-4** for general-purpose assistance
+- **Anthropic Claude** for detailed analysis and safety
+- **Ollama** for private, local AI processing
+- **Google Gemini** for multimodal capabilities
+
+### Developer-Focused
+
+Built by developers, for developers:
+
+- Code-aware templates and prompts
+- Git integration and workflow automation
+- Programming language expertise across the stack
+
+---
+
+## Getting Started
+
+Ready to transform your terminal into an AI-powered workspace?
+
+1. **[Install Rawi](./getting-started/install)** — Get up and running in minutes
+2. **[Quick Start Guide](./getting-started/quickstart)** — Your first AI conversation
+3. **[Explore Templates](./configure/act-templates)** — Discover expert-level assistance
+4. **[Advanced Features](./advanced/sessions)** — Sessions, profiles, and automation
+
+---
+
+## Community and Support
+
+- **GitHub Repository**: [github.com/withrawi/rawi](https://github.com/withrawi/rawi)
+- **Documentation**: You're reading it!
+- **Issues & Bugs**: [GitHub Issues](https://github.com/withrawi/rawi/issues)
+- **Feature Requests**: [GitHub Discussions](https://github.com/withrawi/rawi/discussions)
+
+---
+
+_Rawi (راوي) — meaning "storyteller" in Arabic — brings the rich tradition of knowledge sharing to your development workflow._

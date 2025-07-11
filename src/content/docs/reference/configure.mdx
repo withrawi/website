@@ -1,123 +1,493 @@
 ---
-title: Rawi (راوي) Documentation | Reference `configure` Command
-description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+title: configure — Setup & Management
+description: The configure command is your tool for setting up AI providers, managing profiles, and customizing Rawi's behavior.
 ---
 
-import Clarity from '../../../components/clarity.astro';
+The `configure` command is your tool for setting up AI providers, managing profiles, and customizing Rawi's behavior.
 
-<Clarity />
+## Basic Usage
 
-# configure
+```
+rawi configure [options]
+```
 
-## Description
-
-Configure Rawi AI settings, including provider, model, API keys, and advanced options for different AI backends. Supports multiple profiles and provider-specific settings.
-
-See also: Rawi Documentation
-
-## Synopsis
+### Quick Start
 
 ```bash
-rawi configure [options]
+# Interactive setup (recommended for first-time users)
+rawi configure
+
+# View current configuration
+rawi configure --show
+
+# List all profiles
+rawi configure --list
 ```
 
 ## Options
 
-- `-p, --profile <profile>` (string)  
-  Configuration profile name (default: "default").
+### Configuration Options
 
-- `--provider <provider>` (string)  
-  AI provider (openai, anthropic, google, ollama, xai, azure, bedrock, qwen).
+| Option                    | Description                | Example                                |
+| ------------------------- | -------------------------- | -------------------------------------- |
+| `-p, --profile <profile>` | Profile name to configure  | `--profile work`                       |
+| `--provider <provider>`   | AI provider                | `--provider openai`                    |
+| `--model <model>`         | AI model name              | `--model gpt-4o`                       |
+| `--api-key <apiKey>`      | API key for the provider   | `--api-key sk-...`                     |
+| `--base-url <baseURL>`    | Custom base URL            | `--base-url https://api.openai.com/v1` |
+| `--temperature <temp>`    | Sampling temperature (0-2) | `--temperature 0.7`                    |
+| `--max-tokens <tokens>`   | Maximum response tokens    | `--max-tokens 2048`                    |
+| `--language <lang>`       | Language (english, arabic) | `--language english`                   |
 
-- `--model <model>` (string)  
-  AI model name.
+### Provider-Specific Options
 
-- `--api-key <apiKey>` (string)  
-  API key for the provider (not needed for Ollama).
+#### Azure OpenAI
 
-- `--base-url <baseURL>` (string)  
-  Base URL for Ollama (default: http://localhost:11434/api), OpenAI (default: https://api.openai.com/v1), Anthropic (default: https://api.anthropic.com), Google (default: https://generativelanguage.googleapis.com/v1beta), Qwen (default: https://dashscope-intl.aliyuncs.com/compatible-mode/v1), or xAI (default: https://api.x.ai/v1).
+| Option                    | Description         | Required                         |
+| ------------------------- | ------------------- | -------------------------------- |
+| `--resource-name <name>`  | Azure resource name | ✅                               |
+| `--api-version <version>` | API version         | ❌ (default: 2024-10-01-preview) |
 
-- `--resource-name <resourceName>` (string)  
-  Resource name for Azure OpenAI (required for Azure).
+#### Amazon Bedrock
 
-- `--api-version <apiVersion>` (string)  
-  API version for Azure OpenAI (default: 2024-10-01-preview).
+| Option                      | Description                       | Required                |
+| --------------------------- | --------------------------------- | ----------------------- |
+| `--region <region>`         | AWS region                        | ❌ (default: us-east-1) |
+| `--access-key-id <id>`      | AWS access key ID                 | ❌\*                    |
+| `--secret-access-key <key>` | AWS secret access key             | ❌\*                    |
+| `--session-token <token>`   | AWS session token                 | ❌                      |
+| `--use-provider-chain`      | Use AWS credential provider chain | ❌\*                    |
 
-- `--region <region>` (string)  
-  AWS region for Amazon Bedrock (default: us-east-1).
+\*Either explicit credentials or provider chain required
 
-- `--access-key-id <accessKeyId>` (string)  
-  AWS access key ID for Amazon Bedrock.
+### Management Options
 
-- `--secret-access-key <secretAccessKey>` (string)  
-  AWS secret access key for Amazon Bedrock.
+| Option                   | Description                    |
+| ------------------------ | ------------------------------ |
+| `-s, --show`             | Show current configuration     |
+| `-l, --list`             | List all profiles              |
+| `-d, --delete <profile>` | Delete a configuration profile |
 
-- `--session-token <sessionToken>` (string)  
-  AWS session token for Amazon Bedrock (optional).
+## Interactive Configuration
 
-- `--use-provider-chain` (boolean)  
-  Use AWS credential provider chain instead of explicit credentials.
+The interactive mode guides you through the setup process step by step.
 
-- `--temperature <temperature>` (number)  
-  Temperature value (0-2).
-
-- `--max-tokens <maxTokens>` (number)  
-  Maximum tokens.
-
-- `--language <language>` (string)  
-  Language setting (english, arabic) (default: "english").
-
-- `--show` (boolean)  
-  Show current configuration.
-
-- `--list` (boolean)  
-  List all profiles.
-
-- `--list-providers` (boolean)  
-  List all available AI providers.
-
-- `--list-models <provider>` (string)  
-  List all models for a specific provider.
-
-- `--delete <profile>` (string)  
-  Delete a configuration profile.
-
-- `-h, --help` (boolean)  
-  Display help for command.
-
-## Examples
-
-**Configure OpenAI with a new profile:**
+### Start Interactive Setup
 
 ```bash
-$ rawi configure --provider openai --model gpt-4o --api-key sk-xxxx
+rawi configure
 ```
 
-**Configure Ollama with a custom base URL:**
+### Interactive Flow
+
+1. **Choose Provider**: Select from available AI providers
+2. **Select Model**: Pick from provider's available models
+3. **Enter Credentials**: Provide API keys or authentication details
+4. **Configure Options**: Set temperature, tokens, language
+5. **Test Configuration**: Verify the setup works
+
+### Example Interactive Session
 
 ```bash
-$ rawi configure --provider ollama --base-url http://localhost:11434/api
+$ rawi configure
+
+🤖 Welcome to Rawi configuration!
+
+? Select an AI provider: (Use arrow keys)
+❯ OpenAI (GPT-4, GPT-3.5)
+  Anthropic (Claude)
+  Google (Gemini)
+  Ollama (Local AI)
+  Azure OpenAI
+  AWS Bedrock
+  xAI (Grok)
+  Qwen
+  LM Studio
+
+? Select a model:
+❯ gpt-4o (Latest GPT-4 model)
+  gpt-4o-mini (Faster, cheaper GPT-4)
+  gpt-3.5-turbo (Fast and efficient)
+
+? Enter your OpenAI API key: sk-********************************
+
+? Set temperature (0-2, higher = more creative): 0.7
+
+? Set max tokens (1-100000): 2048
+
+? Select language:
+❯ English
+  Arabic (العربية)
+
+✅ Configuration saved successfully!
+✅ Testing connection... Success!
+
+You can now use: rawi ask "Hello, world!"
 ```
 
-**Show current configuration:**
+## Manual Configuration
+
+For automation or advanced users, configure directly with command-line options.
+
+### Quick Provider Setup
+
+#### OpenAI
 
 ```bash
-$ rawi configure --show
+# Basic OpenAI setup
+rawi configure --provider openai --model gpt-4o --api-key sk-your-key
+
+# With custom settings
+rawi configure --provider openai --model gpt-4o-mini --api-key sk-your-key \
+  --temperature 0.3 --max-tokens 1500
 ```
 
-**List all available providers:**
+#### Anthropic
 
 ```bash
-$ rawi configure --list-providers
+# Claude setup
+rawi configure --provider anthropic --model claude-3-5-sonnet-20241022 \
+  --api-key sk-ant-your-key
+
+# For long-form analysis
+rawi configure --provider anthropic --model claude-3-5-sonnet-20241022 \
+  --api-key sk-ant-your-key --temperature 0.1 --max-tokens 4000
 ```
 
-**Delete a profile:**
+#### Google
 
 ```bash
-$ rawi configure --delete myprofile
+# Gemini setup
+rawi configure --provider google --model gemini-1.5-pro \
+  --api-key your-google-key
 ```
 
----
+#### Ollama (Local AI)
 
-For more information, see the Rawi documentation or run `rawi configure --help`.
+```bash
+# Local Llama 2 setup
+rawi configure --provider ollama --model llama2 \
+  --base-url http://localhost:11434
+
+# Custom local model
+rawi configure --provider ollama --model codellama:13b \
+  --base-url http://localhost:11434
+```
+
+#### Azure OpenAI
+
+```bash
+# Azure setup (requires resource name)
+rawi configure --provider azure --model gpt-4 \
+  --api-key your-azure-key \
+  --resource-name your-resource \
+  --base-url https://your-resource.openai.azure.com
+```
+
+#### Amazon Bedrock
+
+```bash
+# Using AWS credentials
+rawi configure --provider bedrock --model anthropic.claude-3-sonnet-20240229-v1:0 \
+  --region us-east-1 \
+  --access-key-id your-access-key \
+  --secret-access-key your-secret-key
+
+# Using AWS credential provider chain
+rawi configure --provider bedrock --model anthropic.claude-3-sonnet-20240229-v1:0 \
+  --region us-east-1 \
+  --use-provider-chain
+```
+
+## Profile Management
+
+Profiles allow you to maintain different configurations for different use cases.
+
+### Creating Profiles
+
+```bash
+# Work profile with enterprise settings
+rawi configure --profile work \
+  --provider azure \
+  --model gpt-4 \
+  --resource-name company-openai \
+  --api-key work-key
+
+# Personal profile with cost-effective settings
+rawi configure --profile personal \
+  --provider openai \
+  --model gpt-3.5-turbo \
+  --api-key personal-key \
+  --temperature 0.8
+
+# Local profile for privacy
+rawi configure --profile local \
+  --provider ollama \
+  --model llama2 \
+  --base-url http://localhost:11434
+```
+
+### Managing Profiles
+
+```bash
+# List all profiles
+rawi configure --list
+
+# View specific profile
+rawi configure --profile work --show
+
+# Delete profile
+rawi configure --delete personal
+
+# Set default profile
+rawi configure --profile work --set-default
+```
+
+### Profile Examples
+
+#### Development Profiles
+
+```bash
+# Code review profile (detailed analysis)
+rawi configure --profile code-review \
+  --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --temperature 0.1 \
+  --max-tokens 4000
+
+# Quick development profile (fast responses)
+rawi configure --profile dev-quick \
+  --provider openai \
+  --model gpt-3.5-turbo \
+  --temperature 0.3 \
+  --max-tokens 1000
+
+# Local development profile (privacy)
+rawi configure --profile dev-local \
+  --provider ollama \
+  --model codellama \
+  --temperature 0.2
+```
+
+#### Writing Profiles
+
+```bash
+# Creative writing profile
+rawi configure --profile creative \
+  --provider openai \
+  --model gpt-4 \
+  --temperature 0.9 \
+  --max-tokens 3000
+
+# Technical writing profile
+rawi configure --profile technical \
+  --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --temperature 0.3 \
+  --max-tokens 2500
+```
+
+## Advanced Configuration
+
+### Environment Variables
+
+You can also configure Rawi using environment variables:
+
+```bash
+# API keys
+export OPENAI_API_KEY="sk-your-openai-key"
+export ANTHROPIC_API_KEY="sk-ant-your-anthropic-key"
+export GOOGLE_API_KEY="your-google-key"
+
+# Default profile
+export RAWI_PROFILE="work"
+
+# Default provider settings
+export RAWI_PROVIDER="openai"
+export RAWI_MODEL="gpt-4"
+export RAWI_TEMPERATURE="0.7"
+```
+
+### Configuration Files
+
+Rawi stores configuration in:
+
+- **Linux/macOS**: `~/.config/rawi/`
+- **Windows**: `%APPDATA%/rawi/`
+
+#### Main config structure:
+
+```
+~/.config/rawi/
+├── config.json          # Global settings
+├── profiles/
+│   ├── default.json      # Default profile
+│   ├── work.json         # Work profile
+│   └── personal.json     # Personal profile
+└── history/              # Session history
+```
+
+### Manual Configuration File Editing
+
+```bash
+# Edit main configuration
+nano ~/.config/rawi/config.json
+
+# Edit specific profile
+nano ~/.config/rawi/profiles/work.json
+
+# Backup configuration
+cp -r ~/.config/rawi/ ~/rawi-config-backup/
+```
+
+## Provider-Specific Setup Guides
+
+### OpenAI Setup
+
+1. **Get API Key**: Visit [platform.openai.com](https://platform.openai.com)
+2. **Choose Model**: `gpt-4o` (latest), `gpt-4o-mini` (cost-effective), `gpt-3.5-turbo` (fast)
+3. **Configure**:
+   ```bash
+   rawi configure --provider openai --model gpt-4o --api-key sk-your-key
+   ```
+
+### Anthropic Setup
+
+1. **Get API Key**: Visit [console.anthropic.com](https://console.anthropic.com)
+2. **Choose Model**: `claude-3-5-sonnet-20241022` (recommended)
+3. **Configure**:
+   ```bash
+   rawi configure --provider anthropic --model claude-3-5-sonnet-20241022 --api-key sk-ant-your-key
+   ```
+
+### Ollama Setup (Local AI)
+
+1. **Install Ollama**: Visit [ollama.ai](https://ollama.ai) and follow installation instructions
+2. **Pull a model**:
+   ```bash
+   ollama pull llama2
+   # or for coding:
+   ollama pull codellama
+   ```
+3. **Configure Rawi**:
+   ```bash
+   rawi configure --provider ollama --model llama2
+   ```
+
+## Troubleshooting Configuration
+
+### Common Issues
+
+**Configuration not saved:**
+
+```bash
+# Check permissions
+ls -la ~/.config/rawi/
+# Create directory if missing
+mkdir -p ~/.config/rawi/profiles/
+```
+
+**API key not working:**
+
+```bash
+# Test configuration
+rawi info
+# Verify API key format
+rawi configure --show
+```
+
+**Provider connection fails:**
+
+```bash
+# Check network connectivity
+curl -s https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
+
+# Try different provider
+rawi configure --provider anthropic
+```
+
+**Ollama not connecting:**
+
+```bash
+# Check if Ollama is running
+ollama list
+# Check base URL
+rawi configure --provider ollama --base-url http://localhost:11434
+```
+
+### Configuration Validation
+
+```bash
+# Test current configuration
+rawi ask "test" --verbose
+
+# Validate specific profile
+rawi configure --profile work --test
+
+# Check provider status
+rawi provider --show openai
+```
+
+## Migration and Backup
+
+### Export Configuration
+
+```bash
+# Export all profiles
+rawi configure --export > rawi-config-backup.json
+
+# Export specific profile
+rawi configure --profile work --export > work-profile.json
+```
+
+### Import Configuration
+
+```bash
+# Import configuration
+rawi configure --import rawi-config-backup.json
+
+# Import specific profile
+rawi configure --profile work --import work-profile.json
+```
+
+### Reset Configuration
+
+```bash
+# Reset all configuration
+rawi configure --reset
+
+# Reset specific profile
+rawi configure --profile work --reset
+
+# Delete all profiles
+rawi configure --reset-all
+```
+
+## Best Practices
+
+### Security
+
+1. **Use Environment Variables** for API keys in production
+2. **Separate Profiles** for different security contexts
+3. **Regular Key Rotation** for enterprise environments
+4. **Local Providers** for sensitive data
+
+### Performance
+
+1. **Appropriate Models**: Use lighter models for simple tasks
+2. **Temperature Settings**: Lower for factual tasks, higher for creative
+3. **Token Limits**: Set reasonable limits to control costs
+4. **Profile Optimization**: Different profiles for different use cases
+
+### Organization
+
+1. **Descriptive Profile Names**: `work-gpt4`, `personal-claude`, `local-dev`
+2. **Environment-Specific Profiles**: `dev`, `staging`, `production`
+3. **Task-Specific Profiles**: `code-review`, `writing`, `data-analysis`
+
+## See Also
+
+- [Supported AI Providers](../configure/providers) — Detailed provider information
+- [Profile Management](../advanced/profiles) — Advanced profile features
+- [Environment Variables](../configure/envvars) — Environment-based configuration
+- [ask command](./ask) — Using configured profiles in conversations

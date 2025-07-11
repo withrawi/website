@@ -1,177 +1,633 @@
 ---
-title: Rawi (راوي) Documentation | Providers
-description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+title: Supported Providers
+description: Comprehensive guide to AI providers supported by Rawi CLI, including OpenAI, Anthropic, Google, Ollama, Azure, Bedrock, Qwen, and xAI.
 ---
 
-import Clarity from '../../../components/clarity.astro';
-import {Tabs, TabItem, Steps} from '@astrojs/starlight/components';
+import {Tabs, TabItem, Steps, Aside} from '@astrojs/starlight/components';
 
-<Clarity />
+# Supported AI Providers
 
-# Supported AI Providers in Rawi CLI
+Rawi CLI supports 9 major AI providers, giving you access to dozens of models from leading companies. Whether you need cloud-based power or local privacy, there's a provider configuration for your use case.
 
-Rawi CLI supports multiple AI providers, enabling you to access a wide range of models and capabilities directly from your terminal. With minimal configuration, you can switch between providers, manage profiles, and leverage the best model for your use case.
+<Aside type="tip">
+  Use `rawi info --providers` to see all available providers and their models in
+  real-time.
+</Aside>
 
-## Overview
-
-Rawi CLI enables seamless integration with leading AI providers, including OpenAI, Anthropic, Google, Ollama (local), Azure OpenAI, Amazon Bedrock, Qwen, and xAI. Each provider offers unique models, features, and configuration options.
-
-| Provider           | Models                                          | API Key Required | Local Support |
-| ------------------ | ----------------------------------------------- | ---------------- | ------------- |
-| **OpenAI**         | GPT-4o, GPT-4, GPT-3.5, O1, O3                  | ✅               | ❌            |
-| **Anthropic**      | Claude 3.5 Sonnet, Claude 4, Haiku              | ✅               | ❌            |
-| **Google**         | Gemini 2.0 Flash, Gemini 1.5 Pro/Flash          | ✅               | ❌            |
-| **Ollama**         | Llama 3.2, Mistral, CodeLlama, Qwen + 100+ more | ❌               | ✅            |
-| **Azure OpenAI**   | Enterprise OpenAI models                        | ✅               | ❌            |
-| **Amazon Bedrock** | Claude, Llama, Titan                            | ✅               | ❌            |
-| **Qwen**           | Qwen-Max, Qwen-Plus, Qwen-Turbo                 | ✅               | ❌            |
-| **xAI**            | Grok-Beta, Grok-2                               | ✅               | ❌            |
-
-## Key Features
-
-- **Multi-provider support**: Easily switch between providers and models.
-- **Profile management**: Store multiple configurations for different projects or use cases.
-- **Local and cloud models**: Use local models for privacy or cloud models for advanced capabilities.
-- **Unified CLI experience**: Consistent commands and options across all providers.
-
-## Example: Listing Supported Providers
-
-To view all supported providers and their available models:
-
-```bash
-rawi info --providers
-```
-
-Sample output:
-
-```bash
-🤖 Supported AI Providers (8)
-
-🟣 Anthropic (Claude) (anthropic)
-  Models: 12 available
-    • claude-4-opus-20250514
-    • claude-4-sonnet-20250514
-    • claude-3-7-sonnet-20250219
-    ... and 9 more
-
-🔷 Azure OpenAI (azure)
-  Models: 0 available
-
-🟠 Amazon Bedrock (bedrock)
-  Models: 32 available
-    • amazon.titan-tg1-large
-    • amazon.titan-text-express-v1
-    • amazon.titan-text-lite-v1
-    ... and 29 more
-
-🔴 Google (Gemini) (google)
-  Models: 24 available
-    • gemini-1.5-flash
-    • gemini-1.5-flash-latest
-    • gemini-1.5-flash-001
-    ... and 21 more
-
-🟢 Ollama (ollama)
-  Models: 180 available
-    • athene-v2
-    • athene-v2:72b
-    • aya-expanse
-    ... and 177 more
-
-🔵 OpenAI (GPT) (openai)
-  Models: 44 available
-    • o1
-    • o1-2024-12-17
-    • o1-mini
-    ... and 41 more
-
-🟡 Qwen (Alibaba Cloud) (qwen)
-  Models: 21 available
-    • qwen2.5-14b-instruct-1m
-    • qwen2.5-72b-instruct
-    • qwen2.5-32b-instruct
-    ... and 18 more
-
-🤖 xAI (Grok) (xai)
-  Models: 19 available
-    • grok-3
-    • grok-3-latest
-    • grok-3-fast
-    ... and 16 more
-
-Run "rawi configure --list-models <provider>" for all models
-```
-
-## Example: Configuring a Provider
+## Provider Overview
 
 <Tabs>
-  <TabItem label="OpenAI" icon="openai">
-    <Steps>
-
-      1. **Configure OpenAI provider:**
-
-         ```bash
-         rawi configure --provider openai --model gpt-4o --api-key sk-your-key
-         ```
-
-    </Steps>
-
-  </TabItem>
-  <TabItem label="Ollama (local)" icon="ollama">
-    <Steps>
-
-      1. **Configure Ollama (local) provider:**
-
-         ```bash
-         rawi configure --provider ollama --model llama3.2
-         ```
-
-    </Steps>
-
-  </TabItem>
-</Tabs>
-
-## Example: Switching Providers
-
-<Tabs>
-  <TabItem label="OpenAI" icon="openai">
-    <Steps>
-
-      1. **Switch to OpenAI profile:**
-
-         ```bash
-         rawi ask "Summarize this code" --profile openai
-         ```
-
-    </Steps>
-
-  </TabItem>
-  <TabItem label="Ollama (local)" icon="ollama">
-    <Steps>
+  <TabItem label="Cloud Providers" icon="seti:cloud">
     
-      1. **Switch to Ollama profile:**
+    **Commercial cloud providers with API keys:**
+    
+    - **OpenAI** - GPT-4o, GPT-4, O1 models
+    - **Anthropic** - Claude 3.5 Sonnet, Claude 4
+    - **Google** - Gemini 2.0 Flash, Gemini 1.5 Pro
+    - **Azure OpenAI** - Enterprise OpenAI models
+    - **Amazon Bedrock** - Multi-vendor model access
+    - **Qwen** - Alibaba's language models
+    - **xAI** - Grok models from Elon Musk's company
 
-         ```bash
-         rawi ask "Summarize this code" --profile ollama
-         ```
+  </TabItem>
+  <TabItem label="Local Providers" icon="seti:home">
+    
+    **Run models locally on your machine:**
+    
+    - **Ollama** - 100+ open-source models
+      - Llama 3.2, Mistral, CodeLlama
+      - Qwen, Phi, Gemma, and more
+      - No API key required
+      - Complete privacy and control
 
-    </Steps>
+    - **LM Studio** - Local GUI for managing models
+      - Supports Ollama models and more
+      - Easy to use with Rawi CLI
 
   </TabItem>
 </Tabs>
 
-## Best Practices
+## Quick Provider Comparison
 
-- Use provider-specific profiles for different projects.
-- Choose local models (Ollama) for privacy-sensitive tasks.
-- Use cloud providers for the latest and most capable models.
-- Check available models with `rawi configure --list-models <provider>`.
+| Provider      | Best For                 | Key Models           | Setup Difficulty |
+| ------------- | ------------------------ | -------------------- | ---------------- |
+| **OpenAI**    | General AI tasks, coding | GPT-4o, O1           | Easy             |
+| **Anthropic** | Long contexts, analysis  | Claude 3.5 Sonnet    | Easy             |
+| **Google**    | Multimodal tasks         | Gemini 2.0 Flash     | Easy             |
+| **Ollama**    | Privacy, local use       | Llama 3.2, Mistral   | Medium           |
+| **LM Studio** | Local model management   | Ollama models        | Easy             |
+| **Azure**     | Enterprise environments  | GPT-4 (Enterprise)   | Medium           |
+| **Bedrock**   | AWS ecosystem            | Claude, Llama, Titan | Hard             |
+| **Qwen**      | Chinese language tasks   | Qwen-Max             | Easy             |
+| **xAI**       | Experimental features    | Grok-2               | Easy             |
 
-## Troubleshooting
+## Provider Details
 
-If you encounter issues with a provider, run:
+### OpenAI
+
+The most popular provider with cutting-edge models including the latest GPT-4o and reasoning models.
+
+**Available Models:**
+
+- `gpt-4o` - Latest multimodal model (recommended)
+- `gpt-4o-mini` - Faster, cost-effective version
+- `gpt-4` - Previous generation flagship
+- `gpt-3.5-turbo` - Fast and affordable
+- `o1-preview` - Advanced reasoning model
+- `o1-mini` - Compact reasoning model
+
+**Configuration:**
 
 ```bash
-rawi info --providers
-rawi configure --show --profile <profile>
+# Basic setup
+rawi configure --provider openai --model gpt-4o --api-key sk-your-key
+
+# With custom settings
+rawi configure --provider openai \
+  --model gpt-4o \
+  --api-key sk-your-key \
+  --temperature 0.7 \
+  --max-tokens 2048
 ```
+
+**Use Cases:**
+
+- General purpose AI tasks
+- Code generation and review
+- Writing and content creation
+- Data analysis and reasoning
+
+### Anthropic (Claude)
+
+Anthropic's Claude models excel at long-form analysis, safety, and nuanced reasoning.
+
+**Available Models:**
+
+- `claude-3-5-sonnet-20241022` - Latest and most capable (recommended)
+- `claude-3-5-haiku-20241022` - Fast and cost-effective
+- `claude-3-opus-20240229` - Previous flagship model
+
+**Configuration:**
+
+```bash
+# Basic setup
+rawi configure --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --api-key sk-ant-your-key
+
+# For long-form analysis
+rawi configure --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --api-key sk-ant-your-key \
+  --max-tokens 4000 \
+  --temperature 0.1
+```
+
+**Use Cases:**
+
+- Long document analysis
+- Code review and refactoring
+- Research and writing
+- Safety-critical applications
+
+### Google (Gemini)
+
+Google's Gemini models provide strong multimodal capabilities and competitive performance.
+
+**Available Models:**
+
+- `gemini-2.0-flash-exp` - Latest experimental model
+- `gemini-1.5-pro` - High-capability model
+- `gemini-1.5-flash` - Fast and efficient
+
+**Configuration:**
+
+```bash
+# Basic setup
+rawi configure --provider google \
+  --model gemini-2.0-flash-exp \
+  --api-key your-google-api-key
+
+# For multimodal tasks
+rawi configure --provider google \
+  --model gemini-1.5-pro \
+  --api-key your-google-api-key \
+  --temperature 0.4
+```
+
+**Use Cases:**
+
+- Multimodal tasks (text + images)
+- Search and information retrieval
+- Creative writing
+- Technical documentation
+
+### Ollama (Local)
+
+Run open-source models locally for privacy and control. No API key required.
+
+**Popular Models:**
+
+- `llama3.2:latest` - Meta's latest Llama model
+- `mistral:latest` - Mistral AI's flagship model
+- `codellama:latest` - Specialized for code generation
+- `qwen2.5:latest` - Alibaba's multilingual model
+- `phi3:latest` - Microsoft's compact model
+
+**Configuration:**
+
+```bash
+# Install Ollama first: https://ollama.ai
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Start Ollama service
+ollama serve
+
+# Pull a model
+ollama pull llama3.2
+
+# Configure Rawi
+rawi configure --provider ollama \
+  --model llama3.2 \
+  --base-url http://localhost:11434
+```
+
+**Use Cases:**
+
+- Privacy-sensitive tasks
+- Offline work environments
+- Cost-free AI interactions
+- Experimentation with open models
+
+### LM Studio (Local)
+
+User-friendly local AI with GUI management for easy model handling and optimization.
+
+**Key Features:**
+
+- 🖥️ Easy GUI for model management
+- 📦 Automatic model downloads
+- ⚙️ Hardware optimization
+- 🔧 Fine-tuning capabilities
+- 📊 Performance monitoring
+
+**Popular Models:**
+
+- Llama models (3.1, 3.2)
+- Mistral models
+- Code-specific models
+- Custom fine-tuned models
+
+**Configuration:**
+
+```bash
+# Install LM Studio first: https://lmstudio.ai
+# Download and install from website
+
+# Download models through GUI
+# Start local server in LM Studio
+
+# Configure Rawi
+rawi configure --provider lmstudio \
+  --model your-loaded-model \
+  --base-url http://localhost:1234
+```
+
+**Setup Steps:**
+
+1. Download LM Studio from [lmstudio.ai](https://lmstudio.ai)
+2. Install and open the application
+3. Browse and download models through the GUI
+4. Start the local server
+5. Configure Rawi to use LM Studio
+
+**Use Cases:**
+
+- User-friendly local AI without command line
+- GUI-based model management
+- Hardware-optimized inference
+- Fine-tuning and customization
+- Educational and research purposes
+
+### Azure OpenAI
+
+Enterprise-grade OpenAI models with enhanced security and compliance.
+
+**Available Models:**
+
+- Same as OpenAI but with enterprise features
+- Custom fine-tuned models
+- Regional deployment options
+
+**Configuration:**
+
+```bash
+# Basic setup
+rawi configure --provider azure \
+  --model gpt-4 \
+  --api-key your-azure-key \
+  --resource-name your-resource-name \
+  --base-url https://your-resource.openai.azure.com
+
+# With API version
+rawi configure --provider azure \
+  --model gpt-4 \
+  --api-key your-azure-key \
+  --resource-name your-resource-name \
+  --api-version 2024-10-01-preview
+```
+
+**Use Cases:**
+
+- Enterprise environments
+- Compliance-critical applications
+- Custom model deployments
+- Regional data requirements
+
+### Amazon Bedrock
+
+Access multiple AI providers through AWS's managed service.
+
+**Available Models:**
+
+- `anthropic.claude-3-5-sonnet-20241022-v2:0` - Claude 3.5 Sonnet
+- `anthropic.claude-3-haiku-20240307-v1:0` - Claude 3 Haiku
+- `meta.llama3-2-90b-instruct-v1:0` - Llama 3.2 90B
+- `amazon.titan-text-premier-v1:0` - Amazon Titan
+
+**Configuration:**
+
+```bash
+# Using AWS credentials
+export AWS_ACCESS_KEY_ID="your-access-key"
+export AWS_SECRET_ACCESS_KEY="your-secret-key"
+export AWS_REGION="us-east-1"
+
+rawi configure --provider bedrock \
+  --model anthropic.claude-3-5-sonnet-20241022-v2:0 \
+  --region us-east-1
+```
+
+**Use Cases:**
+
+- AWS-integrated workflows
+- Multi-model experimentation
+- Enterprise AWS environments
+- Regulated industries
+
+### Qwen
+
+Alibaba's Qwen models, particularly strong for Chinese language tasks.
+
+**Available Models:**
+
+- `qwen-max` - Most capable model
+- `qwen-plus` - Balanced performance
+- `qwen-turbo` - Fast and efficient
+
+**Configuration:**
+
+```bash
+rawi configure --provider qwen \
+  --model qwen-max \
+  --api-key sk-your-qwen-key
+```
+
+**Use Cases:**
+
+- Chinese language processing
+- Multilingual applications
+- Asian market applications
+- Cross-cultural content
+
+### xAI (Grok)
+
+Elon Musk's xAI models with unique training and capabilities.
+
+**Available Models:**
+
+- `grok-2-1212` - Latest Grok model
+- `grok-2-vision-1212` - Multimodal version
+- `grok-beta` - Beta testing model
+
+**Configuration:**
+
+```bash
+rawi configure --provider xai \
+  --model grok-2-1212 \
+  --api-key xai-your-api-key
+```
+
+**Use Cases:**
+
+- Creative and experimental tasks
+- Alternative perspective generation
+- Research and exploration
+- Unique reasoning approaches
+
+## Provider Selection Guide
+
+### For Development Work
+
+<Tabs>
+  <TabItem label="Code Generation" icon="seti:config">
+    
+    **Recommended:** OpenAI GPT-4o or Anthropic Claude 3.5 Sonnet
+    
+    ```bash
+    # OpenAI for general coding
+    rawi configure --provider openai --model gpt-4o
+    
+    # Claude for code review
+    rawi configure --provider anthropic --model claude-3-5-sonnet-20241022
+    ```
+
+  </TabItem>
+  <TabItem label="Local Development" icon="seti:home">
+    
+    **Recommended:** Ollama with CodeLlama or Llama 3.2
+    
+    ```bash
+    # Install and setup
+    ollama pull codellama:13b
+    rawi configure --provider ollama --model codellama:13b
+    ```
+
+  </TabItem>
+</Tabs>
+
+### For Content Creation
+
+<Tabs>
+  <TabItem label="Writing & Research" icon="pencil">
+    
+    **Recommended:** Anthropic Claude 3.5 Sonnet for analysis, OpenAI GPT-4o for creativity
+    
+    ```bash
+    # Long-form analysis
+    rawi configure --profile research \
+      --provider anthropic \
+      --model claude-3-5-sonnet-20241022 \
+      --max-tokens 4000
+
+    # Creative writing
+    rawi configure --profile creative \
+      --provider openai \
+      --model gpt-4o \
+      --temperature 0.8
+    ```
+
+  </TabItem>
+  <TabItem label="Multimodal Content" icon="picture">
+    
+    **Recommended:** Google Gemini or OpenAI GPT-4o
+    
+    ```bash
+    # Google Gemini for multimodal
+    rawi configure --provider google --model gemini-2.0-flash-exp
+    
+    # OpenAI for image analysis
+    rawi configure --provider openai --model gpt-4o
+    ```
+
+  </TabItem>
+</Tabs>
+
+### For Enterprise Use
+
+<Tabs>
+  <TabItem label="Security & Compliance" icon="approve-check">
+    
+    **Recommended:** Azure OpenAI or Amazon Bedrock
+    
+    ```bash
+    # Azure for Office 365 integration
+    rawi configure --provider azure \
+      --model gpt-4 \
+      --resource-name company-openai
+
+    # Bedrock for AWS environments
+    rawi configure --provider bedrock \
+      --model anthropic.claude-3-5-sonnet-20241022-v2:0
+    ```
+
+  </TabItem>
+  <TabItem label="Privacy & Control" icon="lock">
+    
+    **Recommended:** Ollama for complete data control
+    
+    ```bash
+    # Local deployment
+    ollama pull llama3.2:70b
+    rawi configure --provider ollama --model llama3.2:70b
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Multi-Provider Workflows
+
+You can use different providers for different tasks within the same project:
+
+```bash
+# Code generation with OpenAI
+rawi configure --profile code \
+  --provider openai \
+  --model gpt-4o
+
+# Code review with Claude
+rawi configure --profile review \
+  --provider anthropic \
+  --model claude-3-5-sonnet-20241022
+
+# Documentation with Gemini
+rawi configure --profile docs \
+  --provider google \
+  --model gemini-1.5-pro
+
+# Privacy-sensitive tasks with Ollama
+rawi configure --profile private \
+  --provider ollama \
+  --model llama3.2
+```
+
+## Getting API Keys
+
+<Steps>
+
+1. **Choose your provider(s)** based on your needs
+
+2. **Get API keys:**
+   - **OpenAI**: [platform.openai.com](https://platform.openai.com/api-keys)
+   - **Anthropic**: [console.anthropic.com](https://console.anthropic.com/)
+   - **Google**: [aistudio.google.com](https://aistudio.google.com/app/apikey)
+   - **xAI**: [console.x.ai](https://console.x.ai/)
+   - **Qwen**: [dashscope.aliyun.com](https://dashscope.aliyun.com/)
+
+3. **Set up enterprise providers:**
+   - **Azure**: Contact your Azure administrator
+   - **Bedrock**: Set up through AWS Console
+
+4. **Install local providers:**
+   - **Ollama**: [ollama.ai](https://ollama.ai/)
+
+</Steps>
+
+## Provider-Specific Tips
+
+### OpenAI
+
+- Use `gpt-4o` for best overall performance
+- Set lower temperature (0.1-0.3) for factual tasks
+- Use `o1-preview` for complex reasoning problems
+
+### Anthropic
+
+- Claude excels at long document analysis
+- Use higher token limits (3000-4000) for detailed work
+- Great for safety-critical applications
+
+### Google
+
+- Gemini 2.0 Flash is experimental but very capable
+- Strong multimodal capabilities
+- Good for search and information tasks
+
+### Ollama
+
+- Start with `llama3.2:8b` for general use
+- Use `codellama` specifically for programming
+- Models run entirely on your machine
+
+### LM Studio
+
+- Use the GUI for easy model management
+- Great for users who prefer visual interfaces
+- Automatic hardware optimization
+- Easy model switching through interface
+
+### Azure/Bedrock
+
+- Check regional availability for models
+- Consider compliance requirements
+- May have different pricing structures
+
+## Troubleshooting Providers
+
+### Common Issues
+
+**API Key Errors:**
+
+```bash
+# Test your configuration
+rawi configure --test
+
+# Verify API key format
+rawi configure --show
+```
+
+**Connection Problems:**
+
+```bash
+# Check provider status
+rawi info --providers
+
+# Test with simple query
+rawi ask "hello" --verbose
+```
+
+**Model Not Available:**
+
+```bash
+# List available models for provider
+rawi info --models --provider openai
+
+# Try different model
+rawi configure --model gpt-3.5-turbo
+```
+
+### Provider-Specific Troubleshooting
+
+**Ollama not responding:**
+
+```bash
+# Check if Ollama is running
+curl http://localhost:11434/api/tags
+
+# Start Ollama service
+ollama serve
+
+# Pull model if missing
+ollama pull llama3.2
+```
+
+**LM Studio connection issues:**
+
+```bash
+# Check if LM Studio server is running
+curl http://localhost:1234/v1/models
+
+# Start server in LM Studio app
+# Check Models tab for loaded models
+# Verify server is running on correct port
+
+# Test connection
+rawi configure --provider lmstudio --test
+```
+
+**Azure authentication:**
+
+```bash
+# Verify resource name and endpoint
+rawi configure --provider azure --show
+
+# Check Azure subscription
+az account show
+```
+
+## Next Steps
+
+- **Configure your first provider**: [Configuration Guide](./index)
+- **Set up environment variables**: [Environment Variables](./envvars)
+- **Explore advanced settings**: [Advanced Options](./options)
+- **Start using Rawi**: [Quick Start Guide](../getting-started/quickstart)

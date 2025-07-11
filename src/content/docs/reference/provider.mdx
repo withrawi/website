@@ -1,0 +1,274 @@
+---
+title: provider — AI Provider Information
+description: Show information about supported AI providers and their models.
+---
+
+The `provider` command provides detailed information about AI providers supported by Rawi, their available models, and setup requirements.
+
+## Basic Usage
+
+```
+rawi provider [options]
+```
+
+## Options
+
+| Option                | Alias | Description                          |
+| --------------------- | ----- | ------------------------------------ |
+| `--list`              | `-l`  | List all supported providers         |
+| `--show <provider>`   | `-s`  | Show detailed provider information   |
+| `--models <provider>` |       | List available models for a provider |
+
+## Examples
+
+### List All Providers
+
+```bash
+# Show all supported providers
+rawi provider --list
+```
+
+### Get Provider Details
+
+```bash
+# Get detailed information about OpenAI
+rawi provider --show openai
+
+# Show Anthropic provider details
+rawi provider --show anthropic
+
+# Get information about local providers
+rawi provider --show ollama
+```
+
+### List Available Models
+
+```bash
+# List OpenAI models
+rawi provider --models openai
+
+# List Anthropic models
+rawi provider --models anthropic
+
+# List Ollama models (if installed)
+rawi provider --models ollama
+```
+
+## Supported Providers
+
+### Cloud Providers
+
+#### OpenAI
+
+- **Type**: Cloud-based
+- **Models**: GPT-4, GPT-4 Turbo, GPT-3.5 Turbo
+- **Setup**: API key required
+- **Best for**: General purpose, latest AI capabilities
+
+#### Anthropic
+
+- **Type**: Cloud-based
+- **Models**: Claude 3.5 Sonnet, Claude 3 Opus, Claude 3 Haiku
+- **Setup**: API key required
+- **Best for**: Safety, reasoning, long context
+
+#### Google
+
+- **Type**: Cloud-based
+- **Models**: Gemini Pro, Gemini Pro Vision
+- **Setup**: API key required
+- **Best for**: Multimodal tasks, code generation
+
+#### xAI
+
+- **Type**: Cloud-based
+- **Models**: Grok models
+- **Setup**: API key required
+- **Best for**: Real-time information, conversational AI
+
+#### Qwen
+
+- **Type**: Cloud-based
+- **Models**: Qwen-turbo, Qwen-plus, Qwen-max
+- **Setup**: API key required
+- **Best for**: Multilingual support, efficiency
+
+### Enterprise Providers
+
+#### Azure OpenAI
+
+- **Type**: Enterprise cloud
+- **Models**: GPT-4, GPT-3.5 (Azure-hosted)
+- **Setup**: Azure API key and endpoint
+- **Best for**: Enterprise compliance, data residency
+
+#### Amazon Bedrock
+
+- **Type**: Enterprise cloud
+- **Models**: Claude, Titan, Jurassic-2
+- **Setup**: AWS credentials
+- **Best for**: AWS integration, multiple model options
+
+### Local Providers
+
+#### Ollama
+
+- **Type**: Local/Self-hosted
+- **Models**: Llama 2, Code Llama, Mistral, and many others
+- **Setup**: Install Ollama locally
+- **Best for**: Privacy, offline usage, no API costs
+
+#### LM Studio
+
+- **Type**: Local with GUI
+- **Models**: Various open-source models
+- **Setup**: Install LM Studio application
+- **Best for**: Easy local model management
+
+## Provider Comparison
+
+### By Use Case
+
+**General Development:**
+
+- OpenAI GPT-4 — Best overall performance
+- Anthropic Claude — Strong reasoning and safety
+- Google Gemini — Good for code generation
+
+**Privacy-Focused:**
+
+- Ollama — Complete local control
+- LM Studio — User-friendly local setup
+
+**Enterprise:**
+
+- Azure OpenAI — Enterprise compliance
+- Amazon Bedrock — AWS integration
+
+**Cost-Effective:**
+
+- OpenAI GPT-3.5 — Good performance, lower cost
+- Ollama — No API costs (hardware requirements)
+
+### By Model Capabilities
+
+**Large Context Windows:**
+
+- Anthropic Claude (200k tokens)
+- Google Gemini Pro (1M+ tokens)
+
+**Code Specialization:**
+
+- OpenAI GPT-4
+- Code Llama (via Ollama)
+
+**Multimodal (Text + Images):**
+
+- OpenAI GPT-4 Vision
+- Google Gemini Pro Vision
+
+## Setup Examples
+
+### Quick Setup Commands
+
+```bash
+# OpenAI setup
+rawi configure --provider openai --model gpt-4 --api-key sk-your-key
+
+# Anthropic setup
+rawi configure --provider anthropic --model claude-3-5-sonnet-20241022 --api-key sk-ant-your-key
+
+# Ollama setup (after installing Ollama)
+rawi configure --provider ollama --model llama2 --base-url http://localhost:11434
+
+# Azure OpenAI setup
+rawi configure --provider azure --model gpt-4 --api-key your-key --base-url https://your-resource.openai.azure.com
+```
+
+## Getting API Keys
+
+### OpenAI
+
+1. Visit [platform.openai.com](https://platform.openai.com)
+2. Sign up or log in
+3. Go to API Keys section
+4. Create new secret key
+
+### Anthropic
+
+1. Visit [console.anthropic.com](https://console.anthropic.com)
+2. Sign up or log in
+3. Go to API Keys
+4. Generate new key
+
+### Google
+
+1. Visit [Google AI Studio](https://aistudio.google.com)
+2. Sign in with Google account
+3. Get API key from settings
+
+### Ollama (Local)
+
+1. Install from [ollama.ai](https://ollama.ai)
+2. Run `ollama pull llama2` (or other models)
+3. No API key needed
+
+## Model Selection Guide
+
+### For Beginners
+
+- **OpenAI GPT-3.5 Turbo** — Good balance of performance and cost
+- **Ollama Llama 2** — Free local option
+
+### For Professional Use
+
+- **OpenAI GPT-4** — Best overall capabilities
+- **Anthropic Claude 3.5 Sonnet** — Excellent reasoning
+- **Azure OpenAI GPT-4** — Enterprise features
+
+### For Privacy-Conscious Users
+
+- **Ollama** — Complete local control
+- **LM Studio** — Local with easy management
+
+### For Specific Tasks
+
+- **Code**: OpenAI GPT-4, Code Llama
+- **Writing**: Anthropic Claude, OpenAI GPT-4
+- **Analysis**: Google Gemini, Anthropic Claude
+- **Multilingual**: Qwen, OpenAI GPT-4
+
+## Troubleshooting
+
+### Common Provider Issues
+
+**"Provider not available"**
+
+```bash
+rawi provider --list  # Check supported providers
+```
+
+**"Invalid API key"**
+
+```bash
+rawi configure --provider <provider> --api-key <new-key>
+```
+
+**"Model not found"**
+
+```bash
+rawi provider --models <provider>  # Check available models
+```
+
+**Ollama connection issues**
+
+```bash
+# Check if Ollama is running
+curl http://localhost:11434/api/tags
+```
+
+## See Also
+
+- [configure command](./configure) — Setting up providers
+- [Supported AI Providers](../configure/providers) — Detailed provider guide
+- [Configuration Guide](../configure) — Complete setup instructions

@@ -5,6 +5,7 @@ description: Welcome to the comprehensive documentation for Rawi (راوي), a d
 
 import Clarity from '../../../components/clarity.astro';
 import {Steps} from '@astrojs/starlight/components';
+import {Tabs, TabItem} from '@astrojs/starlight/components';
 
 <Clarity />
 
@@ -48,9 +49,36 @@ After you have the required credentials:
 
 1. **Install Rawi CLI:**
 
-   ```bash
-   npm install -g rawi
-   ```
+   <Tabs>
+      <TabItem label="npm" icon="npm">
+
+         ```bash
+         npm install -g rawi
+         ```
+
+      </TabItem>
+      <TabItem label="pnpm" icon="pnpm">
+
+         ```bash
+         pnpm add -g rawi
+         ```
+
+      </TabItem>
+      <TabItem label="yarn" icon="seti:yarn">
+
+         ```bash
+         yarn global add rawi
+         ```
+
+      </TabItem>
+      <TabItem label="bun" icon="bun">
+
+         ```bash
+         bun add -g rawi
+         ```
+
+      </TabItem>
+   </Tabs>
 
 2. **Configure your first provider (interactive):**
 

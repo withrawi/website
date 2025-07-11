@@ -1,27 +1,21 @@
 ---
-title: Rawi (راوي) Documentation | Reference
-description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+title: Command Reference
+description: Complete reference for all Rawi commands, options, and capabilities.
 ---
 
-import Clarity from '../../../components/clarity.astro';
+Complete reference for all Rawi commands, options, and capabilities.
 
-<Clarity />
-
-# rawi
-
-## Description
+## Overview
 
 Rawi (راوي) is a unified command-line tool to interact with multiple AI providers, manage chat sessions, and automate AI-powered workflows directly from your terminal.
 
 ## Synopsis
 
-```bash
-rawi [options] <command> [subcommand] [parameters]
+```
+rawi [global-options] <command> [command-options] [arguments]
 ```
 
-Use `rawi <command> --help` for information on a specific command. Use `rawi help` to view a list of available commands and topics. The synopsis for each command shows its parameters and their usage. Optional parameters are shown in square brackets.
-
----
+Use `rawi <command> --help` for information on a specific command.
 
 ## Global Options
 
@@ -42,53 +36,344 @@ Use `rawi <command> --help` for information on a specific command. Use `rawi hel
 | `--no-verify-ssl`      | boolean | Do not verify SSL certificates.                                                                       |
 | `--no-sign-request`    | boolean | Do not sign requests (for local providers).                                                           |
 
----
+## Core Commands
 
-## Available Commands
+### [ask](./ask) — AI Conversations
 
-| Command     | Description                                  |
-| ----------- | -------------------------------------------- |
-| `ask`       | Ask AI a question and get a response         |
-| `configure` | Configure AI provider settings and profiles  |
-| `history`   | Manage chat history and sessions             |
-| `info`      | Display system and configuration information |
+Start conversations with AI providers. Supports streaming responses, file attachments, act templates, and session management.
 
-Use `rawi <command> --help` for detailed usage and options.
+**Quick Examples:**
 
----
+```bash
+# Simple question
+rawi ask "Explain async/await in JavaScript"
+
+# With file context
+rawi ask "Review this code" --file src/app.js
+
+# Using act template
+rawi ask "Optimize this SQL" --act database_expert
+
+# Continue previous session
+rawi ask "Add error handling" --continue
+```
+
+**Use Cases:**
+
+- Code reviews and debugging
+- Technical explanations
+- Creative writing
+- Data analysis
+- Problem solving
+
+### [configure](./configure) — Setup & Management
+
+Configure AI providers, manage profiles, and customize Rawi's behavior. Supports interactive setup and manual configuration.
+
+**Quick Examples:**
+
+```bash
+# Interactive setup (recommended for first-time users)
+rawi configure
+
+# Manual OpenAI setup
+rawi configure --provider openai --model gpt-4o --api-key sk-your-key
+
+# Work profile setup
+rawi configure --profile work --provider azure --resource-name company-openai
+
+# List all profiles
+rawi configure --list
+```
+
+**Use Cases:**
+
+- Initial setup and onboarding
+- Multiple provider management
+- Team configuration standardization
+- Environment-specific settings
+
+### [history](./history) — Conversation Management
+
+Search, manage, export, and analyze your AI conversation history and sessions.
+
+**Quick Examples:**
+
+```bash
+# Show recent conversations
+rawi history
+
+# Search conversations
+rawi history --search "docker deployment"
+
+# Export history
+rawi history export --format json --output backup.json
+
+# Usage statistics
+rawi history stats --from 2024-01-01
+```
+
+**Use Cases:**
+
+- Finding previous solutions
+- Conversation analytics
+- Data export and backup
+- Usage monitoring
+
+### [info](./info) — System Information
+
+Get detailed information about your Rawi installation, configuration, and system status.
+
+**Quick Examples:**
+
+```bash
+# System overview
+rawi info
+
+# Profile details
+rawi info --profiles
+
+# Provider status
+rawi info --providers
+```
+
+**Use Cases:**
+
+- Configuration troubleshooting
+- System health monitoring
+- Support information gathering
+- Setup verification
 
 ## Supported AI Providers
 
-| Provider       | API Key Required | Local | Best For                    |
-| -------------- | ---------------- | ----- | --------------------------- |
-| OpenAI         | Yes              | No    | General, coding, creative   |
-| Anthropic      | Yes              | No    | Safety, long-form           |
-| Google Gemini  | Yes              | No    | Fast, multimodal            |
-| Ollama         | No               | Yes   | Privacy, offline, free      |
-| Azure OpenAI   | Yes              | No    | Enterprise, compliance      |
-| Amazon Bedrock | Yes (AWS creds)  | No    | AWS integration, enterprise |
-| Qwen           | Yes              | No    | Multilingual, Chinese       |
-| xAI            | Yes              | No    | Real-time, conversational   |
+| Provider      | Models Available       | API Key Required | Local | Best For                     |
+| ------------- | ---------------------- | ---------------- | ----- | ---------------------------- |
+| **OpenAI**    | GPT-4, GPT-4o, GPT-3.5 | Yes              | No    | General, coding, creative    |
+| **Anthropic** | Claude 3.5 Sonnet      | Yes              | No    | Safety, long-form analysis   |
+| **Google**    | Gemini 1.5 Pro         | Yes              | No    | Fast, multimodal             |
+| **Ollama**    | Llama 2, CodeLlama     | No               | Yes   | Privacy, offline, free       |
+| **Azure**     | GPT-4, GPT-3.5         | Yes + Resource   | No    | Enterprise, compliance       |
+| **Bedrock**   | Claude, Llama          | AWS Credentials  | No    | AWS integration, enterprise  |
+| **xAI**       | Grok                   | Yes              | No    | Real-time, conversational    |
+| **Qwen**      | Qwen Max, Qwen Plus    | Yes              | No    | Multilingual, Chinese        |
+| **LM Studio** | Various Local Models   | No               | Yes   | Local hosting, custom models |
 
-See `rawi configure --list-providers` for a full list and setup instructions.
-
----
-
-## Example Usage
+### Provider Setup Quick Reference
 
 ```bash
-# Ask a question using the default profile
-rawi ask "What is TypeScript?"
+# OpenAI
+rawi configure --provider openai --model gpt-4o --api-key sk-your-key
 
-# Use a specific profile
-rawi ask "Summarize this code" --profile work
+# Anthropic
+rawi configure --provider anthropic --model claude-3-5-sonnet-20241022 --api-key sk-ant-your-key
 
-# Configure a new provider profile
-rawi configure --profile openai --provider openai --model gpt-4o --api-key sk-...
+# Ollama (local)
+rawi configure --provider ollama --model llama2
 
-# List all chat sessions
-rawi history
+# Azure OpenAI
+rawi configure --provider azure --model gpt-4 --api-key your-key --resource-name your-resource
 
-# Show system info
-rawi info
+# AWS Bedrock
+rawi configure --provider bedrock --model anthropic.claude-3-sonnet --region us-east-1 --use-provider-chain
 ```
+
+## Command Patterns
+
+### Basic Usage Patterns
+
+```bash
+# Question → Answer
+rawi ask "What is Docker?"
+
+# Configuration → Usage
+rawi configure --provider openai
+rawi ask "Hello world"
+
+# History → Search → Reuse
+rawi history --search "deployment"
+rawi ask "Continue that deployment discussion" --continue abc123
+```
+
+### Advanced Workflows
+
+```bash
+# Code Review Workflow
+rawi ask "Review this PR" --file changes.diff --act code_reviewer --profile work
+
+# Data Analysis Workflow
+rawi ask "Analyze this dataset" --file data.csv --act data_analyst --temperature 0.1
+
+# Writing Workflow
+rawi ask "Write a blog post about AI" --act content_writer --temperature 0.8 --max-tokens 3000
+```
+
+### Automation Patterns
+
+```bash
+# Automated code review
+git diff HEAD~1 | rawi ask "Review these changes" --act code_reviewer --profile ci
+
+# Daily standup prep
+rawi ask "Summarize yesterday's commits" --file $(git log --since="1 day ago" --pretty=format:"%h %s")
+
+# Documentation generation
+rawi ask "Generate README for this project" --file package.json --act documentation_expert
+```
+
+## Environment Integration
+
+### Shell Integration
+
+Add to your `.bashrc` or `.zshrc`:
+
+```bash
+# Quick ask alias
+alias ask='rawi ask'
+
+# Code review alias
+alias review='rawi ask --act code_reviewer'
+
+# Git commit message helper
+alias commit-msg='git diff --cached | rawi ask "Write a commit message for these changes" --max-tokens 100'
+```
+
+### IDE Integration
+
+Most IDEs can be configured to run Rawi commands:
+
+```bash
+# VS Code task
+{
+  "label": "AI Code Review",
+  "type": "shell",
+  "command": "rawi ask 'Review the current file' --file ${file} --act code_reviewer"
+}
+```
+
+### CI/CD Integration
+
+```yaml
+# GitHub Actions example
+- name: AI Code Review
+  run: |
+    git diff origin/main...HEAD | rawi ask "Review this PR" --act code_reviewer --profile ci > review.md
+    gh pr comment --body-file review.md
+```
+
+## Configuration Management
+
+### Profile Strategy
+
+```bash
+# Development profiles
+rawi configure --profile dev-fast --provider openai --model gpt-3.5-turbo --temperature 0.3
+rawi configure --profile dev-thorough --provider anthropic --model claude-3-5-sonnet --temperature 0.1
+
+# Work profiles
+rawi configure --profile work --provider azure --model gpt-4 --resource-name company-ai
+rawi configure --profile personal --provider openai --model gpt-4o --api-key personal-key
+
+# Specialized profiles
+rawi configure --profile code-review --provider anthropic --temperature 0.1 --max-tokens 4000
+rawi configure --profile creative --provider openai --temperature 0.9 --max-tokens 3000
+```
+
+### Environment Variables
+
+```bash
+# Default configuration
+export RAWI_PROFILE="work"
+export RAWI_PROVIDER="openai"
+export RAWI_MODEL="gpt-4"
+
+# API keys
+export OPENAI_API_KEY="sk-your-openai-key"
+export ANTHROPIC_API_KEY="sk-ant-your-anthropic-key"
+export GOOGLE_API_KEY="your-google-key"
+```
+
+## Best Practices
+
+### Security
+
+1. **API Key Management**: Use environment variables for production
+2. **Profile Separation**: Different profiles for different security contexts
+3. **Local Providers**: Use Ollama for sensitive data
+4. **History Management**: Regular cleanup of conversation history
+
+### Performance
+
+1. **Model Selection**: Choose appropriate models for your use case
+2. **Token Limits**: Set reasonable limits to control costs
+3. **Temperature Settings**: Lower for factual tasks, higher for creative
+4. **Streaming**: Enable streaming for real-time feedback
+
+### Organization
+
+1. **Meaningful Profiles**: Use descriptive names like `work-gpt4`, `local-dev`
+2. **Consistent Naming**: Standardize profile naming across teams
+3. **Documentation**: Document your profile configurations
+4. **Regular Maintenance**: Clean up unused profiles and history
+
+## Troubleshooting
+
+### Common Issues
+
+**Command not found:**
+
+```bash
+# Check installation
+which rawi
+# Reinstall if needed
+npm install -g rawi
+```
+
+**Configuration errors:**
+
+```bash
+# Check configuration
+rawi info --profiles
+# Reset if needed
+rawi configure --reset
+```
+
+**Provider connection issues:**
+
+```bash
+# Test configuration
+rawi configure --test
+# Check network connectivity
+ping api.openai.com
+```
+
+**History issues:**
+
+```bash
+# Check history location
+rawi info | grep "History:"
+# Fix permissions if needed
+chmod 755 ~/.config/rawi/
+```
+
+### Getting Help
+
+```bash
+# Command help
+rawi <command> --help
+
+# System information
+rawi info
+
+# Debug mode
+rawi --debug ask "test question"
+
+# Verbose output
+rawi ask "test" --verbose
+```
+
+## See Also
+
+- [Getting Started](../getting-started/) — Installation and initial setup
+- [Configuration Guide](../configure/) — Detailed configuration options
+- [Advanced Features](../advanced/) — Sessions, profiles, and shell integration
+- [Workflows](../workflows/) — Common use patterns and examples

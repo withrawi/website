@@ -1,7 +1,8 @@
 import starlight from '@astrojs/starlight';
 import {pluginCodeOutput} from '@fujocoded/expressive-code-output';
 import {defineConfig} from 'astro/config';
-import starlightVersions from 'starlight-versions';
+
+// import starlightVersions from 'starlight-versions';
 
 export default defineConfig({
   integrations: [
@@ -10,14 +11,14 @@ export default defineConfig({
         plugins: [pluginCodeOutput()],
       },
       plugins: [
-        starlightVersions({
-          versions: [
-            {
-              slug: '0.0.x',
-              label: 'rawi CLI 0.0.x',
-            },
-          ],
-        }),
+        // starlightVersions({
+        //   versions: [
+        //     {
+        //       slug: '0.0.x',
+        //       label: 'rawi CLI 0.0.x',
+        //     },
+        //   ],
+        // }),
       ],
       logo: {
         src: '/src/assets/rawi.png',
@@ -62,6 +63,10 @@ export default defineConfig({
               slug: 'getting-started/install',
             },
             {
+              label: 'Quick Start Guide',
+              slug: 'getting-started/quickstart',
+            },
+            {
               label: 'Past releases',
               slug: 'getting-started/version',
             },
@@ -81,10 +86,6 @@ export default defineConfig({
             {
               label: 'Configuration settings',
               slug: 'configure/settings',
-            },
-            {
-              label: 'Environment Variables',
-              slug: 'configure/envvars',
             },
             {
               label: 'Command Line Options',
@@ -122,6 +123,69 @@ export default defineConfig({
             {
               label: 'info',
               slug: 'reference/info',
+            },
+            {
+              label: 'act',
+              slug: 'reference/act',
+            },
+            {
+              label: 'provider',
+              slug: 'reference/provider',
+            },
+          ],
+        },
+        {
+          label: 'Advanced Features',
+          items: [
+            {
+              label: 'Session Management',
+              slug: 'advanced/sessions',
+            },
+            {
+              label: 'Profile Management',
+              slug: 'advanced/profiles',
+            },
+            {
+              label: 'Shell Integration',
+              slug: 'advanced/shell-integration',
+            },
+            {
+              label: 'Usage Patterns',
+              slug: 'advanced/usage',
+            },
+          ],
+        },
+        {
+          label: 'Workflows',
+          items: [
+            {
+              label: 'Overview',
+              slug: 'workflows',
+            },
+            {
+              label: 'Development Workflow',
+              slug: 'workflows/development',
+            },
+            {
+              label: 'Content Creation',
+              slug: 'workflows/content-creation',
+            },
+            {
+              label: 'Research & Analysis',
+              slug: 'workflows/research',
+            },
+          ],
+        },
+        {
+          label: 'Help & Support',
+          items: [
+            {
+              label: 'FAQ',
+              slug: 'help/faq',
+            },
+            {
+              label: 'Troubleshooting',
+              slug: 'help/troubleshooting',
             },
           ],
         },

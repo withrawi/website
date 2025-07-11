@@ -1,0 +1,872 @@
+---
+title: Troubleshooting
+description: Comprehensive troubleshooting guide for common Rawi issues and their solutions.
+---
+
+This guide helps you diagnose and resolve common issues with Rawi.
+
+## Quick Diagnostics
+
+### Check Rawi Status
+
+```bash
+# Check if Rawi is properly installed
+rawi --version
+
+# View current configuration
+rawi info
+
+# Test basic functionality
+rawi ask "Hello, are you working?"
+```
+
+### Common Quick Fixes
+
+Before diving into specific issues, try these common solutions:
+
+1. **Update Rawi**: `npm update -g rawi`
+2. **Clear configuration**: `rawi configure --reset`
+3. **Restart terminal**: Close and reopen your terminal
+4. **Check permissions**: Ensure proper file permissions for config directory
+
+---
+
+## Installation Issues
+
+### Installation Fails
+
+**Problem**: `npm install -g rawi` fails
+
+**Symptoms**:
+
+- Permission denied errors
+- Network timeout errors
+- Package not found errors
+
+**Solutions**:
+
+```bash
+# Try with elevated permissions (Linux/macOS)
+sudo npm install -g rawi
+
+# Use npm with different registry
+npm install -g rawi --registry https://registry.npmjs.org/
+
+# Clear npm cache and retry
+npm cache clean --force
+npm install -g rawi
+
+# Use different package manager
+pnpm add -g rawi
+# or
+yarn global add rawi
+# or
+bun add -g rawi
+```
+
+### Command Not Found
+
+**Problem**: `rawi: command not found` after installation
+
+**Symptoms**:
+
+- Bash/shell doesn't recognize `rawi` command
+- Works with `npx rawi` but not `rawi`
+
+**Solutions**:
+
+```bash
+# Check if npm global bin is in PATH
+npm config get prefix
+echo $PATH
+
+# Add npm global bin to PATH (add to ~/.bashrc or ~/.zshrc)
+export PATH="$(npm config get prefix)/bin:$PATH"
+
+# Alternative: Use npx
+npx rawi --version
+
+# Check installation location
+which rawi
+ls -la $(npm config get prefix)/bin/rawi
+
+# For Windows, add to PATH in System Environment Variables
+```
+
+### Permission Errors
+
+**Problem**: Permission denied during installation or usage
+
+**Solutions**:
+
+```bash
+# Fix npm permissions (preferred method)
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+
+# Alternative: Change npm permissions
+sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+
+# Windows: Run terminal as administrator
+```
+
+### Node.js Version Issues
+
+**Problem**: Incompatible Node.js version
+
+**Symptoms**:
+
+- `engine "node" is incompatible` error
+- Syntax errors during installation
+
+**Solutions**:
+
+```bash
+# Check Node.js version
+node --version
+
+# Update Node.js to latest LTS
+# Using nvm (recommended)
+nvm install --lts
+nvm use --lts
+
+# Using package manager
+# Ubuntu/Debian
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# macOS with Homebrew
+brew install node
+
+# Windows: Download from nodejs.org
+```
+
+---
+
+## Configuration Issues
+
+### No Provider Configured
+
+**Problem**: "No provider configured" error
+
+**Symptoms**:
+
+- Error when trying to ask questions
+- Empty configuration when running `rawi info`
+
+**Solutions**:
+
+```bash
+# Run interactive configuration
+rawi configure
+
+# Configure manually
+rawi configure --provider openai --api-key sk-your-key --model gpt-4
+
+# Check current configuration
+rawi configure --show
+
+# Reset configuration if corrupted
+rawi configure --reset
+```
+
+### API Key Issues
+
+**Problem**: "Invalid API key" or "Authentication failed"
+
+**Symptoms**:
+
+- 401 Unauthorized errors
+- "Invalid API key" messages
+- Authentication failures
+
+**Diagnosis**:
+
+```bash
+# Check current API key (partially hidden)
+rawi configure --show
+
+# Test API key manually
+# For OpenAI
+curl -s https://api.openai.com/v1/models \
+  -H "Authorization: Bearer $OPENAI_API_KEY"
+
+# For Anthropic
+curl -s https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY"
+```
+
+**Solutions**:
+
+```bash
+# Update API key
+rawi configure --provider openai --api-key sk-your-new-key
+
+# Use environment variables
+export OPENAI_API_KEY="sk-your-key"
+export ANTHROPIC_API_KEY="sk-ant-your-key"
+
+# Verify key format
+# OpenAI: starts with sk-
+# Anthropic: starts with sk-ant-
+# Google: alphanumeric string
+
+# Check for extra spaces or characters
+echo "$OPENAI_API_KEY" | wc -c  # Should be expected length
+```
+
+### Profile Issues
+
+**Problem**: Profile not found or corrupted
+
+**Symptoms**:
+
+- "Profile 'name' not found" error
+- Inconsistent behavior between profiles
+
+**Solutions**:
+
+```bash
+# List all profiles
+rawi configure --list
+
+# Create missing profile
+rawi configure --profile work --provider openai --api-key sk-key
+
+# Reset specific profile
+rawi configure --profile work --reset
+
+# Delete corrupted profile
+rm ~/.config/rawi/profiles/work.json
+
+# Export and reimport profile
+rawi configure --profile work --export > work-backup.json
+rawi configure --profile work-new --import work-backup.json
+```
+
+### Configuration File Corruption
+
+**Problem**: Configuration files are corrupted or invalid
+
+**Symptoms**:
+
+- JSON parsing errors
+- Unexpected behavior
+- Crashes on startup
+
+**Solutions**:
+
+```bash
+# Backup current config
+cp -r ~/.config/rawi/ ~/.config/rawi-backup/
+
+# Reset all configuration
+rawi configure --reset
+
+# Manually check configuration files
+cat ~/.config/rawi/config.json | jq '.'  # Validate JSON
+
+# Remove corrupted files
+rm ~/.config/rawi/config.json
+rm -rf ~/.config/rawi/profiles/
+
+# Reconfigure from scratch
+rawi configure
+```
+
+---
+
+## API and Network Issues
+
+### Network Connection Errors
+
+**Problem**: Connection timeouts or network errors
+
+**Symptoms**:
+
+- "Request timeout" errors
+- "Network error" messages
+- Connection refused errors
+
+**Diagnosis**:
+
+```bash
+# Test internet connection
+ping google.com
+
+# Test API endpoint connectivity
+# OpenAI
+curl -s https://api.openai.com/v1/models
+
+# Anthropic
+curl -s https://api.anthropic.com/
+
+# Check for proxy/firewall issues
+echo $HTTP_PROXY
+echo $HTTPS_PROXY
+```
+
+**Solutions**:
+
+```bash
+# Configure proxy if needed
+export HTTP_PROXY=http://proxy.company.com:8080
+export HTTPS_PROXY=http://proxy.company.com:8080
+
+# Increase timeout settings
+rawi configure --timeout 60  # 60 seconds
+
+# Try different endpoint (if available)
+rawi configure --base-url https://api.openai.com/v1
+
+# Use local provider as fallback
+rawi configure --provider ollama --model llama2
+```
+
+### Rate Limiting
+
+**Problem**: "Rate limit exceeded" errors
+
+**Symptoms**:
+
+- 429 status code errors
+- "Rate limit exceeded" messages
+- Requests failing after working initially
+
+**Solutions**:
+
+```bash
+# Wait and retry
+sleep 60
+rawi ask "test question"
+
+# Check usage limits on provider dashboard
+# OpenAI: platform.openai.com/usage
+# Anthropic: console.anthropic.com/dashboard
+
+# Use different model with higher limits
+rawi configure --model gpt-3.5-turbo  # Usually has higher limits
+
+# Upgrade API plan if needed
+
+# Add delays in scripts
+for file in *.txt; do
+    cat "$file" | rawi ask "process this"
+    sleep 5  # Wait 5 seconds between requests
+done
+```
+
+### API Quota Exceeded
+
+**Problem**: Monthly quota or credit limit reached
+
+**Symptoms**:
+
+- "Quota exceeded" errors
+- Billing-related error messages
+
+**Solutions**:
+
+```bash
+# Check usage and billing on provider website
+
+# Switch to different provider temporarily
+rawi configure --profile backup --provider anthropic
+rawi ask --profile backup "test question"
+
+# Use local provider
+rawi configure --provider ollama --model llama2
+
+# Set up billing alerts on provider dashboard
+```
+
+---
+
+## Session and History Issues
+
+### Session Not Found
+
+**Problem**: "Session not found" error
+
+**Symptoms**:
+
+- Can't continue previous conversations
+- Session IDs not recognized
+
+**Solutions**:
+
+```bash
+# List available sessions
+rawi history --sessions
+
+# Check session ID format
+rawi history --sessions --verbose
+
+# Start new session if old one is lost
+rawi ask --new-session "Continue previous discussion about..."
+
+# Clean up corrupted sessions
+rawi history --cleanup
+```
+
+### History Corruption
+
+**Problem**: History files corrupted or inaccessible
+
+**Symptoms**:
+
+- Can't access previous conversations
+- Error when running history commands
+
+**Solutions**:
+
+```bash
+# Check history directory
+ls -la ~/.config/rawi/history/
+
+# Backup current history
+cp -r ~/.config/rawi/history/ ~/.config/rawi/history-backup/
+
+# Clean corrupted history
+rawi history --cleanup --force
+
+# Reset history if severely corrupted
+rm -rf ~/.config/rawi/history/
+mkdir ~/.config/rawi/history/
+```
+
+### Session Context Lost
+
+**Problem**: AI doesn't remember previous conversation context
+
+**Symptoms**:
+
+- Responses don't reference earlier messages
+- Context seems reset
+
+**Solutions**:
+
+```bash
+# Verify you're using the correct session
+rawi history --sessions
+rawi ask --session correct-session-id "continue our discussion"
+
+# Check session hasn't expired
+rawi history --session session-id --show
+
+# Start new session with context
+rawi ask --new-session "Previously we were discussing X, now I want to..."
+```
+
+---
+
+## Performance Issues
+
+### Slow Response Times
+
+**Problem**: Rawi takes too long to respond
+
+**Symptoms**:
+
+- Long wait times for responses
+- Timeouts occurring
+
+**Diagnosis**:
+
+```bash
+# Test with simple question
+time rawi ask "What is 2+2?"
+
+# Check model being used
+rawi configure --show
+
+# Test different providers
+rawi configure --provider anthropic
+time rawi ask "What is 2+2?"
+```
+
+**Solutions**:
+
+```bash
+# Use faster model
+rawi configure --model gpt-3.5-turbo  # Faster than GPT-4
+
+# Reduce input size
+head -100 large-file.txt | rawi ask "analyze this sample"
+
+# Use local provider for speed
+rawi configure --provider ollama --model llama2
+
+# Increase timeout if needed
+rawi configure --timeout 120  # 2 minutes
+```
+
+### High Memory Usage
+
+**Problem**: Rawi using excessive memory
+
+**Symptoms**:
+
+- System slowdown
+- Out of memory errors
+
+**Solutions**:
+
+```bash
+# Monitor memory usage
+top -p $(pgrep -f rawi)
+
+# Reduce context window
+rawi configure --max-tokens 1000  # Smaller responses
+
+# Clean up old sessions
+rawi history --cleanup --older-than 30d
+
+# Restart Rawi process
+pkill -f rawi  # If running in background
+```
+
+### Large File Processing
+
+**Problem**: Issues processing large files
+
+**Symptoms**:
+
+- Timeouts with large inputs
+- "Input too large" errors
+
+**Solutions**:
+
+```bash
+# Process in chunks
+split -l 100 large-file.txt chunk_
+for chunk in chunk_*; do
+    cat "$chunk" | rawi ask "analyze this section"
+done
+
+# Use head/tail for samples
+head -500 large-file.txt | rawi ask "analyze this sample"
+
+# Compress before sending
+gzip -c large-file.txt | base64 | rawi ask "analyze this compressed data"
+```
+
+---
+
+## Shell Integration Issues
+
+### Pipe Issues
+
+**Problem**: Problems with shell pipes
+
+**Symptoms**:
+
+- Broken pipe errors
+- Data not flowing correctly
+
+**Solutions**:
+
+```bash
+# Check pipe syntax
+echo "test" | rawi ask "process this"
+
+# Handle broken pipes
+cat large-file.txt | rawi ask "analyze" 2>/dev/null || echo "Pipe failed"
+
+# Use intermediate files if pipes fail
+cat input.txt > temp.txt
+rawi ask "analyze this file" < temp.txt
+rm temp.txt
+```
+
+### Output Formatting Issues
+
+**Problem**: Output not displaying correctly
+
+**Symptoms**:
+
+- Garbled text
+- Missing formatting
+- ANSI color codes in files
+
+**Solutions**:
+
+```bash
+# Force plain text output
+rawi ask --format plain "your question"
+
+# Remove ANSI codes when saving to file
+rawi ask "question" | sed 's/\x1b\[[0-9;]*m//g' > clean-output.txt
+
+# Use different terminal
+# Try different terminal emulator if display issues persist
+```
+
+### Environment Variable Issues
+
+**Problem**: Environment variables not working
+
+**Symptoms**:
+
+- API keys not recognized
+- Configuration not applied
+
+**Solutions**:
+
+```bash
+# Check if variables are set
+echo $OPENAI_API_KEY
+echo $RAWI_PROFILE
+
+# Set variables in current session
+export OPENAI_API_KEY="sk-your-key"
+
+# Make permanent (add to ~/.bashrc or ~/.zshrc)
+echo 'export OPENAI_API_KEY="sk-your-key"' >> ~/.bashrc
+source ~/.bashrc
+
+# Check variable loading
+env | grep -i rawi
+env | grep -i openai
+```
+
+---
+
+## Platform-Specific Issues
+
+### Windows Issues
+
+**Common Windows problems and solutions**:
+
+```powershell
+# PowerShell execution policy
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Path issues in Windows
+$env:PATH += ";$env:APPDATA\npm"
+
+# Use Windows-style paths
+rawi ask "analyze this" < C:\path\to\file.txt
+
+# Handle Windows line endings
+dos2unix file.txt  # Convert if needed
+```
+
+### macOS Issues
+
+**Common macOS problems**:
+
+```bash
+# Xcode command line tools
+xcode-select --install
+
+# Homebrew Node.js conflicts
+brew unlink node
+brew link node
+
+# Permission issues with system directories
+sudo chown -R $(whoami) /usr/local/lib/node_modules
+```
+
+### Linux Issues
+
+**Common Linux problems**:
+
+```bash
+# Node.js repository issues
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+
+# Permission issues
+sudo chown -R $USER:$USER ~/.npm
+
+# Missing dependencies
+sudo apt-get install build-essential
+
+# SELinux issues (if applicable)
+sudo setsebool -P httpd_can_network_connect 1
+```
+
+---
+
+## Error Message Reference
+
+### Common Error Messages and Solutions
+
+**"Error: Cannot find module 'rawi'"**
+
+```bash
+# Reinstall Rawi
+npm uninstall -g rawi
+npm install -g rawi
+```
+
+**"SyntaxError: Unexpected token"**
+
+```bash
+# Update Node.js
+node --version  # Should be 18+
+nvm install --lts
+```
+
+**"Error: Request timeout"**
+
+```bash
+# Increase timeout
+rawi configure --timeout 180
+
+# Check network connection
+ping api.openai.com
+```
+
+**"Error: Invalid JSON response"**
+
+```bash
+# Check API status
+curl -s https://status.openai.com/
+
+# Try different provider
+rawi configure --provider anthropic
+```
+
+**"Error: File not found"**
+
+```bash
+# Check file path
+ls -la ~/.config/rawi/
+cat ~/.config/rawi/config.json
+```
+
+---
+
+## Advanced Troubleshooting
+
+### Debug Mode
+
+Enable detailed logging for troubleshooting:
+
+```bash
+# Enable debug output
+export DEBUG=rawi:*
+rawi ask "test question"
+
+# Verbose mode
+rawi ask --verbose "test question"
+
+# Save debug output
+DEBUG=rawi:* rawi ask "test" 2> debug.log
+```
+
+### Log Analysis
+
+```bash
+# Check system logs
+# macOS
+log show --predicate 'process == "rawi"' --last 1h
+
+# Linux
+journalctl -u rawi --since "1 hour ago"
+
+# Check application logs
+tail -f ~/.config/rawi/logs/rawi.log  # If logging enabled
+```
+
+### Configuration Validation
+
+```bash
+# Validate JSON configuration
+cat ~/.config/rawi/config.json | jq '.'
+
+# Check file permissions
+ls -la ~/.config/rawi/
+chmod 700 ~/.config/rawi/
+chmod 600 ~/.config/rawi/config.json
+```
+
+### Network Debugging
+
+```bash
+# Trace network requests
+export NODE_DEBUG=net,tls
+rawi ask "test"
+
+# Use proxy for debugging
+export HTTPS_PROXY=http://localhost:8080  # With proxy tool like mitmproxy
+
+# Check DNS resolution
+nslookup api.openai.com
+dig api.openai.com
+```
+
+---
+
+## Getting Help
+
+### Collecting Diagnostic Information
+
+When reporting issues, include:
+
+```bash
+# System information
+rawi info
+node --version
+npm --version
+uname -a  # Linux/macOS
+ver       # Windows
+
+# Configuration (sanitized)
+rawi configure --show  # Remove sensitive data before sharing
+
+# Recent error logs
+tail -20 ~/.config/rawi/logs/error.log
+```
+
+### Reporting Bugs
+
+1. **Check existing issues**: Search GitHub issues first
+2. **Provide minimal reproduction**: Simple steps to reproduce
+3. **Include environment details**: OS, Node.js version, Rawi version
+4. **Sanitize sensitive data**: Remove API keys from logs
+
+### Community Support
+
+- **GitHub Issues**: [github.com/withrawi/rawi/issues](https://github.com/withrawi/rawi/issues)
+- **Discussions**: [github.com/withrawi/rawi/discussions](https://github.com/withrawi/rawi/discussions)
+- **Documentation**: This documentation site
+
+---
+
+## Preventive Measures
+
+### Regular Maintenance
+
+```bash
+# Update Rawi regularly
+npm update -g rawi
+
+# Clean up old sessions
+rawi history --cleanup --older-than 30d
+
+# Backup configuration
+cp -r ~/.config/rawi/ ~/.config/rawi-backup-$(date +%Y%m%d)
+
+# Verify configuration
+rawi info
+rawi ask "test connection"
+```
+
+### Best Practices
+
+1. **Keep backups**: Regular configuration backups
+2. **Monitor usage**: Check API usage regularly
+3. **Use version control**: Track configuration changes
+4. **Test after updates**: Verify functionality after updates
+5. **Use multiple providers**: Have backup providers configured
+
+## See Also
+
+- [FAQ](./faq) — Frequently asked questions
+- [Installation Guide](../getting-started/install) — Installation instructions
+- [Configuration Guide](../configure) — Configuration reference
+- [GitHub Issues](https://github.com/withrawi/rawi/issues) — Report bugs and get help

@@ -1,0 +1,465 @@
+---
+title: Profile Management
+description: Learn how to create and manage multiple configurations for different projects, providers, and use cases.
+---
+
+Profile management in Rawi allows you to maintain different configurations for various projects, AI providers, and use cases. Each profile can have its own provider, model, API keys, and settings.
+
+## What Are Profiles?
+
+Profiles are named configurations that contain:
+
+- AI provider settings (OpenAI, Anthropic, etc.)
+- Model selection and parameters
+- API keys and endpoints
+- Default templates and preferences
+- Custom settings for specific use cases
+
+## Basic Profile Commands
+
+### Listing Profiles
+
+```bash
+# List all profiles
+rawi configure --list
+
+# Show current active profile
+rawi configure --show
+
+# Show specific profile details
+rawi configure --profile work --show
+```
+
+### Creating Profiles
+
+```bash
+# Create a new profile interactively
+rawi configure --profile work
+
+# Create profile with specific settings
+rawi configure --profile personal \
+  --provider openai \
+  --model gpt-4 \
+  --api-key sk-your-personal-key
+
+# Create profile for local AI
+rawi configure --profile local \
+  --provider ollama \
+  --model llama2 \
+  --base-url http://localhost:11434
+```
+
+### Using Profiles
+
+```bash
+# Use specific profile for a question
+rawi ask --profile work "How do I optimize this database query?"
+
+# Switch default profile
+rawi configure --profile personal --set-default
+
+# Use profile with other features
+rawi ask --profile work --act code-reviewer "Review this code"
+```
+
+## Common Profile Setups
+
+### Work vs Personal Profiles
+
+**Work Profile (Enterprise/Secure):**
+
+```bash
+rawi configure --profile work \
+  --provider azure \
+  --model gpt-4 \
+  --api-key your-work-key \
+  --base-url https://company.openai.azure.com \
+  --temperature 0.1
+```
+
+**Personal Profile (Flexible):**
+
+```bash
+rawi configure --profile personal \
+  --provider openai \
+  --model gpt-4 \
+  --api-key your-personal-key \
+  --temperature 0.7
+```
+
+### Provider-Specific Profiles
+
+**OpenAI Profile:**
+
+```bash
+rawi configure --profile openai-pro \
+  --provider openai \
+  --model gpt-4 \
+  --temperature 0.5 \
+  --max-tokens 2000
+```
+
+**Anthropic Profile:**
+
+```bash
+rawi configure --profile claude \
+  --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --temperature 0.3
+```
+
+**Local AI Profile:**
+
+```bash
+rawi configure --profile offline \
+  --provider ollama \
+  --model codellama \
+  --base-url http://localhost:11434
+```
+
+### Use Case Profiles
+
+**Code Review Profile:**
+
+```bash
+rawi configure --profile code-review \
+  --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --temperature 0.1 \
+  --default-act code-reviewer
+```
+
+**Creative Writing Profile:**
+
+```bash
+rawi configure --profile creative \
+  --provider openai \
+  --model gpt-4 \
+  --temperature 0.9 \
+  --default-act creative-writer
+```
+
+**Data Analysis Profile:**
+
+```bash
+rawi configure --profile data \
+  --provider openai \
+  --model gpt-4 \
+  --temperature 0.2 \
+  --default-act data-scientist
+```
+
+## Advanced Profile Management
+
+### Profile Configuration
+
+```bash
+# Set profile-specific settings
+rawi configure --profile work \
+  --temperature 0.1 \
+  --max-tokens 1500 \
+  --timeout 30 \
+  --retry-count 3
+
+# Configure profile defaults
+rawi configure --profile work \
+  --default-act software-engineer \
+  --auto-session true \
+  --verbose false
+```
+
+### Environment-Based Profiles
+
+**Development Environment:**
+
+```bash
+rawi configure --profile dev \
+  --provider ollama \
+  --model codellama \
+  --temperature 0.3
+```
+
+**Production Environment:**
+
+```bash
+rawi configure --profile prod \
+  --provider azure \
+  --model gpt-4 \
+  --temperature 0.1 \
+  --max-tokens 1000
+```
+
+**Testing Environment:**
+
+```bash
+rawi configure --profile test \
+  --provider openai \
+  --model gpt-3.5-turbo \
+  --temperature 0.2
+```
+
+## Profile Workflows
+
+### Project-Based Workflows
+
+```bash
+# Web development project
+rawi ask --profile web-dev "How do I implement SSR in Next.js?"
+
+# Mobile development project
+rawi ask --profile mobile "Best practices for React Native navigation?"
+
+# Data science project
+rawi ask --profile data-science "How do I visualize this dataset?"
+```
+
+### Team Collaboration
+
+```bash
+# Shared team profile (same settings for consistency)
+rawi configure --profile team-standard \
+  --provider azure \
+  --model gpt-4 \
+  --temperature 0.3 \
+  --max-tokens 1500
+
+# Individual customization
+rawi configure --profile john-personal \
+  --provider openai \
+  --model gpt-4 \
+  --temperature 0.7
+```
+
+### Cost Management
+
+**Premium Profile (High-quality, higher cost):**
+
+```bash
+rawi configure --profile premium \
+  --provider openai \
+  --model gpt-4 \
+  --max-tokens 4000
+```
+
+**Budget Profile (Good quality, lower cost):**
+
+```bash
+rawi configure --profile budget \
+  --provider openai \
+  --model gpt-3.5-turbo \
+  --max-tokens 1000
+```
+
+**Free Profile (Local, no API costs):**
+
+```bash
+rawi configure --profile free \
+  --provider ollama \
+  --model llama2
+```
+
+## Profile Best Practices
+
+### 1. Naming Conventions
+
+Use clear, descriptive names:
+
+```bash
+# Good naming
+work-azure
+personal-openai
+local-development
+code-review-claude
+
+# Avoid generic names
+profile1
+test
+temp
+```
+
+### 2. Environment Separation
+
+```bash
+# Separate work and personal
+rawi configure --profile work-openai
+rawi configure --profile personal-claude
+
+# Separate by project
+rawi configure --profile project-alpha
+rawi configure --profile project-beta
+```
+
+### 3. Provider Redundancy
+
+Set up multiple providers for reliability:
+
+```bash
+# Primary provider
+rawi configure --profile main --provider openai
+
+# Backup provider
+rawi configure --profile backup --provider anthropic
+
+# Local fallback
+rawi configure --profile local --provider ollama
+```
+
+### 4. Security Considerations
+
+```bash
+# Use environment variables for sensitive keys
+export OPENAI_API_KEY="sk-your-key"
+rawi configure --profile secure --provider openai --api-key "$OPENAI_API_KEY"
+
+# Separate profiles for different security levels
+rawi configure --profile public-demos --provider ollama  # No API keys
+rawi configure --profile internal --provider azure      # Company keys
+```
+
+## Profile Configuration Files
+
+### Location
+
+Profiles are stored in:
+
+- **Linux/macOS:** `~/.config/rawi/profiles/`
+- **Windows:** `%APPDATA%/rawi/profiles/`
+
+### Manual Editing
+
+```bash
+# Edit profile configuration directly
+nano ~/.config/rawi/profiles/work.json
+
+# Copy profile configuration
+cp ~/.config/rawi/profiles/work.json ~/.config/rawi/profiles/work-backup.json
+```
+
+### Profile Export/Import
+
+```bash
+# Export profile settings
+rawi configure --profile work --export > work-profile.json
+
+# Import profile settings
+rawi configure --profile new-work --import work-profile.json
+
+# Share team profile
+rawi configure --profile team --export | base64  # Share encoded config
+```
+
+## Troubleshooting Profiles
+
+### Common Profile Issues
+
+**Profile not found:**
+
+```bash
+# List available profiles
+rawi configure --list
+```
+
+**Profile authentication errors:**
+
+```bash
+# Check profile configuration
+rawi configure --profile work --show
+rawi configure --profile work --test-connection
+```
+
+**Profile conflicts:**
+
+```bash
+# Reset profile to defaults
+rawi configure --profile work --reset
+
+# Delete problematic profile
+rawi configure --profile old-profile --delete
+```
+
+### Profile Validation
+
+```bash
+# Test profile configuration
+rawi configure --profile work --validate
+
+# Check API connectivity
+rawi ask --profile work "test connection"
+
+# Verify model availability
+rawi provider --models openai
+```
+
+## Integration Examples
+
+### Profile + Sessions
+
+```bash
+# Start work session with work profile
+rawi ask --profile work --new-session "Starting the API refactoring project"
+
+# Continue with same profile and session
+rawi ask --profile work --session abc123 "How do we handle data migration?"
+```
+
+### Profile + Templates
+
+```bash
+# Code review with specific profile
+rawi ask --profile claude-code --act code-reviewer "Review this function"
+
+# Technical writing with creative profile
+rawi ask --profile creative --act technical-writer "Write user documentation"
+```
+
+### Profile + Shell Integration
+
+```bash
+# Analyze logs with data profile
+tail -f app.log | rawi ask --profile data-analysis "Summarize errors"
+
+# Code review with work profile
+cat src/app.js | rawi ask --profile work --act code-reviewer "Review this"
+```
+
+## Automation and Scripting
+
+### Profile-Based Scripts
+
+```bash
+#!/bin/bash
+# Daily standup helper
+rawi ask --profile work --new-session "Generate standup report for $(date +%Y-%m-%d)"
+```
+
+```bash
+#!/bin/bash
+# Code review automation
+for file in src/*.js; do
+    echo "Reviewing $file..."
+    cat "$file" | rawi ask --profile code-review --act code-reviewer "Review this file"
+done
+```
+
+### Environment Detection
+
+```bash
+#!/bin/bash
+# Auto-select profile based on directory
+if [[ $PWD == *"/work/"* ]]; then
+    PROFILE="work"
+elif [[ $PWD == *"/personal/"* ]]; then
+    PROFILE="personal"
+else
+    PROFILE="default"
+fi
+
+rawi ask --profile "$PROFILE" "$@"
+```
+
+## See Also
+
+- [configure command](../reference/configure) — Profile configuration details
+- [Supported AI Providers](../configure/providers) — Provider setup guides
+- [Environment Variables](../configure/envvars) — Environment-based configuration
+- [Session Management](./sessions) — Using profiles with sessions

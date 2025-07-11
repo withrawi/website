@@ -1,103 +1,360 @@
 ---
-title: Rawi (راوي) Documentation | Reference `ask` Command
-description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+title: ask — AI Assistant
+description: The ask command is the heart of Rawi — your direct interface to AI assistance. Use it to ask questions, get code reviews, analyze data, and much more.
 ---
 
-import Clarity from '../../../components/clarity.astro';
+The `ask` command is the heart of Rawi — your direct interface to AI assistance. Use it to ask questions, get code reviews, analyze data, and much more.
 
-<Clarity />
-
-# ask
-
-## Description
-
-Ask AI a question and get a response. Supports piped input from stdin. You can specify a profile, continue or start chat sessions, and use act templates for specialized prompts.
-
-See also: Rawi Documentation
-
-## Synopsis
+## Basic Usage
 
 ```
-rawi ask [options] [query]
+rawi ask [query] [options]
 ```
 
-- `query`  
-  The question or prompt to send to the AI (can be combined with piped input).
+### Simple Questions
+
+```bash
+# Basic question
+rawi ask "What is TypeScript?"
+
+# Multi-word questions (quotes recommended)
+rawi ask "How do I deploy a Node.js application to AWS?"
+
+# Code-related questions
+rawi ask "Explain async/await in JavaScript with examples"
+```
 
 ## Options
 
-- `-p, --profile <profile>` (string)  
-  Profile to use for AI configuration (default: "default").
+| Option                  | Alias | Description                                | Default   |
+| ----------------------- | ----- | ------------------------------------------ | --------- |
+| `--profile <profile>`   | `-p`  | Profile to use for AI configuration        | `default` |
+| `--session <sessionId>` | `-s`  | Continue an existing chat session          |           |
+| `--new-session`         | `-n`  | Start a new chat session                   |           |
+| `--act <template>`      |       | Use an act template by ID                  |           |
+| `--verbose`             |       | Show detailed status and debug information |           |
 
-- `--session <sessionId>` (string)  
-  Continue an existing chat session.
+## Session Management
 
-- `--new-session` (boolean)  
-  Start a new chat session.
+Sessions allow you to have continuous conversations where each question remembers the previous context.
 
-- `--act <template>` (string)  
-  Use an act template (e.g., ethereum-developer).
-
-- `--list-acts` (boolean)  
-  List all available act templates.
-
-- `--show` (boolean)  
-  Show details of the specified act template (use with --act).
-
-- `--verbose` (boolean)  
-  Show detailed status and debug information.
-
-- `-h, --help` (boolean)  
-  Display help for command.
-
-## Global Options
-
-- `--version` (boolean)  
-  Display the version of this tool.
-
-## Examples
-
-**Ask a question directly:**
+### Start a New Session
 
 ```bash
-$ rawi ask "What is the capital of France?"
+# Explicitly start a new session
+rawi ask "I'm building a React application" --new-session
+
+# Shorter version
+rawi ask "I'm building a React application" -n
 ```
 
-**Pipe input from another command:**
+### Continue a Conversation
 
 ```bash
-$ echo "Summarize this text" | rawi ask
+# Continue current session (automatic)
+rawi ask "How should I structure my components?"
+
+# Continue specific session
+rawi ask "What about state management?" --session abc123-def456
 ```
 
-**Use a specific profile:**
+### Session Workflow Example
 
 ```bash
-$ rawi ask -p work "Generate a Python script for data analysis"
+# Start a project conversation
+$ rawi ask "I'm building a REST API with Node.js and Express" --new-session
+🤖 Great! I'd be happy to help you build a REST API with Node.js and Express.
+What specific aspects would you like to focus on? Here are some areas I can assist with:
+...
+
+# Continue the conversation
+$ rawi ask "How should I structure my project folders?"
+🤖 Based on our discussion about your REST API, here's a recommended folder structure:
+...
+
+# Add more context
+$ rawi ask "What about database integration with MongoDB?"
+🤖 For your Express REST API, here's how to integrate MongoDB effectively:
+...
 ```
 
-**Continue a chat session:**
+## Act Templates
+
+Act templates transform the AI into specialized experts for different domains.
+
+### Using Templates
 
 ```bash
-$ rawi ask --session 12345 "Continue our previous conversation"
+# Use template with question
+rawi ask --act code-reviewer "Review this function for performance issues"
+
+# Combine with file input
+cat server.js | rawi ask --act security-expert "Analyze for vulnerabilities"
+
+# Use with profile
+rawi ask --act database-admin "Optimize this query" --profile work
 ```
 
-**Start a new chat session:**
+### Popular Templates
+
+#### Development
 
 ```bash
-$ rawi ask --new-session "Start a new topic"
+# Code review
+rawi ask --act code-reviewer "Review this Python function"
+
+# Linux terminal simulation
+rawi ask --act linux-terminal "list files in /home with details"
+
+# Software engineering
+rawi ask --act software-engineer "Design a scalable authentication system"
 ```
 
-**Use an act template:**
+#### Security
 
 ```bash
-$ rawi ask --act ethereum-developer "Write a smart contract"
+# Security analysis
+rawi ask --act security-expert "Audit this authentication code"
+
+# Cybersecurity specialist
+rawi ask --act cybersecurity-specialist "Assess web application vulnerabilities"
 ```
 
-**List all available act templates:**
+#### Documentation
 
 ```bash
-$ rawi ask --list-acts
+# Technical writing
+rawi ask --act technical-writer "Document this API endpoint"
+
+# API documentation
+rawi ask --act api-documentation-expert "Create docs for these REST endpoints"
 ```
+
+#### Database
+
+```bash
+# Database administration
+rawi ask --act database-expert "Optimize this SQL query"
+
+# Data analysis
+rawi ask --act data-scientist "Analyze trends in this dataset"
+```
+
+### Browse Templates
+
+```bash
+# List all available templates
+rawi act --list
+
+# Show template details
+rawi act --show code-reviewer
+```
+
+## Profile Usage
+
+Profiles let you use different AI providers and configurations for different tasks.
+
+### Using Specific Profiles
+
+```bash
+# Use work profile
+rawi ask "Review this code" --profile work
+
+# Use local profile (e.g., Ollama)
+rawi ask "Quick question" --profile local
+
+# Use analysis profile (e.g., Claude)
+rawi ask "Analyze this data" --profile analysis
+```
+
+### Profile + Template Combinations
+
+```bash
+# Use Claude for deep code analysis
+rawi ask --act code-reviewer "Analyze architecture" --profile claude
+
+# Use local AI for quick questions
+rawi ask --act linux-terminal "ls -la" --profile local
+
+# Use GPT-4 for documentation
+rawi ask --act technical-writer "Create README" --profile openai
+```
+
+## Shell Integration
+
+Rawi integrates seamlessly with shell commands and pipes.
+
+### Input from Pipes
+
+```bash
+# Analyze code files
+cat app.js | rawi ask --act code-reviewer "Review this JavaScript code"
+
+# Process command output
+ps aux | rawi ask "Which processes are using the most memory?"
+
+# Analyze logs
+tail -f error.log | rawi ask "Monitor for critical issues"
+
+# Git integration
+git diff | rawi ask "Summarize these changes"
+```
+
+### Chaining Commands
+
+```bash
+# Save AI responses
+rawi ask "Explain Docker containers" > docker-notes.txt
+
+# Process AI output
+rawi ask "List popular Python libraries" | grep -i "data"
+
+# Complex pipelines
+cat data.csv | rawi ask --act data-scientist "Analyze this data" | tee analysis.txt
+```
+
+## Advanced Usage
+
+### File Analysis
+
+```bash
+# Code review entire files
+cat src/server.js | rawi ask --act code-reviewer "Comprehensive code review focusing on security and performance"
+
+# Documentation generation
+cat api/routes.js | rawi ask --act technical-writer "Generate API documentation for these routes"
+
+# Error analysis
+cat error.log | rawi ask --act debugging-expert "Identify and categorize these errors"
+```
+
+### Multi-Step Workflows
+
+```bash
+# Development workflow
+rawi ask --new-session --act software-engineer "I'm building a user authentication system"
+rawi ask "What are the security considerations?"
+rawi ask "Show me the database schema"
+rawi ask "How should I handle password reset?"
+```
+
+### Batch Processing
+
+```bash
+# Review multiple files
+for file in src/*.js; do
+    echo "Reviewing $file..."
+    cat "$file" | rawi ask --act code-reviewer "Quick review of this file"
+done
+
+# Analyze logs from multiple servers
+for log in logs/*.log; do
+    cat "$log" | rawi ask --act system-administrator "Summarize issues in this log"
+done
+```
+
+## Tips and Best Practices
+
+### Effective Prompting
+
+1. **Be Specific**: Include context and requirements
+
+   ```bash
+   rawi ask --act code-reviewer "Review this React component for performance issues and accessibility compliance"
+   ```
+
+2. **Provide Context**: Mention your tech stack and constraints
+
+   ```bash
+   rawi ask "How do I implement caching in a Node.js Express API using Redis?"
+   ```
+
+3. **Use Templates**: Choose appropriate expertise for your task
+   ```bash
+   rawi ask --act database-expert "Optimize this PostgreSQL query for large datasets"
+   ```
+
+### Session Management
+
+1. **Start Sessions for Related Work**: Group related questions together
+2. **Use Descriptive First Messages**: Set clear context
+3. **Reference Previous Discussion**: Build on earlier conversation points
+
+### Performance Optimization
+
+1. **Choose Appropriate Models**: Use lighter models for simple tasks
+2. **Limit Input Size**: Process large files in chunks if needed
+3. **Use Local Providers**: For speed and privacy when possible
+
+## Error Handling
+
+### Common Issues
+
+**Session not found:**
+
+```bash
+# List available sessions
+rawi history --sessions
+
+# Start new session if old one expired
+rawi ask --new-session "Continuing previous work on authentication"
+```
+
+**Large input errors:**
+
+```bash
+# Process in chunks for large files
+head -100 large-file.txt | rawi ask "Analyze this sample"
+```
+
+**Network issues:**
+
+```bash
+# Check configuration
+rawi info
+
+# Try different profile/provider
+rawi ask --profile backup "Test question"
+```
+
+## Integration Examples
+
+### Git Workflows
+
+```bash
+# Pre-commit code review
+git diff --cached | rawi ask --act code-reviewer "Review staged changes"
+
+# Commit message generation
+git diff --cached | rawi ask "Generate a conventional commit message"
+
+# Release notes
+git log --oneline v1.0..HEAD | rawi ask --act technical-writer "Create release notes"
+```
+
+### Development Automation
+
+```bash
+# API testing
+curl -s https://api.example.com/users | rawi ask --act api-tester "Analyze this API response"
+
+# Log monitoring
+tail -f /var/log/app.log | rawi ask --act incident-responder "Monitor for critical alerts"
+
+# Documentation updates
+find . -name "*.js" -newer docs/ | while read file; do
+    cat "$file" | rawi ask --act technical-writer "Update documentation for changes in this file"
+done
+```
+
+## See Also
+
+- [act command](./act) — Discovering and using templates
+- [configure command](./configure) — Setting up profiles and providers
+- [history command](./history) — Managing sessions and conversation history
+- [Act Templates Guide](../configure/act-templates) — Complete template reference
+- [Session Management](../advanced/sessions) — Advanced session features
+- [Shell Integration](../advanced/shell-integration) — Advanced automation patterns
 
 **Show details of a specific act template:**
 

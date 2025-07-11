@@ -1,0 +1,623 @@
+---
+title: Research and Analysis Workflow
+description: Leverage Rawi for information gathering, data analysis, literature reviews, and research documentation.
+---
+
+This guide shows how to use Rawi for research tasks, data analysis, and information synthesis.
+
+## Overview
+
+Rawi can assist with various research and analysis tasks:
+
+- Information gathering and synthesis
+- Data analysis and interpretation
+- Competitive research
+- Academic research assistance
+- Market analysis
+- Technical research
+
+## Research Setup
+
+### 1. Configure Research Profile
+
+```bash
+# Create a research-focused profile
+rawi configure --profile research --provider anthropic --model claude-3-5-sonnet --temperature 0.2
+
+# Academic research profile
+rawi configure --profile academic --provider openai --model gpt-4 --temperature 0.1
+
+# Data analysis profile
+rawi configure --profile data-analysis --provider openai --model gpt-4 --temperature 0.3
+```
+
+### 2. Research Session Management
+
+```bash
+# Start a research session with a clear topic
+rawi ask --new-session --act researcher "I'm researching the impact of AI on software development productivity"
+
+# Continue with focused questions
+rawi ask "What are the current metrics used to measure developer productivity?"
+rawi ask "How do AI coding assistants affect these productivity metrics?"
+```
+
+## Research Workflows
+
+### Information Gathering
+
+#### Topic Exploration Workflow
+
+```bash
+#!/bin/bash
+# research-exploration.sh - Comprehensive topic exploration
+
+TOPIC="$1"
+SESSION_ID="research-$(date +%Y%m%d)-$(echo "$TOPIC" | tr ' ' '-')"
+
+echo "🔍 Starting research exploration: $TOPIC"
+
+# 1. Initial overview
+rawi ask --new-session --session "$SESSION_ID" --act researcher \
+    "Provide a comprehensive overview of '$TOPIC' including key concepts, current state, and recent developments"
+
+# 2. Key stakeholders and experts
+rawi ask --session "$SESSION_ID" --act researcher \
+    "Who are the leading researchers, practitioners, and thought leaders in '$TOPIC'?"
+
+# 3. Research questions
+rawi ask --session "$SESSION_ID" --act researcher \
+    "What are the most important research questions currently being investigated in '$TOPIC'?"
+
+# 4. Methodological approaches
+rawi ask --session "$SESSION_ID" --act researcher \
+    "What research methodologies are commonly used to study '$TOPIC'?"
+
+# 5. Knowledge gaps
+rawi ask --session "$SESSION_ID" --act researcher \
+    "What are the current knowledge gaps and future research directions in '$TOPIC'?"
+
+echo "✅ Initial exploration complete. Session: $SESSION_ID"
+```
+
+#### Source Analysis
+
+```bash
+# Analyze academic papers
+analyze_paper() {
+    local paper_file="$1"
+
+    cat "$paper_file" | rawi ask --act academic-researcher \
+        "Analyze this research paper and provide:
+        1. Main research question and hypothesis
+        2. Methodology and sample size
+        3. Key findings and statistical significance
+        4. Limitations and future research suggestions
+        5. Relevance to current literature"
+}
+
+# Compare multiple sources
+compare_sources() {
+    local source1="$1"
+    local source2="$2"
+    local source3="$3"
+
+    cat "$source1" "$source2" "$source3" | rawi ask --act meta-analyst \
+        "Compare these three research sources:
+        1. Areas of agreement and disagreement
+        2. Methodological differences
+        3. Strength of evidence
+        4. Synthesis of findings"
+}
+
+# Extract specific data
+extract_data() {
+    local document="$1"
+    local data_type="$2"
+
+    cat "$document" | rawi ask --act data-analyst \
+        "Extract all $data_type from this document and present in a structured format"
+}
+```
+
+### Data Analysis
+
+#### Quantitative Analysis Workflow
+
+```bash
+# Comprehensive data analysis
+analyze_dataset() {
+    local data_file="$1"
+    local research_question="$2"
+
+    echo "📊 Analyzing dataset: $data_file"
+
+    # 1. Data overview
+    cat "$data_file" | rawi ask --act data-scientist \
+        "Provide an overview of this dataset including variables, data types, and basic statistics" \
+        > analysis-overview.md
+
+    # 2. Exploratory analysis
+    cat "$data_file" | rawi ask --act data-scientist \
+        "Perform exploratory data analysis and identify patterns, outliers, and relationships" \
+        > exploratory-analysis.md
+
+    # 3. Hypothesis testing
+    cat "$data_file" | rawi ask --act statistician \
+        "Test hypotheses related to: $research_question. Suggest appropriate statistical tests" \
+        > hypothesis-testing.md
+
+    # 4. Visualization suggestions
+    cat "$data_file" | rawi ask --act data-visualization-expert \
+        "Suggest appropriate visualizations for this data and research question" \
+        > visualization-plan.md
+
+    # 5. Interpretation
+    rawi ask --act data-scientist \
+        "Based on the analysis, interpret findings in context of: $research_question" \
+        > interpretation.md
+}
+```
+
+#### Qualitative Analysis
+
+```bash
+# Thematic analysis workflow
+thematic_analysis() {
+    local qualitative_data="$1"
+
+    echo "🎯 Performing thematic analysis..."
+
+    # 1. Initial coding
+    cat "$qualitative_data" | rawi ask --act qualitative-researcher \
+        "Perform initial coding of this qualitative data. Identify preliminary themes and patterns" \
+        > initial-coding.md
+
+    # 2. Theme development
+    cat initial-coding.md | rawi ask --act qualitative-researcher \
+        "Develop themes from these initial codes. Group related codes and identify overarching themes" \
+        > theme-development.md
+
+    # 3. Theme refinement
+    cat theme-development.md | rawi ask --act qualitative-researcher \
+        "Refine these themes, check for overlap, and ensure they capture the data accurately" \
+        > final-themes.md
+
+    # 4. Narrative synthesis
+    cat final-themes.md "$qualitative_data" | rawi ask --act qualitative-researcher \
+        "Create a narrative synthesis that explains how these themes answer the research question" \
+        > narrative-synthesis.md
+}
+
+# Sentiment and content analysis
+sentiment_analysis() {
+    local text_data="$1"
+
+    cat "$text_data" | rawi ask --act sentiment-analyst \
+        "Perform comprehensive sentiment analysis including:
+        1. Overall sentiment distribution
+        2. Key topics and their associated sentiments
+        3. Temporal trends if timestamps available
+        4. Notable quotes or examples"
+}
+```
+
+### Literature Review
+
+#### Systematic Literature Review
+
+```bash
+#!/bin/bash
+# systematic-review.sh - Systematic literature review workflow
+
+TOPIC="$1"
+REVIEW_DIR="systematic-review-$(date +%Y%m%d)"
+mkdir -p "$REVIEW_DIR"
+
+echo "📚 Starting systematic literature review: $TOPIC"
+
+# 1. Search strategy development
+rawi ask --act librarian \
+    "Develop a comprehensive search strategy for '$TOPIC' including:
+    1. Key search terms and synonyms
+    2. Boolean operators and search strings
+    3. Database selection criteria
+    4. Inclusion/exclusion criteria" \
+    > "$REVIEW_DIR/search-strategy.md"
+
+# 2. Quality assessment criteria
+rawi ask --act academic-researcher \
+    "Create quality assessment criteria for studies on '$TOPIC'" \
+    > "$REVIEW_DIR/quality-criteria.md"
+
+# 3. Data extraction template
+rawi ask --act academic-researcher \
+    "Design a data extraction template for systematically reviewing studies on '$TOPIC'" \
+    > "$REVIEW_DIR/extraction-template.md"
+
+echo "✅ Review framework complete. Continue with paper screening and analysis."
+```
+
+#### Literature Synthesis
+
+```bash
+# Synthesize findings across studies
+synthesize_literature() {
+    local papers_dir="$1"
+
+    echo "🔄 Synthesizing literature findings..."
+
+    # Combine all papers
+    cat "$papers_dir"/*.txt > combined-papers.txt
+
+    # Thematic synthesis
+    cat combined-papers.txt | rawi ask --act meta-analyst \
+        "Perform a thematic synthesis of these research papers:
+        1. Identify common themes across studies
+        2. Note contradictory findings
+        3. Assess quality of evidence
+        4. Identify research gaps" \
+        > literature-synthesis.md
+
+    # Create evidence matrix
+    cat combined-papers.txt | rawi ask --act systematic-reviewer \
+        "Create an evidence matrix showing how each study contributes to different themes" \
+        > evidence-matrix.md
+}
+```
+
+### Competitive Research
+
+#### Market Analysis Workflow
+
+```bash
+#!/bin/bash
+# market-analysis.sh - Comprehensive market research
+
+MARKET="$1"
+ANALYSIS_DIR="market-analysis-$(date +%Y%m%d)"
+mkdir -p "$ANALYSIS_DIR"
+
+echo "🏢 Starting market analysis: $MARKET"
+
+# 1. Market overview
+rawi ask --act market-researcher \
+    "Provide a comprehensive overview of the $MARKET market including size, growth, key players" \
+    > "$ANALYSIS_DIR/market-overview.md"
+
+# 2. Competitive landscape
+rawi ask --act competitive-analyst \
+    "Analyze the competitive landscape in $MARKET including major players, market share, positioning" \
+    > "$ANALYSIS_DIR/competitive-landscape.md"
+
+# 3. Trend analysis
+rawi ask --act trend-analyst \
+    "Identify current and emerging trends in $MARKET with supporting evidence" \
+    > "$ANALYSIS_DIR/trend-analysis.md"
+
+# 4. Opportunity identification
+rawi ask --act business-strategist \
+    "Based on market analysis, identify potential opportunities and threats in $MARKET" \
+    > "$ANALYSIS_DIR/opportunities.md"
+```
+
+#### Product Research
+
+```bash
+# Comprehensive product analysis
+analyze_product() {
+    local product_data="$1"
+
+    cat "$product_data" | rawi ask --act product-analyst \
+        "Analyze this product information including:
+        1. Feature set and capabilities
+        2. Target market and positioning
+        3. Pricing strategy
+        4. Strengths and weaknesses
+        5. Competitive advantages"
+}
+
+# User feedback analysis
+analyze_user_feedback() {
+    local feedback_file="$1"
+
+    cat "$feedback_file" | rawi ask --act ux-researcher \
+        "Analyze user feedback to identify:
+        1. Common pain points and frustrations
+        2. Most requested features
+        3. User journey issues
+        4. Satisfaction drivers
+        5. Improvement recommendations"
+}
+```
+
+## Advanced Research Techniques
+
+### Cross-Domain Research
+
+#### Interdisciplinary Analysis
+
+```bash
+# Multi-perspective analysis
+interdisciplinary_analysis() {
+    local research_topic="$1"
+    local domain1="$2"
+    local domain2="$3"
+
+    rawi ask --act interdisciplinary-researcher \
+        "Analyze '$research_topic' from both $domain1 and $domain2 perspectives:
+        1. How does each field approach this topic?
+        2. What methodologies does each use?
+        3. Where do insights overlap or conflict?
+        4. How can approaches be integrated?"
+}
+
+# Method transfer analysis
+analyze_method_transfer() {
+    local source_domain="$1"
+    local target_domain="$2"
+    local method="$3"
+
+    rawi ask --act methodology-expert \
+        "Assess the feasibility of transferring '$method' from $source_domain to $target_domain:
+        1. Theoretical compatibility
+        2. Practical considerations
+        3. Necessary adaptations
+        4. Potential benefits and limitations"
+}
+```
+
+### Research Methodology
+
+#### Study Design
+
+```bash
+# Research design consultation
+design_study() {
+    local research_question="$1"
+    local domain="$2"
+
+    rawi ask --act research-methodologist \
+        "Design a study to investigate: '$research_question' in $domain
+        1. Appropriate research design (experimental, observational, etc.)
+        2. Sample size and selection criteria
+        3. Data collection methods
+        4. Analysis plan
+        5. Potential confounding variables"
+}
+
+# Survey development
+create_survey() {
+    local research_objectives="$1"
+
+    rawi ask --act survey-methodologist \
+        "Create a survey instrument for: '$research_objectives'
+        1. Clear, unbiased questions
+        2. Appropriate response scales
+        3. Logical flow and organization
+        4. Validation considerations
+        5. Pilot testing recommendations"
+}
+```
+
+### Research Validation
+
+#### Fact-Checking Workflow
+
+```bash
+# Comprehensive fact-checking
+fact_check_research() {
+    local claims_file="$1"
+
+    echo "✅ Fact-checking research claims..."
+
+    # Check individual claims
+    cat "$claims_file" | rawi ask --act fact-checker \
+        "Fact-check these claims and provide sources for verification or correction" \
+        > fact-check-results.md
+
+    # Source credibility assessment
+    cat "$claims_file" | rawi ask --act information-analyst \
+        "Assess the credibility of sources cited for these claims" \
+        > source-assessment.md
+
+    # Alternative evidence
+    cat "$claims_file" | rawi ask --act researcher \
+        "Find alternative sources that support or contradict these claims" \
+        > alternative-evidence.md
+}
+```
+
+#### Bias Analysis
+
+```bash
+# Research bias assessment
+assess_bias() {
+    local study_file="$1"
+
+    cat "$study_file" | rawi ask --act methodology-critic \
+        "Assess potential biases in this research:
+        1. Selection bias
+        2. Confirmation bias
+        3. Publication bias
+        4. Methodological limitations
+        5. Recommendations for addressing biases"
+}
+```
+
+## Research Documentation
+
+### Research Management
+
+```bash
+# Research session documentation
+document_research_session() {
+    local session_id="$1"
+    local topic="$2"
+
+    # Export session history
+    rawi history --session "$session_id" --export --format markdown > "research-log-$topic.md"
+
+    # Create research summary
+    rawi ask --act research-coordinator \
+        "Summarize this research session into a structured research log with key findings and next steps" \
+        < "research-log-$topic.md" > "research-summary-$topic.md"
+}
+
+# Bibliography management
+create_bibliography() {
+    local sources_file="$1"
+    local citation_style="$2"
+
+    cat "$sources_file" | rawi ask --act librarian \
+        "Create a properly formatted bibliography in $citation_style style from these sources"
+}
+```
+
+### Report Generation
+
+```bash
+# Research report workflow
+generate_research_report() {
+    local topic="$1"
+    local findings_dir="$2"
+
+    echo "📄 Generating research report for: $topic"
+
+    # Combine all findings
+    cat "$findings_dir"/*.md > combined-findings.txt
+
+    # Generate executive summary
+    cat combined-findings.txt | rawi ask --act research-writer \
+        "Create an executive summary of this research highlighting key findings and implications" \
+        > executive-summary.md
+
+    # Create detailed report
+    cat combined-findings.txt | rawi ask --act academic-writer \
+        "Structure this research into a comprehensive report with:
+        1. Introduction and objectives
+        2. Methodology
+        3. Findings and analysis
+        4. Discussion and implications
+        5. Conclusions and recommendations" \
+        > detailed-report.md
+
+    # Generate presentation slides outline
+    cat detailed-report.md | rawi ask --act presentation-designer \
+        "Create an outline for presentation slides summarizing this research report" \
+        > presentation-outline.md
+}
+```
+
+## Integration with Research Tools
+
+### Reference Management
+
+```bash
+# Zotero integration
+prepare_for_zotero() {
+    local citation_data="$1"
+
+    cat "$citation_data" | rawi ask --act librarian \
+        "Format these citations for import into Zotero reference manager"
+}
+
+# Mendeley preparation
+prepare_for_mendeley() {
+    local references="$1"
+
+    cat "$references" | rawi ask --act reference-manager \
+        "Prepare these references for Mendeley including tags and annotations"
+}
+```
+
+### Data Analysis Tools
+
+```bash
+# R script generation
+generate_r_analysis() {
+    local analysis_plan="$1"
+
+    cat "$analysis_plan" | rawi ask --act r-programmer \
+        "Generate R code to perform this analysis including data loading, cleaning, analysis, and visualization"
+}
+
+# Python analysis script
+generate_python_analysis() {
+    local data_description="$1"
+
+    cat "$data_description" | rawi ask --act python-data-scientist \
+        "Create Python code using pandas and scipy to analyze this dataset"
+}
+```
+
+## Research Quality Assurance
+
+### Peer Review Simulation
+
+```bash
+# Simulate peer review
+simulate_peer_review() {
+    local research_paper="$1"
+
+    cat "$research_paper" | rawi ask --act peer-reviewer \
+        "Provide a constructive peer review of this research paper including:
+        1. Strengths and contributions
+        2. Methodological concerns
+        3. Areas for improvement
+        4. Minor and major revision suggestions"
+}
+```
+
+### Research Ethics
+
+```bash
+# Ethics assessment
+assess_research_ethics() {
+    local study_protocol="$1"
+
+    cat "$study_protocol" | rawi ask --act research-ethicist \
+        "Assess the ethical considerations of this research protocol:
+        1. Participant safety and consent
+        2. Data privacy and confidentiality
+        3. Potential risks and benefits
+        4. Vulnerable populations
+        5. Recommendations for ethical approval"
+}
+```
+
+## Troubleshooting Research Workflows
+
+### Common Research Challenges
+
+**Information overload:**
+
+```bash
+# Prioritize sources
+cat source-list.txt | rawi ask --act research-coordinator \
+    "Help me prioritize these sources based on relevance, credibility, and recency for my research on [topic]"
+```
+
+**Conflicting findings:**
+
+```bash
+# Reconcile contradictions
+cat conflicting-studies.txt | rawi ask --act meta-analyst \
+    "Analyze why these studies have conflicting results and suggest how to reconcile the differences"
+```
+
+**Methodology selection:**
+
+```bash
+# Method guidance
+rawi ask --act methodology-expert \
+    "What research methodology would be most appropriate for investigating [research question] given these constraints: [constraints]"
+```
+
+## See Also
+
+- [Data Analysis Workflow](../workflows) — Specialized data analysis patterns
+- [Content Creation Workflow](./content-creation) — Research-driven writing
+- [Shell Integration](../advanced/shell-integration) — Automation for research tasks
+- [Act Templates](../configure/act-templates) — Research and analysis templates
+- [Session Management](../advanced/sessions) — Managing research conversations

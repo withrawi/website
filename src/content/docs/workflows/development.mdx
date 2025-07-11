@@ -1,0 +1,457 @@
+---
+title: Development Workflow
+description: Integrate Rawi into your software development process for code review, debugging, documentation, and refactoring assistance.
+---
+
+This guide shows how to integrate Rawi into your development workflow for code review, documentation, and problem-solving.
+
+## Overview
+
+Rawi can assist with various development tasks:
+
+- Code review and analysis
+- Bug investigation and debugging
+- Documentation generation
+- Refactoring assistance
+- Testing strategy
+
+## Basic Development Setup
+
+### 1. Configure Development Profile
+
+```bash
+# Create a development-specific profile
+rawi configure --profile dev --provider openai --model gpt-4
+
+# For budget-conscious development
+rawi configure --profile dev-budget --provider openai --model gpt-3.5-turbo
+
+# For privacy-focused development
+rawi configure --profile dev-local --provider ollama --model codellama
+```
+
+### 2. Enable Shell Integration
+
+```bash
+# Add to your shell configuration (.bashrc or .zshrc)
+alias rwdev='rawi ask --profile dev'
+alias rwreview='rawi ask --profile dev --act code-reviewer'
+alias rwdebug='rawi ask --profile dev --act debugging-expert'
+```
+
+## Common Development Tasks
+
+### Code Review
+
+```bash
+# Review a specific file
+cat src/utils.ts | rawi ask --act code-reviewer "Review this TypeScript code for potential issues, best practices, and improvements"
+
+# Review git diff
+git diff | rawi ask --act code-reviewer "Analyze these changes for potential issues, breaking changes, and improvement suggestions"
+
+# Review pull request
+gh pr diff 123 | rawi ask --act code-reviewer "Review this PR for code quality, security vulnerabilities, and maintainability"
+
+# Review specific commit
+git show abc123 | rawi ask --act code-reviewer "Review this commit for quality and potential issues"
+```
+
+### Bug Investigation
+
+```bash
+# Analyze error logs
+tail -100 error.log | rawi ask --act debugging-expert "Help me understand these errors and suggest solutions"
+
+# Debug function behavior
+cat src/buggy-function.js | rawi ask --act debugging-expert "Why might this function be returning unexpected results? Debug this code."
+
+# Analyze stack trace
+rawi ask --act debugging-expert "Explain this stack trace and suggest fixes: $(cat stack-trace.txt)"
+
+# Performance debugging
+cat slow-query.log | rawi ask --act database-expert "Analyze these slow database queries and suggest optimizations"
+```
+
+### Documentation Generation
+
+```bash
+# Generate README content
+cat package.json | rawi ask --act technical-writer "Create a comprehensive README for this project based on the package.json"
+
+# Document API endpoints
+cat src/routes/api.js | rawi ask --act api-documentation-expert "Generate OpenAPI documentation for these Express.js routes"
+
+# Create inline documentation
+cat src/utils.js | rawi ask --act code-documenter "Add comprehensive JSDoc comments to this JavaScript file"
+
+# Generate changelog
+git log --oneline --since="1 month ago" | rawi ask --act technical-writer "Create a changelog from these git commits"
+```
+
+### Refactoring Assistance
+
+```bash
+# Suggest improvements
+cat src/legacy-code.js | rawi ask --act software-architect "How can I refactor this code to be more maintainable and follow modern best practices?"
+
+# Convert between patterns
+cat src/callbacks.js | rawi ask --act javascript-expert "Convert this callback-based code to use async/await with proper error handling"
+
+# Optimize performance
+cat src/slow-function.js | rawi ask --act performance-expert "How can I optimize this function for better performance?"
+
+# Modernize code
+cat src/old-react-component.js | rawi ask --act react-expert "Convert this class component to a modern functional component with hooks"
+```
+
+## Advanced Development Workflows
+
+### Feature Development Workflow
+
+```bash
+# 1. Planning phase
+rawi ask --new-session --act software-architect "I need to implement user authentication with JWT tokens in a Node.js/Express API"
+
+# 2. Design decisions
+rawi ask "What's the best approach for token refresh and security?"
+
+# 3. Implementation guidance
+rawi ask --act backend-engineer "Show me how to implement JWT middleware for Express"
+
+# 4. Testing strategy
+rawi ask --act qa-engineer "Create comprehensive test cases for this authentication system"
+
+# 5. Documentation
+rawi ask --act technical-writer "Document this authentication system for other developers"
+```
+
+### Code Review Workflow
+
+```bash
+#!/bin/bash
+# comprehensive-review.sh - Complete code review workflow
+
+BRANCH="${1:-main}"
+OUTPUT_DIR="reviews/$(date +%Y%m%d)"
+mkdir -p "$OUTPUT_DIR"
+
+echo "🔍 Starting comprehensive code review..."
+
+# 1. Overall diff analysis
+git diff "$BRANCH" | rawi ask --act software-architect \
+    "Analyze these changes for architectural impact and design consistency" \
+    > "$OUTPUT_DIR/architecture-review.md"
+
+# 2. Security review
+git diff "$BRANCH" --name-only | while read -r file; do
+    if [[ "$file" =~ \.(js|ts|py|java|php)$ ]]; then
+        echo "🔒 Security review: $file"
+        cat "$file" | rawi ask --act security-expert \
+            "Review this code for security vulnerabilities and best practices" \
+            > "$OUTPUT_DIR/security-$(basename "$file").md"
+    fi
+done
+
+# 3. Performance analysis
+git diff "$BRANCH" --name-only | grep -E '\.(js|ts|py)$' | while read -r file; do
+    if grep -q "loop\|for\|while\|map\|filter\|reduce" "$file"; then
+        echo "⚡ Performance review: $file"
+        cat "$file" | rawi ask --act performance-expert \
+            "Analyze this code for performance bottlenecks and optimization opportunities" \
+            > "$OUTPUT_DIR/performance-$(basename "$file").md"
+    fi
+done
+
+# 4. Generate summary
+rawi ask --act project-manager \
+    "Based on the review files in $OUTPUT_DIR, create a summary of key issues and recommendations" \
+    > "$OUTPUT_DIR/review-summary.md"
+
+echo "✅ Code review complete. Results in $OUTPUT_DIR/"
+```
+
+### Git Integration Workflow
+
+```bash
+# Smart commit message generation
+generate_commit_message() {
+    git diff --cached | rawi ask --act git-expert \
+        "Generate a conventional commit message for these changes. Format: type(scope): description"
+}
+
+# Pre-commit hook
+#!/bin/bash
+# .git/hooks/pre-commit
+echo "🤖 AI-powered pre-commit checks..."
+
+# Check for potential issues
+git diff --cached | rawi ask --act code-reviewer \
+    "Quick scan: any obvious issues or security concerns in these changes?" \
+    --profile dev-quick
+
+# Check commit message quality if provided
+if [[ -f .git/COMMIT_EDITMSG ]]; then
+    COMMIT_MSG=$(cat .git/COMMIT_EDITMSG)
+    if [[ ${#COMMIT_MSG} -lt 10 ]]; then
+        echo "💡 Suggested commit message:"
+        generate_commit_message
+    fi
+fi
+```
+
+### Testing Workflow
+
+```bash
+# Test generation
+generate_tests() {
+    local source_file="$1"
+    local test_framework="${2:-jest}"
+
+    cat "$source_file" | rawi ask --act qa-engineer \
+        "Generate comprehensive $test_framework tests for this code including:
+        1. Unit tests for all functions
+        2. Edge cases and error scenarios
+        3. Integration test suggestions
+        4. Mock data examples" \
+        > "tests/$(basename "$source_file" .js).test.js"
+}
+
+# Test review and improvement
+improve_tests() {
+    local test_file="$1"
+
+    cat "$test_file" | rawi ask --act qa-engineer \
+        "Review these tests and suggest improvements:
+        1. Missing test cases
+        2. Better assertions
+        3. Test organization
+        4. Performance considerations" \
+        > "$test_file.review"
+}
+```
+
+## Integration Patterns
+
+### IDE Integration
+
+```bash
+# VS Code tasks.json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "AI Code Review",
+            "type": "shell",
+            "command": "cat ${file} | rawi ask --act code-reviewer 'Review this code'",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}
+```
+
+### CI/CD Integration
+
+```yaml
+# GitHub Actions workflow
+name: AI Code Review
+on: [pull_request]
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Rawi
+        run: npm install -g rawi
+
+      - name: AI Code Review
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          git diff origin/main...HEAD | rawi ask --act code-reviewer \
+            "Review this PR for production readiness" > ai-review.md
+
+      - name: Comment PR
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const fs = require('fs');
+            const review = fs.readFileSync('ai-review.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🤖 AI Code Review\n\n${review}`
+            });
+```
+
+### Development Scripts
+
+```bash
+#!/bin/bash
+# dev-assistant.sh - Daily development helper
+
+case "$1" in
+    "start")
+        echo "🚀 Starting development session..."
+        rawi ask --new-session --act software-engineer \
+            "Starting work on feature: $2. What should I consider first?"
+        ;;
+
+    "review")
+        echo "👀 Reviewing current changes..."
+        git diff | rawi ask --act code-reviewer \
+            "Review my current changes before commit"
+        ;;
+
+    "debug")
+        echo "🐛 Debug assistance..."
+        if [[ -f "$2" ]]; then
+            cat "$2" | rawi ask --act debugging-expert \
+                "Help me debug this code. What could be wrong?"
+        else
+            rawi ask --act debugging-expert "$2"
+        fi
+        ;;
+
+    "test")
+        echo "🧪 Test generation..."
+        if [[ -f "$2" ]]; then
+            generate_tests "$2"
+        fi
+        ;;
+
+    "docs")
+        echo "📚 Documentation generation..."
+        if [[ -f "$2" ]]; then
+            cat "$2" | rawi ask --act technical-writer \
+                "Generate documentation for this code"
+        fi
+        ;;
+
+    *)
+        echo "Usage: $0 {start|review|debug|test|docs} [file/description]"
+        ;;
+esac
+```
+
+## Best Practices
+
+### Effective Prompting for Development
+
+1. **Provide Context**
+
+   ```bash
+   rawi ask --act debugging-expert "In a Node.js Express API using MongoDB, why might this query be slow?" < slow-query.js
+   ```
+
+2. **Be Specific About Requirements**
+
+   ```bash
+   rawi ask --act code-reviewer "Review this React TypeScript component for accessibility, performance, and TypeScript best practices" < Component.tsx
+   ```
+
+3. **Include Tech Stack Information**
+   ```bash
+   rawi ask --act full-stack-developer "How should I structure this feature in a Next.js 13 app with Prisma and TypeScript?" < requirements.txt
+   ```
+
+### Session Management for Development
+
+```bash
+# Feature-based sessions
+rawi ask --new-session --session user-auth "Implementing user authentication system"
+
+# Bug-fixing sessions
+rawi ask --new-session --session bug-login "Debugging login issues in production"
+
+# Refactoring sessions
+rawi ask --new-session --session refactor-api "Refactoring API endpoints for better performance"
+```
+
+### Profile Management
+
+```bash
+# Different profiles for different contexts
+rawi configure --profile work-review --provider anthropic --model claude-3-5-sonnet # For thorough reviews
+rawi configure --profile quick-dev --provider openai --model gpt-3.5-turbo # For quick questions
+rawi configure --profile local-dev --provider ollama --model codellama # For offline development
+```
+
+## Team Collaboration
+
+### Sharing Development Insights
+
+```bash
+# Export development session for team review
+rawi history --session feature-auth --export --format markdown > feature-auth-development.md
+
+# Share code review findings
+rawi history --search "security" --last 10 --export > security-findings.md
+
+# Generate team knowledge base
+rawi ask --act knowledge-manager "Create a knowledge base entry from this development session" < session-export.md
+```
+
+### Code Review Standards
+
+```bash
+# Team code review template
+review_template() {
+    cat "$1" | rawi ask --act code-reviewer \
+        "Review this code according to our team standards:
+        1. Follow our coding conventions
+        2. Check for security vulnerabilities
+        3. Ensure proper error handling
+        4. Verify test coverage needs
+        5. Check performance implications
+
+        Provide specific, actionable feedback."
+}
+```
+
+## Troubleshooting Development Workflow
+
+### Common Issues
+
+**Large file processing:**
+
+```bash
+# Process large files in chunks
+split -l 100 large-file.js chunk_
+for chunk in chunk_*; do
+    cat "$chunk" | rawi ask --act code-reviewer "Review this code section"
+done
+```
+
+**API rate limits:**
+
+```bash
+# Add delays between requests
+for file in src/*.js; do
+    cat "$file" | rawi ask --act code-reviewer "Quick review" > "reviews/$(basename "$file").md"
+    sleep 2  # Avoid rate limits
+done
+```
+
+**Context preservation:**
+
+```bash
+# Use sessions for related questions
+SESSION_ID=$(rawi ask --new-session "Starting feature development" --get-session-id)
+rawi ask --session "$SESSION_ID" "Continue with implementation details"
+```
+
+## See Also
+
+- [Code Review Workflow](../workflows) — Detailed review processes
+- [Shell Integration](../advanced/shell-integration) — Advanced automation
+- [act command](../reference/act) — Using expert templates
+- [Session Management](../advanced/sessions) — Managing development conversations
+- [Profile Management](../advanced/profiles) — Different configurations for different needs
