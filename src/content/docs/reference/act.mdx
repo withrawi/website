@@ -1,0 +1,175 @@
+---
+title: act — Act Templates
+description: List and explore act templates for specialized prompts.
+---
+
+The `act` command helps you discover and explore Rawi's 200+ expert-level AI prompt templates that transform your AI assistant into specialized professionals.
+
+## Basic Usage
+
+```
+rawi act [options]
+```
+
+## Options
+
+| Option             | Alias | Description                                |
+| ------------------ | ----- | ------------------------------------------ |
+| `--list`           | `-l`  | List all available act templates           |
+| `--show <id>`      | `-s`  | Show detailed information about a template |
+| `--search <term>`  |       | Search templates by keyword                |
+| `--category <cat>` |       | Filter templates by category               |
+
+## Examples
+
+### List All Templates
+
+```bash
+# Show all available templates
+rawi act --list
+
+# Search for specific templates
+rawi act --search "developer"
+rawi act --search "security"
+
+# Filter by category
+rawi act --category development
+rawi act --category writing
+```
+
+### Get Template Details
+
+```bash
+# Get detailed information about a template
+rawi act --show software-engineer
+rawi act --show code-reviewer
+rawi act --show linux-terminal
+```
+
+### Using Templates in Conversations
+
+```bash
+# Use a template with the ask command
+rawi ask --act software-engineer "How do I optimize this algorithm?"
+rawi ask --act code-reviewer "Review this Python function"
+rawi ask --act technical-writer "Help me write API documentation"
+```
+
+## Template Categories
+
+### 🛠️ Software Development
+
+- `software-engineer` — General software design and development
+- `full-stack-developer` — End-to-end web application development
+- `frontend-developer` — UI/UX focused development
+- `backend-developer` — Server-side and API development
+- `code-reviewer` — Code analysis and improvements
+- `linux-terminal` — Command line assistance
+- `devops-engineer` — Infrastructure and deployment
+
+### 📝 Writing & Documentation
+
+- `technical-writer` — Technical documentation
+- `copywriter` — Marketing and promotional content
+- `proofreader` — Grammar and style checking
+- `translator` — Language translation assistance
+
+### 🔬 Data & Analysis
+
+- `data-scientist` — Data analysis and visualization
+- `statistician` — Statistical analysis and interpretation
+- `sql-expert` — Database queries and optimization
+
+### 🎨 Creative & Design
+
+- `ux-designer` — User experience design
+- `creative-writer` — Creative writing assistance
+- `content-creator` — Social media and content
+
+### 🔒 Security & Systems
+
+- `cybersecurity-specialist` — Security analysis and recommendations
+- `network-engineer` — Network configuration and troubleshooting
+- `system-administrator` — System management and optimization
+
+## Advanced Usage
+
+### Template Information
+
+When you run `rawi act --show <template>`, you'll see:
+
+- **Description** — What the template does
+- **Expertise Areas** — Specific skills and knowledge
+- **Common Use Cases** — Popular scenarios
+- **Example Prompts** — Sample questions to ask
+
+### Combining with Other Features
+
+```bash
+# Use template with specific profile
+rawi ask --profile work --act code-reviewer "Analyze this code"
+
+# Use template in a session
+rawi ask --act software-engineer --new-session "I'm building a microservices architecture"
+
+# Chain with shell commands
+cat app.py | rawi ask --act code-reviewer "Review this Python code"
+```
+
+## Creating Custom Workflows
+
+Templates work great in scripts and automation:
+
+```bash
+#!/bin/bash
+# Code review script
+for file in src/*.py; do
+    echo "Reviewing $file..."
+    cat "$file" | rawi ask --act code-reviewer "Review this code file"
+done
+```
+
+## Popular Template Combinations
+
+### Full Development Workflow
+
+```bash
+# Architecture planning
+rawi ask --act software-engineer "Design a scalable user authentication system"
+
+# Code review
+rawi ask --act code-reviewer "Review this implementation"
+
+# Documentation
+rawi ask --act technical-writer "Document this API endpoint"
+
+# Testing strategy
+rawi ask --act qa-engineer "Create test cases for this feature"
+```
+
+### Content Creation Pipeline
+
+```bash
+# Research
+rawi ask --act researcher "Research best practices for REST API design"
+
+# Writing
+rawi ask --act technical-writer "Write a tutorial on JWT authentication"
+
+# Review and polish
+rawi ask --act proofreader "Improve the clarity of this documentation"
+```
+
+## Tips
+
+1. **Explore Categories** — Use `--category` to find templates for your field
+2. **Read Descriptions** — Use `--show` to understand what each template offers
+3. **Experiment** — Try different templates for the same question to get varied perspectives
+4. **Combine Expertise** — Use multiple templates in sequence for comprehensive analysis
+5. **Save Favorites** — Create aliases for your most-used templates
+
+## See Also
+
+- [ask command](./ask) — Using templates in conversations
+- [Act Templates Guide](../configure/act-templates) — Complete template reference
+- [Workflows](../workflows) — Real-world usage patterns

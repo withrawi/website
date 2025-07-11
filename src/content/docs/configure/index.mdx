@@ -1,6 +1,6 @@
 ---
-title: Rawi (راوي) Documentation | Configure
-description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+title: Configuration Overview
+description: Learn how to configure Rawi with multiple AI providers, profiles, and settings for optimal performance.
 ---
 
 import Clarity from '../../../components/clarity.astro';
@@ -8,13 +8,19 @@ import {Tabs, TabItem, Steps, Aside} from '@astrojs/starlight/components';
 
 <Clarity />
 
-# Configuring settings for the Rawi CLI
+# Configuration Overview
 
-The Rawi Command Line Interface (Rawi CLI) uses configuration settings to determine how it interacts with AI providers and manages your sessions. These settings include:
+The Rawi Command Line Interface (Rawi CLI) uses configuration settings to determine how it interacts with AI providers and manages your sessions. Proper configuration ensures optimal performance and seamless integration with your workflow.
 
-- **Credentials**: Identify who is calling the API. API keys or tokens are used to authenticate your requests and determine your access permissions.
-- **Provider and Model**: Specify which AI provider and model to use for your requests.
-- **Other options**: Such as default profile, output format, and custom endpoints.
+## Configuration Components
+
+Rawi configuration includes:
+
+- **Credentials**: API keys and authentication tokens for AI providers
+- **Provider and Model**: Which AI service and specific model to use
+- **Profiles**: Named configurations for different use cases
+- **Generation Settings**: Temperature, max tokens, and language preferences
+- **Provider Settings**: Custom endpoints, regions, and provider-specific options
 
 <Aside>
 
@@ -22,77 +28,67 @@ Ensure your system’s date and time are set correctly. Some providers require s
 
 </Aside>
 
-## Configuration and credentials precedence
+## Configuration Precedence
 
-Rawi CLI reads configuration and credentials from several locations, in the following order of precedence:
+Rawi CLI reads configuration from multiple sources in order of precedence:
 
-1. **Command line options** – Overrides all other settings. Example: `--provider`, `--model`, `--api-key`, `--profile`.
-2. **Environment variables** – Set variables like `OPENAI_API_KEY` or `RAWI_PROFILE` in your shell.
-3. **Profile configuration files** – Stored in `~/.rawi/credentials` and `~/.rawi/config`.
-4. **Default profile** – Used if no profile is specified.
+1. **Command line options** – Highest priority (e.g., `--provider`, `--model`, `--api-key`)
+2. **Environment variables** – System-level settings (e.g., `OPENAI_API_KEY`, `RAWI_PROFILE`)
+3. **Profile configuration files** – User-defined profiles in `~/.config/rawi/profiles/`
+4. **Default profile** – Fallback configuration used when no profile is specified
 
-## Configuration Examples
+## Quick Start Configuration
 
 <Tabs>
-  <TabItem label="Interactive" icon="terminal">
+  <TabItem label="Interactive Setup" icon="terminal">
     <Steps>
 
-      1. **Set up your credentials and default provider:**
+      1. **Run interactive configuration:**
 
          ```bash
          rawi configure
-         # Example prompts:
-         # Provider [openai]: openai
-         # Model [gpt-4o]: gpt-4o
-         # API Key [None]: sk-...
          ```
 
-      2. **Configure a named profile:**
+         This will guide you through:
+         - Selecting an AI provider
+         - Choosing a model
+         - Entering credentials
+         - Setting preferences
+
+      2. **Verify your setup:**
 
          ```bash
-         rawi configure --profile work
-         # Provider [openai]: openai
-         # Model [gpt-4o]: gpt-4o
-         # API Key [None]: sk-...
+         rawi info
          ```
 
-    </Steps>
-
-  </TabItem>
-  <TabItem label="Manual (CLI)" icon="gear">
-    <Steps>
-
-      1. **Configure a profile non-interactively:**
+      3. **Test your configuration:**
 
          ```bash
-         rawi configure --provider openai --model gpt-4o --api-key sk-your-key
-         ```
-
-    </Steps>
-
-  </TabItem>
-  <TabItem label="Environment Variables" icon="key">
-    <Steps>
-
-      1. **Set your API key in your shell:**
-
-         ```bash
-         export OPENAI_API_KEY=sk-your-key
          rawi ask "Hello, world!"
          ```
 
     </Steps>
 
   </TabItem>
-  <TabItem label="Switching Profiles" icon="person">
+  <TabItem label="Manual Setup" icon="seti:config">
     <Steps>
 
-      1. **List, show, or switch between profiles:**
+      1. **Configure OpenAI provider:**
 
          ```bash
-         rawi configure --list
-         rawi configure --show --profile work
-         rawi configure --profile work --provider anthropic --model claude-3-sonnet-20240229
+         rawi configure --provider openai --model gpt-4o --api-key sk-your-key
+         ```
+
+      2. **Set generation parameters:**
+
+         ```bash
+         rawi configure --temperature 0.7 --max-tokens 2048 --language english
+         ```
+
+      3. **Test the configuration:**
+
+         ```bash
+         rawi ask "What is artificial intelligence?"
          ```
 
     </Steps>
@@ -100,11 +96,350 @@ Rawi CLI reads configuration and credentials from several locations, in the foll
   </TabItem>
 </Tabs>
 
-## Configuration file locations
+## Profile Management
 
-- **Linux/macOS**: `~/.rawi/credentials`
-- **Windows**: `%USERPROFILE%\.rawi\credentials`
+Profiles allow you to maintain different configurations for various use cases:
 
----
+### Creating Profiles
 
-For more details, see the Troubleshooting Guide or run `rawi configure --help`.
+```bash
+# Work profile with enterprise settings
+rawi configure --profile work \
+  --provider azure \
+  --model gpt-4 \
+  --resource-name company-openai \
+  --api-key work-key
+
+# Personal profile for experimentation
+rawi configure --profile personal \
+  --provider openai \
+  --model gpt-3.5-turbo \
+  --api-key personal-key \
+  --temperature 0.8
+
+# Local profile for privacy
+rawi configure --profile local \
+  --provider ollama \
+  --model llama2 \
+  --base-url http://localhost:11434
+```
+
+### Profile Examples by Use Case
+
+#### Development Profiles
+
+```bash
+# Code review profile (detailed analysis)
+rawi configure --profile code-review \
+  --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --temperature 0.1 \
+  --max-tokens 4000
+
+# Quick development profile (fast responses)
+rawi configure --profile dev-quick \
+  --provider openai \
+  --model gpt-3.5-turbo \
+  --temperature 0.3 \
+  --max-tokens 1000
+```
+
+#### Content Creation Profiles
+
+```bash
+# Creative writing profile
+rawi configure --profile creative \
+  --provider openai \
+  --model gpt-4 \
+  --temperature 0.9 \
+  --max-tokens 3000
+
+# Technical documentation profile
+rawi configure --profile docs \
+  --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --temperature 0.3 \
+  --max-tokens 2500
+```
+
+### Using Profiles
+
+```bash
+# Use specific profile
+rawi ask "Review this code" --profile code-review
+
+# List all profiles
+rawi configure --list
+
+# Show profile details
+rawi configure --profile work --show
+
+# Set default profile
+rawi configure --profile work --set-default
+```
+
+## Provider-Specific Configuration
+
+### OpenAI Configuration
+
+```bash
+# Basic OpenAI setup
+rawi configure --provider openai --model gpt-4o --api-key sk-your-key
+
+# Advanced OpenAI setup
+rawi configure --provider openai \
+  --model gpt-4o \
+  --api-key sk-your-key \
+  --temperature 0.7 \
+  --max-tokens 2048 \
+  --base-url https://api.openai.com/v1
+```
+
+### Anthropic Configuration
+
+```bash
+# Claude setup
+rawi configure --provider anthropic \
+  --model claude-3-5-sonnet-20241022 \
+  --api-key sk-ant-your-key \
+  --temperature 0.1 \
+  --max-tokens 4000
+```
+
+### Azure OpenAI Configuration
+
+```bash
+# Azure OpenAI setup
+rawi configure --provider azure \
+  --model gpt-4 \
+  --api-key your-azure-key \
+  --resource-name your-resource \
+  --base-url https://your-resource.openai.azure.com \
+  --api-version 2024-10-01-preview
+```
+
+### Local Providers (Ollama)
+
+```bash
+# Ollama setup
+rawi configure --provider ollama \
+  --model llama2 \
+  --base-url http://localhost:11434
+
+# Custom Ollama model
+rawi configure --provider ollama \
+  --model codellama:13b \
+  --base-url http://localhost:11434
+```
+
+## Environment Variables
+
+You can configure Rawi using environment variables for automation and CI/CD:
+
+### API Keys
+
+```bash
+# Common API keys
+export OPENAI_API_KEY="sk-your-openai-key"
+export ANTHROPIC_API_KEY="sk-ant-your-anthropic-key"
+export GOOGLE_API_KEY="your-google-key"
+
+# Azure-specific
+export AZURE_OPENAI_API_KEY="your-azure-key"
+export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com"
+
+# AWS Bedrock
+export AWS_ACCESS_KEY_ID="your-access-key"
+export AWS_SECRET_ACCESS_KEY="your-secret-key"
+export AWS_REGION="us-east-1"
+```
+
+### Default Settings
+
+```bash
+# Default profile and provider
+export RAWI_PROFILE="work"
+export RAWI_PROVIDER="openai"
+export RAWI_MODEL="gpt-4"
+
+# Generation settings
+export RAWI_TEMPERATURE="0.7"
+export RAWI_MAX_TOKENS="2048"
+export RAWI_LANGUAGE="english"
+```
+
+## Configuration Files
+
+Rawi stores configuration in structured files:
+
+### Directory Structure
+
+```
+~/.config/rawi/
+├── config.json          # Global settings
+├── profiles/
+│   ├── default.json      # Default profile
+│   ├── work.json         # Work profile
+│   └── personal.json     # Personal profile
+├── history/              # Session history
+├── templates/            # Custom templates
+└── cache/                # Temporary cache
+```
+
+### Profile File Example
+
+```json
+{
+  "name": "work",
+  "provider": "azure",
+  "model": "gpt-4",
+  "apiKey": "your-azure-key",
+  "baseUrl": "https://company-openai.openai.azure.com",
+  "resourceName": "company-openai",
+  "temperature": 0.3,
+  "maxTokens": 2048,
+  "language": "english",
+  "createdAt": "2024-01-15T10:30:00Z",
+  "lastUsed": "2024-01-20T15:45:00Z"
+}
+```
+
+## Advanced Configuration
+
+### Custom Base URLs
+
+```bash
+# Custom OpenAI endpoint
+rawi configure --provider openai \
+  --base-url https://custom-openai-proxy.com/v1 \
+  --api-key your-key
+
+# Local LM Studio
+rawi configure --provider openai \
+  --base-url http://localhost:1234/v1 \
+  --model local-model
+```
+
+### Regional Configuration
+
+```bash
+# AWS Bedrock in different region
+rawi configure --provider bedrock \
+  --region eu-west-1 \
+  --model anthropic.claude-3-sonnet-20240229-v1:0
+
+# Azure in specific region
+rawi configure --provider azure \
+  --model gpt-4 \
+  --base-url https://westeurope-openai.openai.azure.com
+```
+
+### Proxy Configuration
+
+```bash
+# HTTP proxy
+export HTTP_PROXY="http://proxy.company.com:8080"
+export HTTPS_PROXY="http://proxy.company.com:8080"
+
+# Custom CA bundle
+rawi configure --ca-bundle /path/to/custom-ca.pem
+```
+
+## Configuration Best Practices
+
+### Security
+
+1. **Use Environment Variables**: Store API keys in environment variables for production
+2. **Profile Separation**: Use different profiles for different security contexts
+3. **Regular Rotation**: Rotate API keys regularly
+4. **Local Providers**: Use Ollama for sensitive data processing
+
+### Performance
+
+1. **Model Selection**: Choose appropriate models for your use case
+2. **Token Limits**: Set reasonable token limits to control costs
+3. **Temperature Settings**: Lower for factual tasks, higher for creative work
+4. **Profile Optimization**: Create task-specific profiles
+
+### Organization
+
+1. **Descriptive Names**: Use clear profile names like `work-gpt4`, `personal-claude`
+2. **Environment Profiles**: Separate dev, staging, and production configurations
+3. **Team Standards**: Standardize configurations across team members
+4. **Documentation**: Document your profile configurations
+
+## Troubleshooting Configuration
+
+### Common Issues
+
+**Configuration not saved:**
+
+```bash
+# Check permissions
+ls -la ~/.config/rawi/
+# Create directory if missing
+mkdir -p ~/.config/rawi/profiles/
+```
+
+**API key not working:**
+
+```bash
+# Test configuration
+rawi configure --test
+# Verify API key format
+rawi configure --show
+```
+
+**Provider connection fails:**
+
+```bash
+# Check network connectivity
+curl -s https://api.openai.com/v1/models -H "Authorization: Bearer $OPENAI_API_KEY"
+# Try different provider
+rawi configure --provider anthropic
+```
+
+### Configuration Validation
+
+```bash
+# Test current configuration
+rawi ask "test" --verbose
+
+# Validate specific profile
+rawi configure --profile work --test
+
+# Check provider status
+rawi info --providers
+```
+
+## Migration and Backup
+
+### Export Configuration
+
+```bash
+# Export all profiles
+rawi configure --export > rawi-config-backup.json
+
+# Backup configuration directory
+cp -r ~/.config/rawi/ ~/rawi-backup-$(date +%Y%m%d)/
+```
+
+### Import Configuration
+
+```bash
+# Import configuration
+rawi configure --import rawi-config-backup.json
+
+# Restore from backup
+cp -r ~/rawi-backup-20240115/ ~/.config/rawi/
+```
+
+## Next Steps
+
+After configuring Rawi:
+
+1. **Learn about specific providers**: [Supported Providers](./providers)
+2. **Explore environment variables**: [Environment Variables](./envvars)
+3. **Set up act templates**: [Act Templates](./act-templates)
+4. **Configure advanced options**: [Advanced Settings](./options)
+5. **Start using Rawi**: [Quick Start Guide](../getting-started/quickstart)

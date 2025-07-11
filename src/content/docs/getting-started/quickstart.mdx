@@ -1,0 +1,583 @@
+---
+title: Quick Start Guide
+description: Get started with Rawi in just a few minutes! This guide will walk you through your first AI conversation and essential features.
+---
+
+Get started with Rawi in just a few minutes! This guide will walk you through your first AI conversation and essential features.
+
+## Prerequisites
+
+Before starting, make sure you have:
+
+✅ **Rawi installed** — See [Installation Guide](./install)  
+✅ **At least one provider configured** — Run `rawi configure` if needed  
+✅ **Terminal open** — Any modern terminal will work
+
+### Quick Check
+
+Verify your setup:
+
+```bash
+# Check version
+rawi --version
+
+# Verify configuration
+rawi info
+```
+
+## Your First Question
+
+Let's start with a simple question to test your setup:
+
+```bash
+rawi ask "What is the difference between JavaScript and TypeScript?"
+```
+
+### What You'll See
+
+```bash
+$ rawi ask "What is the difference between JavaScript and TypeScript?"
+
+🤖 JavaScript and TypeScript are both programming languages, but TypeScript
+is essentially JavaScript with static type checking. Here are the key
+differences:
+
+**JavaScript:**
+- Dynamic typing (variables can change types)
+- Runtime error detection
+- No compilation step required
+- Runs directly in browsers and Node.js
+- More flexible but potentially error-prone
+
+**TypeScript:**
+- Static typing (types are checked at compile time)
+- Compile-time error detection
+- Compiles to JavaScript
+- Better IDE support and autocomplete
+- More verbose but safer for large applications
+
+TypeScript is particularly useful for larger projects where type safety
+helps prevent common programming errors.
+```
+
+🎉 **Congratulations!** You've just had your first AI conversation with Rawi.
+
+## Understanding Profiles
+
+Profiles allow you to use different AI providers for different tasks. Let's explore your current setup:
+
+### Check Your Current Profile
+
+```bash
+# Show current configuration
+rawi configure --show
+
+# List all profiles
+rawi configure --list
+```
+
+### Using Different Profiles
+
+If you have multiple profiles configured:
+
+```bash
+# Use a specific profile
+rawi ask "Explain React hooks" --profile work
+
+# Set a default profile
+rawi configure --profile personal --set-default
+```
+
+### Creating Additional Profiles
+
+```bash
+# Create a work profile
+rawi configure --profile work --provider anthropic --model claude-3-5-sonnet-20241022
+
+# Create a local profile for privacy
+rawi configure --profile local --provider ollama --model llama2
+```
+
+## Using Act Templates
+
+Act templates are pre-written prompts that make Rawi behave like specific experts:
+
+### List Available Templates
+
+```bash
+# Show all available act templates
+rawi act --list
+```
+
+### Using Templates
+
+```bash
+# Act as a code reviewer
+rawi ask "Review this function" --act code_reviewer --file mycode.js
+
+# Act as a Linux terminal
+rawi ask "ls -la" --act linux_terminal
+
+# Act as a technical writer
+rawi ask "Document this API" --act technical_writer
+```
+
+### Popular Templates
+
+- **code_reviewer** — Expert code analysis and suggestions
+- **linux_terminal** — Simulates Linux command execution
+- **javascript_console** — JavaScript interpreter behavior
+- **english_translator** — Translation and language help
+- **plagiarism_checker** — Content originality analysis
+- **cyber_security_specialist** — Security-focused advice
+
+## Session Management
+
+Rawi automatically manages conversation sessions for context continuity:
+
+### Continue Conversations
+
+```bash
+# Start a conversation
+rawi ask "Explain REST APIs"
+
+# Continue the conversation (automatic session)
+rawi ask "Now show me an example in Node.js"
+
+# Explicitly continue a specific session
+rawi ask "Add error handling" --continue abc123-def456
+```
+
+### Session Commands
+
+```bash
+# List recent sessions
+rawi history
+
+# Show specific session
+rawi history show abc123-def456
+
+# Search conversations
+rawi history --search "REST API"
+```
+
+## Working with Files
+
+Rawi can analyze and work with your files:
+
+### Single File Analysis
+
+```bash
+# Code review
+rawi ask "Review this code for bugs" --file src/app.js
+
+# Documentation
+rawi ask "Generate README for this project" --file package.json
+
+# Explanation
+rawi ask "Explain what this function does" --file utils.py
+```
+
+### Multiple Files
+
+```bash
+# Analyze multiple files
+rawi ask "Review these components" --file src/Header.jsx --file src/Footer.jsx
+
+# Compare files
+rawi ask "What's the difference between these implementations?" --file old.js --file new.js
+```
+
+### Supported File Types
+
+Rawi works with any text-based file:
+
+- Source code (`.js`, `.py`, `.java`, `.cpp`, etc.)
+- Configuration files (`.json`, `.yaml`, `.toml`)
+- Documentation (`.md`, `.txt`, `.rst`)
+- Data files (`.csv`, `.sql`, `.xml`)
+
+## Shell Integration Basics
+
+Enhance your terminal workflow with shell integration:
+
+### Useful Aliases
+
+Add these to your shell profile (`.bashrc`, `.zshrc`):
+
+```bash
+# Quick ask alias
+alias ask='rawi ask'
+
+# Code review workflow
+alias review='rawi ask --act code_reviewer'
+
+# Terminal simulation
+alias term='rawi ask --act linux_terminal'
+
+# Quick continuation
+alias chat='rawi ask --continue'
+```
+
+### Command Integration
+
+```bash
+# Git commit message helper
+git diff --cached | rawi ask "Write a commit message for these changes"
+
+# Log analysis
+tail -f /var/log/app.log | rawi ask "Analyze these logs for errors"
+
+# Quick documentation
+ls -la | rawi ask "Explain what these files do" --act technical_writer
+```
+
+### Pipe Integration
+
+```bash
+# Pipe output to Rawi
+echo "console.log('hello')" | rawi ask "Explain this code"
+
+# Combine with other tools
+curl -s https://api.github.com/repos/microsoft/vscode | rawi ask "Summarize this repo data"
+```
+
+## Common Use Cases
+
+### Development Workflow
+
+```bash
+# Code review
+rawi ask "Review this PR for security issues" --file changes.diff --act cyber_security_specialist
+
+# Debug assistance
+rawi ask "Why is this code throwing an error?" --file buggy.py
+
+# Optimization
+rawi ask "How can I optimize this database query?" --file slow_query.sql
+```
+
+### Learning and Exploration
+
+```bash
+# Concept explanation
+rawi ask "Explain microservices architecture with examples"
+
+# Technology comparison
+rawi ask "Compare React vs Vue.js for a new project" --profile work
+
+# Tutorial creation
+rawi ask "Create a beginner's guide to Docker" --act technical_writer
+```
+
+### Content Creation
+
+```bash
+# Blog writing
+rawi ask "Write a blog post about AI in software development" --act content_writer
+
+# Documentation
+rawi ask "Create API documentation for this endpoint" --file api.js --act technical_writer
+
+# README generation
+rawi ask "Generate a comprehensive README" --file package.json
+```
+
+### Data Analysis
+
+```bash
+# CSV analysis
+rawi ask "Analyze this sales data and find trends" --file sales.csv --act data_analyst
+
+# Log interpretation
+rawi ask "Find error patterns in these logs" --file error.log
+
+# Performance review
+rawi ask "Analyze this performance report" --file metrics.json
+```
+
+## Configuration Best Practices
+
+### Multiple Provider Setup
+
+```bash
+# Fast responses for quick questions
+rawi configure --profile quick --provider openai --model gpt-3.5-turbo --temperature 0.3
+
+# Detailed analysis
+rawi configure --profile detailed --provider anthropic --model claude-3-5-sonnet-20241022 --temperature 0.1
+
+# Cost-effective for experimentation
+rawi configure --profile local --provider ollama --model llama2
+
+# Work environment
+rawi configure --profile work --provider azure --model gpt-4 --resource-name company-ai
+```
+
+### Environment-Specific Profiles
+
+```bash
+# Development environment
+rawi configure --profile dev --provider openai --model gpt-4o --temperature 0.2
+
+# Production support
+rawi configure --profile prod --provider anthropic --model claude-3-5-sonnet-20241022 --temperature 0.1
+
+# Research and experimentation
+rawi configure --profile research --provider google --model gemini-1.5-pro --temperature 0.8
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Command not found:**
+
+```bash
+# Verify installation
+which rawi
+rawi --version
+```
+
+**No providers configured:**
+
+```bash
+# Run interactive configuration
+rawi configure
+
+# Check current status
+rawi info
+```
+
+**API key issues:**
+
+```bash
+# Test configuration
+rawi configure --test
+
+# Reconfigure provider
+rawi configure --provider openai --api-key sk-new-key
+```
+
+**Session not found:**
+
+```bash
+# List available sessions
+rawi history
+
+# Start new session
+rawi ask "Hello" --new-session
+```
+
+### Getting Help
+
+```bash
+# Command help
+rawi --help
+rawi ask --help
+
+# Provider information
+rawi info --providers
+
+# Debug mode
+rawi --debug ask "test question"
+```
+
+## Next Steps
+
+Now that you're comfortable with the basics:
+
+1. **Explore Advanced Features**:
+   - [Session Management](../advanced/sessions)
+   - [Profile Configuration](../advanced/profiles)
+   - [Shell Integration](../advanced/shell-integration)
+
+2. **Learn Workflows**:
+   - [Development Workflow](../workflows/development)
+   - [Content Creation](../workflows/content-creation)
+   - [Research Workflow](../workflows/research)
+
+3. **Configure More Providers**:
+   - [Supported Providers](../configure/providers)
+   - [Environment Variables](../configure/envvars)
+
+4. **Join the Community**:
+   - [GitHub Discussions](https://github.com/mkabumattar/rawi/discussions)
+   - [Report Issues](https://github.com/mkabumattar/rawi/issues)
+
+## Quick Reference
+
+### Essential Commands
+
+```bash
+# Configuration
+rawi configure                          # Interactive setup
+rawi configure --list                   # List profiles
+rawi info                              # System information
+
+# Conversations
+rawi ask "question"                     # Basic question
+rawi ask "question" --file code.js      # With file context
+rawi ask "question" --act expert        # With act template
+rawi ask "question" --profile work      # Specific profile
+
+# History
+rawi history                           # List sessions
+rawi history --search "keyword"        # Search conversations
+rawi history show session-id           # Show specific session
+
+# Templates
+rawi act --list                        # List all templates
+rawi act --search "code"               # Search templates
+```
+
+### Useful Aliases
+
+```bash
+alias ask='rawi ask'
+alias review='rawi ask --act code_reviewer'
+alias explain='rawi ask --act explainer'
+alias fix='rawi ask --act debugger'
+```
+
+Happy chatting with AI! 🤖✨
+
+**TypeScript:**
+
+- Superset of JavaScript with static typing
+- Compile-time type checking
+- Compiles to JavaScript
+- Helps catch errors early in development
+- Better tooling and IDE support
+
+The main advantage of TypeScript is that it helps prevent common programming errors by catching them during development rather than at runtime.
+
+````
+
+## Understanding Profiles
+
+Profiles let you use different AI providers and settings for different projects:
+
+```bash
+# List available profiles
+rawi configure --list
+
+# Create a new profile for work projects
+rawi configure --profile work --provider openai --model gpt-4
+
+# Use a specific profile
+rawi ask --profile work "How do I optimize this SQL query?"
+````
+
+## Using Act Templates
+
+Act templates transform your AI into specialized experts:
+
+```bash
+# Browse available templates
+rawi act --list
+
+# Use a template for code review
+rawi ask --act code-reviewer "Review this Python function for improvements"
+
+# Get help with Linux commands
+rawi ask --act linux-terminal "Find all files larger than 100MB"
+```
+
+### Popular Templates
+
+- `software-engineer` — General development help
+- `code-reviewer` — Code analysis and improvements
+- `linux-terminal` — Command line assistance
+- `technical-writer` — Documentation help
+- `data-scientist` — Data analysis and visualization
+
+## Session Management
+
+Sessions maintain conversation context across multiple questions:
+
+```bash
+# Start a new session
+rawi ask --new-session "I'm building a REST API in Node.js"
+
+# Continue the conversation (Rawi remembers the context)
+rawi ask "What's the best way to handle authentication?"
+rawi ask "How do I add rate limiting?"
+
+# List your sessions
+rawi history --sessions
+
+# Continue a previous session
+rawi ask --session abc123 "Can you explain JWT tokens?"
+```
+
+## Shell Integration Basics
+
+Rawi works perfectly with shell pipes and redirects:
+
+```bash
+# Analyze log files
+tail -f app.log | rawi ask "Summarize any errors in this log"
+
+# Code analysis
+cat src/app.js | rawi ask --act code-reviewer "Review this code"
+
+# Save AI responses
+rawi ask "Explain Docker containers" > docker-notes.txt
+
+# Process data
+curl -s api/data.json | rawi ask "Analyze this JSON data"
+```
+
+## Essential Commands
+
+Here are the commands you'll use most often:
+
+```bash
+# Basic question
+rawi ask "your question here"
+
+# With template
+rawi ask --act template-name "your question"
+
+# With profile
+rawi ask --profile work "your question"
+
+# Continue session
+rawi ask --session session-id "follow-up question"
+
+# Get help
+rawi --help
+rawi ask --help
+```
+
+## Next Steps
+
+Now that you're familiar with the basics:
+
+1. **Explore Templates** — Run `rawi act --list` to see all available expert templates
+2. **Set Up Multiple Profiles** — Configure different providers for different projects
+3. **Learn Advanced Features** — Check out [Shell Integration](../advanced/shell-integration) and [Workflows](../workflows)
+4. **Join the Community** — Visit our [GitHub repository](https://github.com/withrawi/rawi) for updates and discussions
+
+## Common First-Time Issues
+
+**"No provider configured"**
+
+```bash
+rawi configure  # Run interactive setup
+```
+
+**"API key not found"**
+
+```bash
+rawi configure --provider openai --api-key your-key-here
+```
+
+**"Command not found"**
+
+```bash
+npm install -g rawi  # Reinstall globally
+```
+
+Happy coding with Rawi! 🚀

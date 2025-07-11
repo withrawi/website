@@ -1,0 +1,448 @@
+---
+title: Shell Integration
+description: Master Rawi's powerful shell integration features including pipes, redirects, and automation scripting.
+---
+
+Rawi's shell integration allows you to seamlessly combine AI assistance with standard Unix tools, pipes, redirects, and shell scripting for powerful automation workflows.
+
+## Pipe Integration
+
+### Input Pipes
+
+Send data to Rawi through pipes for analysis and processing:
+
+```bash
+# Analyze log files
+tail -f /var/log/app.log | rawi ask "Summarize any errors in this log"
+
+# Code review
+cat src/app.js | rawi ask --act code-reviewer "Review this JavaScript code"
+
+# Process JSON data
+curl -s https://api.example.com/data | rawi ask "Analyze this API response"
+
+# Analyze command output
+ps aux | rawi ask "Which processes are using the most memory?"
+
+# Git integration
+git log --oneline -10 | rawi ask "Summarize these recent commits"
+```
+
+### Output Pipes
+
+Chain Rawi output with other tools:
+
+```bash
+# Save AI responses
+rawi ask "Explain Docker containers" | tee docker-notes.txt
+
+# Process AI output
+rawi ask "List 10 popular Python libraries" | grep -E "^\d+" | sort
+
+# Format output
+rawi ask "Generate a JSON example" | jq '.'
+
+# Count words in response
+rawi ask "Write a short essay on AI" | wc -w
+```
+
+### Bidirectional Pipes
+
+Combine input and output pipes for complex workflows:
+
+```bash
+# Analyze and save
+cat error.log | rawi ask "Categorize these errors" | tee error-analysis.txt
+
+# Process and filter
+curl -s api/users.json | rawi ask "Extract email addresses" | grep "@company.com"
+
+# Chain multiple AI operations
+cat code.py | rawi ask --act code-reviewer "Find issues" | rawi ask "Prioritize these issues"
+```
+
+## File Operations
+
+### Reading Files
+
+```bash
+# Analyze configuration files
+rawi ask "Explain this nginx config" < nginx.conf
+
+# Code documentation
+rawi ask --act technical-writer "Document this API" < api.py
+
+# Data analysis
+rawi ask --act data-scientist "Analyze this CSV" < data.csv
+```
+
+### Writing Files
+
+```bash
+# Generate documentation
+rawi ask "Create README for this project" > README.md
+
+# Append to files
+rawi ask "Add error handling examples" >> troubleshooting.md
+
+# Create multiple files
+rawi ask "Generate package.json for Express app" > package.json
+rawi ask "Create basic Express server" > server.js
+```
+
+### File Processing Loops
+
+```bash
+# Process multiple files
+for file in src/*.js; do
+    echo "=== Analyzing $file ==="
+    cat "$file" | rawi ask --act code-reviewer "Review this file"
+done
+
+# Batch documentation
+for component in components/*.vue; do
+    cat "$component" | rawi ask --act technical-writer "Document this Vue component" > "docs/$(basename "$component" .vue).md"
+done
+```
+
+## Advanced Shell Integration
+
+### Error Handling
+
+```bash
+# Handle API failures gracefully
+cat code.py | rawi ask "Review this code" || echo "AI service unavailable"
+
+# Retry on failure
+for i in {1..3}; do
+    if rawi ask "Test question" >/dev/null 2>&1; then
+        break
+    fi
+    echo "Attempt $i failed, retrying..."
+    sleep 2
+done
+```
+
+### Conditional Execution
+
+```bash
+# Only analyze if file exists
+[[ -f "app.log" ]] && cat app.log | rawi ask "Find critical errors"
+
+# Different actions based on file type
+if [[ "$file" == *.py ]]; then
+    cat "$file" | rawi ask --act python-expert "Review this Python code"
+elif [[ "$file" == *.js ]]; then
+    cat "$file" | rawi ask --act javascript-expert "Review this JavaScript code"
+fi
+```
+
+### Background Processing
+
+```bash
+# Analyze logs in background
+tail -f app.log | rawi ask "Monitor for security issues" &
+
+# Process multiple files concurrently
+for file in *.py; do
+    (cat "$file" | rawi ask --act code-reviewer "Review $file" > "reviews/$(basename "$file").md") &
+done
+wait  # Wait for all background jobs to complete
+```
+
+## Environment Variables
+
+### Configuration
+
+```bash
+# Set API keys
+export OPENAI_API_KEY="sk-your-key"
+export ANTHROPIC_API_KEY="sk-ant-your-key"
+
+# Default profile
+export RAWI_PROFILE="work"
+
+# Default template
+export RAWI_DEFAULT_ACT="software-engineer"
+```
+
+### Dynamic Configuration
+
+```bash
+# Profile based on directory
+if [[ $PWD == *"/work/"* ]]; then
+    export RAWI_PROFILE="work"
+else
+    export RAWI_PROFILE="personal"
+fi
+
+# Model based on task complexity
+if [[ "$1" == *"complex"* ]]; then
+    export RAWI_MODEL="gpt-4"
+else
+    export RAWI_MODEL="gpt-3.5-turbo"
+fi
+```
+
+## Automation Scripts
+
+### Development Workflow Script
+
+```bash
+#!/bin/bash
+# dev-helper.sh - Development workflow automation
+
+case "$1" in
+    "review")
+        echo "🔍 Starting code review..."
+        for file in $(git diff --name-only HEAD~1); do
+            if [[ "$file" =~ \.(js|py|ts|jsx|tsx)$ ]]; then
+                echo "Reviewing $file..."
+                cat "$file" | rawi ask --act code-reviewer "Review this file for issues and improvements" > "reviews/$(basename "$file").md"
+            fi
+        done
+        ;;
+
+    "commit")
+        echo "📝 Generating commit message..."
+        git diff --cached | rawi ask "Generate a concise commit message for these changes" | head -1
+        ;;
+
+    "docs")
+        echo "📚 Generating documentation..."
+        find src -name "*.js" | while read -r file; do
+            cat "$file" | rawi ask --act technical-writer "Generate JSDoc comments for this file" > "temp_docs"
+            # Merge with original file
+        done
+        ;;
+
+    *)
+        echo "Usage: $0 {review|commit|docs}"
+        exit 1
+        ;;
+esac
+```
+
+### Log Analysis Script
+
+```bash
+#!/bin/bash
+# log-analyzer.sh - Intelligent log analysis
+
+LOG_FILE="${1:-/var/log/app.log}"
+OUTPUT_DIR="log-analysis/$(date +%Y%m%d)"
+
+mkdir -p "$OUTPUT_DIR"
+
+# Real-time error monitoring
+echo "🔍 Starting log analysis for $LOG_FILE"
+
+# Analyze recent errors
+tail -1000 "$LOG_FILE" | grep ERROR | rawi ask --act system-administrator "Categorize and prioritize these errors" > "$OUTPUT_DIR/error-summary.txt"
+
+# Monitor for new issues
+tail -f "$LOG_FILE" | while read -r line; do
+    if echo "$line" | grep -q "CRITICAL\|FATAL"; then
+        echo "$line" | rawi ask --act incident-responder "Assess this critical error and suggest immediate actions" | tee -a "$OUTPUT_DIR/critical-alerts.txt"
+    fi
+done
+```
+
+### API Testing Script
+
+```bash
+#!/bin/bash
+# api-tester.sh - AI-powered API testing
+
+API_BASE="https://api.example.com"
+ENDPOINTS=("users" "posts" "comments")
+
+for endpoint in "${ENDPOINTS[@]}"; do
+    echo "Testing /$endpoint endpoint..."
+
+    # Test the endpoint
+    response=$(curl -s "$API_BASE/$endpoint")
+    status_code=$(curl -s -o /dev/null -w "%{http_code}" "$API_BASE/$endpoint")
+
+    # Analyze response with AI
+    echo "$response" | rawi ask --act api-tester "Analyze this API response. Status: $status_code. Check for proper structure and potential issues." > "tests/$endpoint-analysis.txt"
+done
+```
+
+## Real-World Integration Examples
+
+### Git Workflow Integration
+
+```bash
+# Add to .git/hooks/pre-commit
+#!/bin/bash
+echo "🤖 AI-powered pre-commit checks..."
+
+# Check commit message quality
+commit_msg=$(git log --format=%B -n 1 HEAD)
+if [[ ${#commit_msg} -lt 10 ]]; then
+    echo "Generating better commit message..."
+    git diff --cached | rawi ask "Suggest a clear commit message for these changes"
+fi
+
+# Quick code review
+git diff --cached --name-only | while read -r file; do
+    if [[ "$file" =~ \.(js|py|ts)$ ]]; then
+        git show ":$file" | rawi ask --act code-reviewer "Quick review: any obvious issues?" | grep -q "ISSUE" && echo "⚠️  Issues found in $file"
+    fi
+done
+```
+
+### CI/CD Integration
+
+```bash
+# In your CI pipeline
+- name: AI Code Review
+  run: |
+    # Review changed files
+    git diff origin/main...HEAD --name-only | while read file; do
+      if [[ "$file" =~ \.(js|ts|py)$ ]]; then
+        cat "$file" | rawi ask --act code-reviewer "Review for production readiness" > "reviews/$file.md"
+      fi
+    done
+
+    # Check for any critical issues
+    if grep -r "CRITICAL\|SECURITY" reviews/; then
+      echo "Critical issues found, failing build"
+      exit 1
+    fi
+```
+
+### Monitoring and Alerting
+
+```bash
+# System monitoring script
+#!/bin/bash
+while true; do
+    # Check system resources
+    df -h | rawi ask --act system-administrator "Any disk space concerns?" | grep -q "WARNING" && \
+        echo "Disk space warning detected" | mail -s "System Alert" admin@company.com
+
+    # Check application health
+    curl -s http://localhost:3000/health | rawi ask --act devops-engineer "Assess application health" | \
+        tee /tmp/health-check.log
+
+    sleep 300  # Check every 5 minutes
+done
+```
+
+## Performance Optimization
+
+### Efficient Piping
+
+```bash
+# Use head/tail to limit input size
+tail -100 large-file.log | rawi ask "Analyze recent entries"
+
+# Compress before sending
+gzip -c large-file.txt | base64 | rawi ask "Analyze this compressed data"
+
+# Filter before analysis
+grep ERROR app.log | rawi ask "Categorize these errors"
+```
+
+### Caching Responses
+
+```bash
+# Cache common analyses
+cache_key=$(echo "$input" | md5sum | cut -d' ' -f1)
+cache_file="/tmp/rawi-cache/$cache_key"
+
+if [[ -f "$cache_file" ]]; then
+    cat "$cache_file"
+else
+    echo "$input" | rawi ask "$question" | tee "$cache_file"
+fi
+```
+
+### Parallel Processing
+
+```bash
+# Process files in parallel
+find . -name "*.py" | xargs -P 4 -I {} bash -c 'cat "{}" | rawi ask --act code-reviewer "Review this file" > "reviews/{}.md"'
+```
+
+## Troubleshooting Shell Integration
+
+### Common Issues
+
+**Pipe broken errors:**
+
+```bash
+# Add error handling
+cat large-file.txt | rawi ask "Analyze this" 2>/dev/null || echo "Analysis failed"
+```
+
+**Output formatting issues:**
+
+```bash
+# Force plain text output
+rawi ask --format plain "Your question"
+
+# Clean up output
+rawi ask "Your question" | sed 's/\x1b\[[0-9;]*m//g'  # Remove ANSI colors
+```
+
+**Environment variable conflicts:**
+
+```bash
+# Isolate environment
+env -i PATH="$PATH" rawi ask "Your question"
+```
+
+## Best Practices
+
+### 1. Input Validation
+
+```bash
+# Validate input size
+if [[ $(wc -c < input.txt) -gt 100000 ]]; then
+    echo "File too large, processing first 1000 lines..."
+    head -1000 input.txt | rawi ask "Analyze this sample"
+else
+    cat input.txt | rawi ask "Analyze this file"
+fi
+```
+
+### 2. Error Handling
+
+```bash
+# Robust error handling
+{
+    cat problematic-file.txt | rawi ask "Analyze this"
+} 2>&1 | tee analysis.log || {
+    echo "Analysis failed, using fallback method"
+    grep -E "(ERROR|WARN)" problematic-file.txt
+}
+```
+
+### 3. Resource Management
+
+```bash
+# Limit concurrent processes
+max_jobs=3
+job_count=0
+
+for file in *.txt; do
+    if (( job_count >= max_jobs )); then
+        wait  # Wait for a job to complete
+        job_count=0
+    fi
+
+    (cat "$file" | rawi ask "Process this file" > "output/$file") &
+    ((job_count++))
+done
+wait  # Wait for all remaining jobs
+```
+
+## See Also
+
+- [ask command](../reference/ask) — Basic AI interactions
+- [Session Management](./sessions) — Maintaining context in scripts
+- [Profile Management](./profiles) — Using different configurations
+- [Workflows](../workflows) — Complete automation examples

@@ -1,0 +1,436 @@
+---
+title: Usage Patterns
+description: Comprehensive guide to effective Rawi usage patterns, best practices, and advanced techniques.
+---
+
+Learn the most effective ways to use Rawi through proven patterns, best practices, and advanced techniques that maximize productivity and AI assistance quality.
+
+## Core Usage Patterns
+
+### Question Formulation Patterns
+
+#### Specific vs General Questions
+
+**Instead of:**
+
+```bash
+rawi ask "Help with JavaScript"
+```
+
+**Use:**
+
+```bash
+rawi ask "How do I handle async/await errors in JavaScript when making API calls?"
+```
+
+**Pattern: Context + Specific Task + Technology**
+
+```bash
+rawi ask "In a React application, how do I optimize performance when rendering large lists of items?"
+rawi ask "For a Node.js Express API, what's the best way to implement rate limiting for different user tiers?"
+```
+
+#### Progressive Question Patterns
+
+**Start Broad, Get Specific:**
+
+```bash
+# 1. Overview
+rawi ask --new-session "I want to implement user authentication in my web app"
+
+# 2. Technology selection
+rawi ask "Should I use JWT tokens or session-based auth for a React/Node.js app?"
+
+# 3. Implementation details
+rawi ask "Show me how to implement JWT authentication with refresh tokens"
+
+# 4. Security considerations
+rawi ask "What security best practices should I follow with this JWT implementation?"
+```
+
+### Template Selection Patterns
+
+#### Task-Based Template Selection
+
+**Code-Related Tasks:**
+
+```bash
+# Code review and improvement
+rawi ask --act code-reviewer "Review this function for performance issues"
+
+# Architecture decisions
+rawi ask --act software-architect "Design a scalable microservices architecture for e-commerce"
+
+# Debugging assistance
+rawi ask --act debugging-expert "Help me debug this memory leak in my Node.js application"
+```
+
+**Writing and Documentation:**
+
+```bash
+# Technical documentation
+rawi ask --act technical-writer "Document this REST API endpoint with examples"
+
+# User-facing content
+rawi ask --act copywriter "Create user onboarding emails for our SaaS product"
+
+# Code comments
+rawi ask --act code-documenter "Generate comprehensive JSDoc comments for this module"
+```
+
+**Analysis and Research:**
+
+```bash
+# Data analysis
+rawi ask --act data-scientist "Analyze this user behavior dataset and find insights"
+
+# Market research
+rawi ask --act business-analyst "Research competitors in the project management software space"
+
+# Technology evaluation
+rawi ask --act technology-consultant "Compare React vs Vue.js for our team's next project"
+```
+
+## Development Workflow Patterns
+
+### Feature Development Pattern
+
+```bash
+# 1. Planning phase
+rawi ask --new-session --act software-architect "I need to add real-time notifications to my web app"
+
+# 2. Technology research
+rawi ask "Compare WebSockets vs Server-Sent Events vs long polling for real-time features"
+
+# 3. Implementation planning
+rawi ask "Design the database schema and API endpoints for a notification system"
+
+# 4. Code implementation
+rawi ask --act software-engineer "Implement WebSocket connection handling in Node.js with error recovery"
+
+# 5. Testing strategy
+rawi ask --act qa-engineer "Create test cases for real-time notification delivery"
+
+# 6. Documentation
+rawi ask --act technical-writer "Document the notification API for other developers"
+```
+
+### Debugging Pattern
+
+```bash
+# 1. Problem description
+rawi ask --new-session "My React app is crashing with 'Cannot read property of undefined' error"
+
+# 2. Error analysis
+rawi ask "Here's the full error stack trace: [paste trace]"
+
+# 3. Code review
+rawi ask --act code-reviewer "Here's the component where the error occurs: [paste code]"
+
+# 4. Solution implementation
+rawi ask "Show me the corrected code with proper error handling"
+
+# 5. Prevention
+rawi ask "What patterns can I use to prevent similar errors in the future?"
+```
+
+### Code Review Pattern
+
+```bash
+# 1. Overall assessment
+cat src/components/UserProfile.jsx | rawi ask --act code-reviewer "Review this React component"
+
+# 2. Security analysis
+cat src/api/auth.js | rawi ask --act security-expert "Check this authentication code for security vulnerabilities"
+
+# 3. Performance review
+cat src/utils/dataProcessor.js | rawi ask --act performance-expert "Analyze this code for performance bottlenecks"
+
+# 4. Best practices check
+cat src/hooks/useDataFetching.js | rawi ask --act react-expert "Does this custom hook follow React best practices?"
+```
+
+## Advanced Usage Patterns
+
+### Multi-Step Problem Solving
+
+#### Complex Feature Implementation
+
+```bash
+# Session: Building a chat application
+rawi ask --new-session --act software-architect "Design a scalable real-time chat application architecture"
+
+# Continue with database design
+rawi ask --act database-expert "Design the database schema for the chat application we discussed"
+
+# Backend implementation
+rawi ask --act backend-engineer "Implement the WebSocket server for real-time messaging"
+
+# Frontend implementation
+rawi ask --act frontend-engineer "Create a React component for the chat interface"
+
+# Security considerations
+rawi ask --act security-expert "What security measures should I implement for this chat app?"
+
+# Performance optimization
+rawi ask --act performance-expert "How can I optimize message delivery and storage?"
+```
+
+#### Learning Pattern
+
+```bash
+# Learning new technology: Docker
+rawi ask --new-session --act teacher "I'm new to Docker. Explain containers and how they work"
+
+# Practical application
+rawi ask "Show me how to containerize a Node.js application step by step"
+
+# Advanced concepts
+rawi ask "Explain Docker Compose and when to use it"
+
+# Real-world scenario
+rawi ask "Help me dockerize my existing React/Node.js application with a database"
+
+# Best practices
+rawi ask "What are Docker security best practices for production deployments?"
+```
+
+### Data Analysis Patterns
+
+#### Log Analysis Workflow
+
+```bash
+# 1. Initial analysis
+tail -1000 /var/log/app.log | rawi ask --act system-administrator "Summarize the main issues in this log"
+
+# 2. Error categorization
+grep ERROR /var/log/app.log | rawi ask --act troubleshooting-expert "Categorize these errors by severity and type"
+
+# 3. Pattern detection
+awk '{print $4}' /var/log/app.log | sort | uniq -c | rawi ask --act data-analyst "Analyze these timestamp patterns for anomalies"
+
+# 4. Solution recommendations
+rawi ask --act devops-engineer "Based on the log analysis, what monitoring and alerting should I implement?"
+```
+
+#### Performance Analysis Pattern
+
+```bash
+# 1. Baseline measurement
+cat performance-metrics.json | rawi ask --act performance-expert "Analyze these application performance metrics"
+
+# 2. Bottleneck identification
+cat database-query-times.log | rawi ask --act database-expert "Identify slow queries and optimization opportunities"
+
+# 3. Optimization planning
+rawi ask --act software-architect "Create a performance optimization plan based on the analysis"
+
+# 4. Implementation guidance
+rawi ask --act backend-engineer "Show me how to implement database query optimization"
+```
+
+## Content Creation Patterns
+
+### Documentation Workflow
+
+```bash
+# 1. Structure planning
+rawi ask --act technical-writer --new-session "Create an outline for API documentation for a project management tool"
+
+# 2. Content generation
+rawi ask "Write the introduction section explaining the API's purpose and capabilities"
+
+# 3. Example creation
+rawi ask --act api-documentation-expert "Create comprehensive examples for user authentication endpoints"
+
+# 4. Review and improvement
+rawi ask --act editor "Review this documentation for clarity and completeness"
+```
+
+### Content Marketing Pattern
+
+```bash
+# 1. Research phase
+rawi ask --act market-researcher --new-session "Research trending topics in web development for blog content"
+
+# 2. Content planning
+rawi ask --act content-strategist "Create a content calendar for a developer-focused blog"
+
+# 3. Writing
+rawi ask --act technical-blogger "Write a comprehensive guide to React Server Components"
+
+# 4. SEO optimization
+rawi ask --act seo-expert "Optimize this blog post for search engines while maintaining readability"
+```
+
+## Productivity Patterns
+
+### Daily Development Routine
+
+```bash
+# Morning planning
+rawi ask --profile work --new-session "Help me plan today's development tasks for the user dashboard feature"
+
+# Code review routine
+for file in $(git diff --name-only HEAD~1); do
+    cat "$file" | rawi ask --profile work --act code-reviewer "Quick review of changes in $file"
+done
+
+# End-of-day reflection
+rawi ask --profile work "Summarize today's progress and suggest tomorrow's priorities"
+```
+
+### Learning and Research Routine
+
+```bash
+# Weekly learning session
+rawi ask --act teacher --new-session "Teach me about GraphQL - I'm familiar with REST APIs"
+
+# Technology comparison
+rawi ask --act technology-consultant "Compare different state management solutions for React applications"
+
+# Stay updated
+rawi ask --act tech-trends-analyst "What are the latest trends in web development I should be aware of?"
+```
+
+## Error Handling and Recovery Patterns
+
+### Graceful Degradation
+
+```bash
+# Primary attempt with error handling
+cat complex-code.js | rawi ask --act code-reviewer "Comprehensive code review" 2>/dev/null || \
+# Fallback to simpler analysis
+cat complex-code.js | rawi ask "Quick code review - any obvious issues?"
+```
+
+### Retry Patterns
+
+```bash
+# Retry with exponential backoff
+for i in {1..3}; do
+    if output=$(rawi ask "Complex analysis question" 2>/dev/null); then
+        echo "$output"
+        break
+    else
+        echo "Attempt $i failed, retrying in $((i*2)) seconds..."
+        sleep $((i*2))
+    fi
+done
+```
+
+## Integration Patterns
+
+### Git Workflow Integration
+
+```bash
+# Pre-commit hook pattern
+#!/bin/bash
+# Check for TODO comments and get AI suggestions
+git diff --cached | grep -i "TODO\|FIXME" | \
+    rawi ask --act project-manager "Prioritize these TODO items and suggest immediate actions"
+
+# Commit message generation
+git diff --cached | rawi ask --act git-expert "Generate a clear, conventional commit message for these changes"
+```
+
+### CI/CD Integration Pattern
+
+```bash
+# Code quality gate
+changed_files=$(git diff origin/main...HEAD --name-only | grep -E '\.(js|ts|py)$')
+for file in $changed_files; do
+    score=$(cat "$file" | rawi ask --act code-quality-assessor "Rate this code quality from 1-10 and explain")
+    if [[ "$score" =~ ^[1-5] ]]; then
+        echo "Code quality concern in $file: $score"
+        exit 1
+    fi
+done
+```
+
+### Monitoring Integration
+
+```bash
+# Intelligent alerting
+while read -r alert; do
+    echo "$alert" | rawi ask --act incident-responder "Assess this alert severity and suggest immediate actions" | \
+    if grep -q "CRITICAL"; then
+        # Send to on-call engineer
+        mail -s "Critical Alert" oncall@company.com
+    fi
+done < alerts.log
+```
+
+## Best Practices Summary
+
+### Question Quality
+
+1. **Be Specific**: Include context, technology stack, and specific requirements
+2. **Provide Examples**: Show what you've tried and what didn't work
+3. **Ask Follow-ups**: Build on previous responses for deeper understanding
+
+### Template Usage
+
+1. **Match Expertise**: Choose templates that align with your task
+2. **Combine Templates**: Use different templates for different aspects of a problem
+3. **Learn Templates**: Explore `rawi act --list` regularly
+
+### Session Management
+
+1. **Stay Focused**: Keep sessions topic-focused for better context
+2. **Use Descriptive Starts**: Begin sessions with clear context
+3. **Reference Previous Work**: Build on earlier conversation points
+
+### Profile Management
+
+1. **Environment Separation**: Different profiles for work/personal/projects
+2. **Provider Optimization**: Match providers to task complexity
+3. **Cost Management**: Use appropriate models for different scenarios
+
+### Integration
+
+1. **Error Handling**: Always include fallback options in scripts
+2. **Resource Limits**: Be mindful of input size and API limits
+3. **Caching**: Cache common responses to improve performance
+
+## Common Anti-Patterns to Avoid
+
+### Ineffective Question Patterns
+
+**Too Vague:**
+
+```bash
+rawi ask "Fix my code"  # No context
+```
+
+**Too Broad:**
+
+```bash
+rawi ask "Teach me programming"  # Too general
+```
+
+**No Context:**
+
+```bash
+rawi ask "Why is this broken?"  # No code or error provided
+```
+
+### Poor Session Management
+
+- Mixing unrelated topics in one session
+- Starting new sessions for follow-up questions
+- Not providing context in session continuations
+
+### Inefficient Template Usage
+
+- Using generic templates for specialized tasks
+- Not exploring available templates
+- Mixing expertise levels inappropriately
+
+## See Also
+
+- [ask command](../reference/ask) — Command reference
+- [Act Templates Guide](../configure/act-templates) — Template details
+- [Session Management](./sessions) — Managing conversations
+- [Shell Integration](./shell-integration) — Automation patterns
+- [Workflows](../workflows) — Complete workflow examples

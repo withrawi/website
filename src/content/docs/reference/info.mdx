@@ -1,57 +1,400 @@
 ---
-title: Rawi (راوي) Documentation | Reference `info` Command
-description: Welcome to the comprehensive documentation for Rawi (راوي), a developer-friendly AI-powered CLI tool for your terminal.
+title: info — System Information
+description: Get detailed information about your Rawi installation, configuration, and system status.
 ---
 
-import Clarity from '../../../components/clarity.astro';
+Get detailed information about your Rawi installation, configuration, and system status.
 
-<Clarity />
+## Basic Usage
 
-# info
+```
+rawi info [options]
+```
 
-## Description
-
-Display information about Rawi and its capabilities, including system details, configured profiles, and supported AI providers.
-
-See also: Rawi Documentation
-
-## Synopsis
+### Quick Commands
 
 ```bash
-rawi info [options]
+# Show general system information
+rawi info
+
+# Show configured profiles
+rawi info --profiles
+
+# Show supported providers
+rawi info --providers
 ```
 
 ## Options
 
-- `--profiles` (boolean)  
-  Show configured profiles.
-
-- `--providers` (boolean)  
-  Show supported AI providers.
-
-- `-h, --help` (boolean)  
-  Display help for command.
+| Option        | Description                                        |
+| ------------- | -------------------------------------------------- |
+| `--profiles`  | Display all configured profiles and their settings |
+| `--providers` | Show supported AI providers and their capabilities |
+| `--help`      | Show command help and examples                     |
 
 ## Examples
 
-**Show general information about Rawi:**
+### System Information
+
+Get a comprehensive overview of your Rawi installation:
 
 ```bash
-$ rawi info
+rawi info
 ```
 
-**Show configured profiles:**
+**Output includes:**
+
+- Version information
+- Author and license details
+- Total number of configured profiles
+- Available AI providers
+- Current default profile
+- Installation path
+- Configuration location
+
+**Example Output:**
+
+```
+🚀 About Rawi (راوي)  https://rawi.mkabumattar.com
+├─ Version: 1.0.0
+├─ Author: Mahmoud Kabumattar
+├─ License: MIT
+└─ Description: AI-powered CLI tool for developers
+
+📊 Configuration Status
+├─ Profiles: 3 configured
+├─ Default Profile: development
+├─ Providers: 9 available
+└─ Templates: 200+ expert prompts
+
+💾 System Paths
+├─ Installation: /usr/local/bin/rawi
+├─ Configuration: ~/.config/rawi/
+├─ History: ~/.config/rawi/history/
+└─ Templates: ~/.config/rawi/templates/
+```
+
+### Profile Overview
+
+View all your configured profiles:
 
 ```bash
-$ rawi info --profiles
+rawi info --profiles
 ```
 
-**Show supported AI providers:**
+**Shows for each profile:**
+
+- Profile name and status
+- Configured AI provider
+- Default model
+- Creation date
+- Last used date
+- Number of conversations
+
+**Example Output:**
+
+```
+👤 Configured Profiles
+┌─────────────┬──────────┬─────────────┬─────────────┬──────────────┐
+│ Profile     │ Provider │ Model       │ Created     │ Conversations│
+├─────────────┼──────────┼─────────────┼─────────────┼──────────────┤
+│ development │ openai   │ gpt-4       │ 2024-01-15  │ 42           │
+│ local       │ ollama   │ llama2      │ 2024-01-20  │ 15           │
+│ production  │ anthropic│ claude-3    │ 2024-01-25  │ 8            │
+└─────────────┴──────────┴─────────────┴─────────────┴──────────────┘
+
+🌟 Default Profile: development
+```
+
+### Provider Information
+
+View supported AI providers and their capabilities:
 
 ```bash
-$ rawi info --providers
+rawi info --providers
 ```
 
----
+**Shows for each provider:**
 
-For more information, see the Rawi documentation or run `rawi info --help`.
+- Provider name and status
+- Available models
+- Authentication requirements
+- Special features
+- Connection status
+
+**Example Output:**
+
+```
+🤖 Supported AI Providers
+
+┌─────────────┬─────────┬──────────────┬─────────────────┐
+│ Provider    │ Status  │ Models       │ Authentication  │
+├─────────────┼─────────┼──────────────┼─────────────────┤
+│ OpenAI      │ ✅ Ready│ gpt-4, gpt-3.5│ API Key        │
+│ Anthropic   │ ✅ Ready│ claude-3     │ API Key        │
+│ Google      │ ✅ Ready│ gemini-pro   │ API Key        │
+│ Ollama      │ ⚠️ Local│ llama2, llama│ None           │
+│ Azure       │ ❌ Config│ gpt-4        │ API Key + Resource│
+│ Bedrock     │ ❌ Config│ claude-3     │ AWS Credentials │
+│ xAI         │ ❌ Config│ grok-1       │ API Key        │
+│ Qwen        │ ❌ Config│ qwen-max     │ API Key        │
+│ LM Studio   │ ❌ Config│ Various      │ None           │
+└─────────────┴─────────┴──────────────┴─────────────────┘
+
+Legend:
+✅ Ready    - Configured and working
+⚠️ Local    - Local provider available
+❌ Config   - Needs configuration
+```
+
+## Understanding the Output
+
+### Status Indicators
+
+| Symbol | Meaning                       |
+| ------ | ----------------------------- |
+| ✅     | Configured and working        |
+| ⚠️     | Available but not configured  |
+| ❌     | Not configured or unreachable |
+| 🔄     | Currently being tested        |
+
+### Configuration Paths
+
+The info command shows important file locations:
+
+- **Configuration**: `~/.config/rawi/` (main config directory)
+- **Profiles**: `~/.config/rawi/profiles/` (profile-specific settings)
+- **History**: `~/.config/rawi/history/` (conversation history)
+- **Templates**: `~/.config/rawi/templates/` (act templates)
+
+## Use Cases
+
+### Troubleshooting Setup
+
+When experiencing issues, run `rawi info` to check:
+
+```bash
+# Full system check
+rawi info
+
+# Check specific profile configuration
+rawi info --profiles
+
+# Verify provider availability
+rawi info --providers
+```
+
+### Health Monitoring
+
+Regular health checks of your Rawi setup:
+
+```bash
+# Quick status check
+rawi info | grep -E "(Version|Profiles|Default)"
+
+# Profile usage monitoring
+rawi info --profiles | grep "Conversations"
+
+# Provider connectivity check
+rawi info --providers | grep -E "(Ready|Config)"
+```
+
+### System Information for Support
+
+When seeking help, provide system information:
+
+```bash
+# Generate support information
+echo "=== Rawi System Information ===" > support-info.txt
+rawi info >> support-info.txt
+echo "=== Profile Details ===" >> support-info.txt
+rawi info --profiles >> support-info.txt
+echo "=== Provider Status ===" >> support-info.txt
+rawi info --providers >> support-info.txt
+```
+
+## Advanced Usage
+
+### JSON Output
+
+For scripting and automation:
+
+```bash
+# Get info as JSON (if supported)
+rawi info --json
+
+# Parse specific information
+rawi info --json | jq '.profiles[] | select(.name == "development")'
+```
+
+### Status Monitoring Scripts
+
+```bash
+#!/bin/bash
+# Check if Rawi is properly configured
+if rawi info --providers | grep -q "✅"; then
+    echo "✅ Rawi has configured providers"
+    exit 0
+else
+    echo "❌ Rawi needs configuration"
+    exit 1
+fi
+```
+
+### Profile Migration Check
+
+```bash
+# Check profiles before migration
+echo "Current profiles:"
+rawi info --profiles
+
+# Backup before changes
+cp -r ~/.config/rawi/ ~/rawi-backup-$(date +%Y%m%d)/
+```
+
+## Integration with Other Commands
+
+The `info` command works well with other Rawi commands:
+
+### Pre-Configuration Check
+
+```bash
+# Check current state before configuring
+rawi info --providers
+rawi configure --provider openai
+```
+
+### Profile Management Workflow
+
+```bash
+# Review existing profiles
+rawi info --profiles
+
+# Create new profile
+rawi configure --profile new-profile
+
+# Verify new profile
+rawi info --profiles | grep new-profile
+```
+
+### Health Check Routine
+
+```bash
+# Daily health check
+rawi info > daily-status.log
+if grep -q "❌" daily-status.log; then
+    echo "⚠️ Configuration issues detected"
+fi
+```
+
+## Troubleshooting
+
+### No Profiles Found
+
+If `rawi info` shows no profiles:
+
+```bash
+# Create your first profile
+rawi configure
+
+# Verify creation
+rawi info --profiles
+```
+
+### Provider Connection Issues
+
+If providers show as unreachable:
+
+```bash
+# Check network connectivity
+ping -c 1 api.openai.com
+
+# Test API key
+rawi configure --test
+
+# Check firewall settings
+netstat -an | grep :443
+```
+
+### Configuration Directory Issues
+
+If configuration cannot be accessed:
+
+```bash
+# Check directory permissions
+ls -la ~/.config/rawi/
+
+# Create directory if missing
+mkdir -p ~/.config/rawi/profiles/
+
+# Fix permissions
+chmod 755 ~/.config/rawi/
+chmod 644 ~/.config/rawi/config.json
+```
+
+### Outdated Information
+
+Information is cached briefly. To force refresh:
+
+```bash
+# Clear cache and refresh
+rawi info --refresh
+
+# Restart for complete refresh
+rawi info
+```
+
+## Output Customization
+
+### Filtering Output
+
+```bash
+# Show only profile names
+rawi info --profiles | grep "│" | awk '{print $2}'
+
+# Show only ready providers
+rawi info --providers | grep "✅"
+
+# Count configurations
+rawi info | grep "Profiles:" | cut -d' ' -f2
+```
+
+### Custom Formats
+
+```bash
+# Compact format
+rawi info --compact
+
+# Verbose format with details
+rawi info --verbose
+
+# Table format for profiles
+rawi info --profiles --format table
+```
+
+## Best Practices
+
+### Regular Monitoring
+
+1. **Daily Checks**: Include `rawi info` in daily development scripts
+2. **Profile Reviews**: Weekly review of profile usage with `--profiles`
+3. **Provider Status**: Monitor provider connectivity before important tasks
+
+### Documentation
+
+1. **System Documentation**: Include `rawi info` output in system documentation
+2. **Team Onboarding**: Use provider info to guide team setup
+3. **Troubleshooting Guides**: Reference specific info outputs
+
+### Automation
+
+1. **CI/CD Integration**: Check Rawi status in deployment scripts
+2. **Monitoring Scripts**: Automated health checks using info command
+3. **Backup Validation**: Verify configuration after backups
+
+## See Also
+
+- [configure command](./configure) — Modify settings shown in info
+- [Supported Providers](../configure/providers) — Detailed provider information
+- [Profile Management](../advanced/profiles) — Advanced profile features
+- [System Requirements](../getting-started/install) — Installation and setup
