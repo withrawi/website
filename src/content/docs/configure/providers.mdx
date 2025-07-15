@@ -7,7 +7,7 @@ import {Tabs, TabItem, Steps, Aside} from '@astrojs/starlight/components';
 
 # Supported AI Providers
 
-Rawi CLI supports 9 major AI providers, giving you access to dozens of models from leading companies. Whether you need cloud-based power or local privacy, there's a provider configuration for your use case.
+Rawi CLI supports 12 major AI providers, giving you access to dozens of models from leading companies. Whether you need cloud-based power or local privacy, there's a provider configuration for your use case.
 
 <Aside type="tip">
   Use `rawi info --providers` to see all available providers and their models in
@@ -24,6 +24,9 @@ Rawi CLI supports 9 major AI providers, giving you access to dozens of models fr
     - **OpenAI** - GPT-4o, GPT-4, O1 models
     - **Anthropic** - Claude 3.5 Sonnet, Claude 4
     - **Google** - Gemini 2.0 Flash, Gemini 1.5 Pro
+    - **DeepSeek** - Cost-effective reasoning models
+    - **Mistral** - European AI with multilingual support
+    - **Cerebras** - Ultra-fast inference with WSE technology
     - **Azure OpenAI** - Enterprise OpenAI models
     - **Amazon Bedrock** - Multi-vendor model access
     - **Qwen** - Alibaba's language models
@@ -49,17 +52,20 @@ Rawi CLI supports 9 major AI providers, giving you access to dozens of models fr
 
 ## Quick Provider Comparison
 
-| Provider      | Best For                 | Key Models           | Setup Difficulty |
-| ------------- | ------------------------ | -------------------- | ---------------- |
-| **OpenAI**    | General AI tasks, coding | GPT-4o, O1           | Easy             |
-| **Anthropic** | Long contexts, analysis  | Claude 3.5 Sonnet    | Easy             |
-| **Google**    | Multimodal tasks         | Gemini 2.0 Flash     | Easy             |
-| **Ollama**    | Privacy, local use       | Llama 3.2, Mistral   | Medium           |
-| **LM Studio** | Local model management   | Ollama models        | Easy             |
-| **Azure**     | Enterprise environments  | GPT-4 (Enterprise)   | Medium           |
-| **Bedrock**   | AWS ecosystem            | Claude, Llama, Titan | Hard             |
-| **Qwen**      | Chinese language tasks   | Qwen-Max             | Easy             |
-| **xAI**       | Experimental features    | Grok-2               | Easy             |
+| Provider      | Best For                  | Key Models           | Setup Difficulty |
+| ------------- | ------------------------- | -------------------- | ---------------- |
+| **OpenAI**    | General AI tasks, coding  | GPT-4o, O1           | Easy             |
+| **Anthropic** | Long contexts, analysis   | Claude 3.5 Sonnet    | Easy             |
+| **Google**    | Multimodal tasks          | Gemini 2.0 Flash     | Easy             |
+| **DeepSeek**  | Cost-effective reasoning  | DeepSeek Chat        | Easy             |
+| **Mistral**   | European AI, multilingual | Mistral Large        | Easy             |
+| **Cerebras**  | Ultra-fast inference      | Llama 3.1 70B        | Easy             |
+| **Ollama**    | Privacy, local use        | Llama 3.2, Mistral   | Medium           |
+| **LM Studio** | Local model management    | Ollama models        | Easy             |
+| **Azure**     | Enterprise environments   | GPT-4 (Enterprise)   | Medium           |
+| **Bedrock**   | AWS ecosystem             | Claude, Llama, Titan | Hard             |
+| **Qwen**      | Chinese language tasks    | Qwen-Max             | Easy             |
+| **xAI**       | Experimental features     | Grok-2               | Easy             |
 
 ## Provider Details
 
@@ -161,6 +167,103 @@ rawi configure --provider google \
 - Search and information retrieval
 - Creative writing
 - Technical documentation
+
+### DeepSeek
+
+Cost-effective AI with strong reasoning capabilities and competitive performance.
+
+**Available Models:**
+
+- `deepseek-chat` - Versatile model for general use
+- `deepseek-reasoner` - Enhanced reasoning capabilities
+
+**Configuration:**
+
+```bash
+# Basic setup
+rawi configure --provider deepseek \
+  --model deepseek-chat \
+  --api-key sk-your-deepseek-key
+
+# For reasoning tasks
+rawi configure --provider deepseek \
+  --model deepseek-reasoner \
+  --api-key sk-your-deepseek-key \
+  --temperature 0.2
+```
+
+**Use Cases:**
+
+- Cost-effective AI interactions
+- Complex reasoning tasks
+- Mathematical problem solving
+- Budget-conscious applications
+
+### Mistral
+
+European AI platform with strong multilingual capabilities and GDPR compliance.
+
+**Available Models:**
+
+- `mistral-large-latest` - Most capable model
+- `mistral-small-latest` - Efficient and fast
+- `ministral-3b-latest` - Lightweight model
+- `ministral-8b-latest` - Balanced performance
+- `pixtral-large-latest` - Multimodal capabilities
+
+**Configuration:**
+
+```bash
+# Basic setup
+rawi configure --provider mistral \
+  --model mistral-large-latest \
+  --api-key your-mistral-key
+
+# For multilingual tasks
+rawi configure --provider mistral \
+  --model mistral-large-latest \
+  --api-key your-mistral-key \
+  --temperature 0.5
+```
+
+**Use Cases:**
+
+- European AI with GDPR compliance
+- Multilingual applications
+- JSON mode support
+- Function calling capabilities
+
+### Cerebras
+
+Ultra-fast AI inference with Wafer-Scale Engine technology for exceptional speed.
+
+**Available Models:**
+
+- `llama3.1-70b` - Meta's Llama 3.1 70B model
+- `llama3.1-8b` - Meta's Llama 3.1 8B model
+- `llama-3.3-70b` - Latest Meta Llama 3.3 70B
+
+**Configuration:**
+
+```bash
+# Basic setup
+rawi configure --provider cerebras \
+  --model llama3.1-70b \
+  --api-key csk-your-key
+
+# For speed-critical tasks
+rawi configure --provider cerebras \
+  --model llama3.1-70b \
+  --api-key csk-your-key \
+  --temperature 0.7
+```
+
+**Use Cases:**
+
+- Ultra-fast inference requirements
+- High-throughput applications
+- Speed-critical workflows
+- Real-time AI interactions
 
 ### Ollama (Local)
 
