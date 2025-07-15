@@ -304,11 +304,20 @@ rawi ask "Analyze this performance report" --file metrics.json
 # Fast responses for quick questions
 rawi configure --profile quick --provider openai --model gpt-3.5-turbo --temperature 0.3
 
+# Cost-effective with reasoning
+rawi configure --profile budget --provider deepseek --model deepseek-chat --temperature 0.2
+
+# European AI with GDPR compliance
+rawi configure --profile europe --provider mistral --model mistral-large-latest --temperature 0.5
+
+# Ultra-fast inference
+rawi configure --profile speed --provider cerebras --model llama3.1-70b --temperature 0.7
+
 # Detailed analysis
 rawi configure --profile detailed --provider anthropic --model claude-3-5-sonnet-20241022 --temperature 0.1
 
-# Cost-effective for experimentation
-rawi configure --profile local --provider ollama --model llama2
+# Local privacy-focused
+rawi configure --profile local --provider ollama --model llama3.2
 
 # Work environment
 rawi configure --profile work --provider azure --model gpt-4 --resource-name company-ai
