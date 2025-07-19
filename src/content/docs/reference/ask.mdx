@@ -26,13 +26,52 @@ rawi ask "Explain async/await in JavaScript with examples"
 
 ## Options
 
-| Option                  | Alias | Description                                | Default   |
-| ----------------------- | ----- | ------------------------------------------ | --------- |
-| `--profile <profile>`   | `-p`  | Profile to use for AI configuration        | `default` |
-| `--session <sessionId>` | `-s`  | Continue an existing chat session          |           |
-| `--new-session`         | `-n`  | Start a new chat session                   |           |
-| `--act <template>`      |       | Use an act template by ID                  |           |
-| `--verbose`             |       | Show detailed status and debug information |           |
+| Option                       | Alias | Description                                  | Default   |
+| ---------------------------- | ----- | -------------------------------------------- | --------- |
+| `--profile <profile>`        | `-p`  | Profile to use for AI configuration          | `default` |
+| `--session <sessionId>`      | `-s`  | Continue an existing chat session            |           |
+| `--new-session`              | `-n`  | Start a new chat session                     |           |
+| `--act <template>`           |       | Use an act template by ID                    |           |
+| `--file <path>`              | `-f`  | Process content from a file                  |           |
+| `--files <paths...>`         | `-F`  | Process content from multiple files          |           |
+| `--batch <patterns...>`      | `-b`  | Process files matching glob patterns         |           |
+| `--file-type <type>`         |       | Override automatic file type detection       |           |
+| `--parallel`                 |       | Process multiple files in parallel           |           |
+| `--max-concurrency <number>` |       | Maximum concurrent files to process          | `5`       |
+| `--continue-on-error`        |       | Continue processing other files if one fails |           |
+| `--verbose`                  |       | Show detailed status and debug information   |           |
+
+### File Processing Options
+
+**Supported File Types:**
+
+| Category                  | Extensions                                | Description                                    |
+| ------------------------- | ----------------------------------------- | ---------------------------------------------- |
+| **Documents**             | `pdf`, `docx`, `pptx`, `xlsx`             | PDF documents, Word docs, PowerPoint, Excel    |
+| **OpenDocument**          | `odt`, `odp`, `ods`                       | OpenDocument text, presentations, spreadsheets |
+| **Text & Markup**         | `txt`, `md`, `xml`, `html`, `htm`         | Plain text, Markdown, XML, HTML files          |
+| **Web Technologies**      | `js`, `jsx`, `ts`, `tsx`, `css`, `json`   | JavaScript, TypeScript, CSS, JSON              |
+| **Programming Languages** | `py`, `java`, `cpp`, `c`, `h`, `go`, `rs` | Python, Java, C/C++, Go, Rust                  |
+|                           | `rb`, `kt`, `swift`, `dart`, `scala`      | Ruby, Kotlin, Swift, Dart, Scala               |
+|                           | `r`, `m`, `pl`, `lua`, `php`              | R, Objective-C, Perl, Lua, PHP                 |
+| **Configuration**         | `yml`, `yaml`, `toml`, `env`, `ini`       | YAML, TOML, environment, config files          |
+|                           | `conf`, `cfg`                             | General configuration files                    |
+| **Scripts & Tools**       | `sql`, `sh`, `bash`, `vim`                | SQL, shell scripts, Vim config                 |
+|                           | `dockerfile`, `makefile`, `gitignore`     | Docker, Make, Git ignore files                 |
+| **Logs**                  | `log`                                     | Log files and system output                    |
+
+**File Type Override:**
+
+```bash
+# Process unknown file as text
+rawi ask --file data.unknown --file-type txt "Analyze this data"
+
+# Force PDF processing
+rawi ask --file document --file-type pdf "Extract text from this"
+
+# Override auto-detection for config files
+rawi ask --file config.custom --file-type yaml "Parse this YAML configuration"
+```
 
 ## Session Management
 
@@ -215,6 +254,40 @@ cat data.csv | rawi ask --act data-scientist "Analyze this data" | tee analysis.
 
 ## Advanced Usage
 
+### File Processing
+
+```bash
+# Process PDF documents
+rawi ask --file report.pdf "Summarize the key findings in this report"
+
+# Analyze Excel spreadsheets
+rawi ask --file sales-data.xlsx "What trends do you see in this quarterly data?"
+
+# Review source code files
+rawi ask --file src/app.js --act code-reviewer "Review this code for best practices"
+
+# Process Word documents
+rawi ask --file requirements.docx "Extract all functional requirements"
+
+# Multiple file comparison
+rawi ask --files package.json composer.json "Compare these dependency configurations"
+
+# Batch processing with glob patterns
+rawi ask --batch "src/**/*.{js,ts}" "Find potential security vulnerabilities"
+
+# Override file type detection
+rawi ask --file data.unknown --file-type txt "Process this as plain text"
+
+# Parallel processing for speed
+rawi ask --batch "docs/**/*.md" --parallel "Create a comprehensive documentation index"
+
+# Continue on errors for large batches
+rawi ask --batch "**/*.json" --continue-on-error "Validate all JSON configuration files"
+
+# Combine file processing with templates
+rawi ask --file database-schema.sql --act database-admin "Optimize this schema"
+```
+
 ### File Analysis
 
 ```bash
@@ -346,15 +419,6 @@ find . -name "*.js" -newer docs/ | while read file; do
     cat "$file" | rawi ask --act technical-writer "Update documentation for changes in this file"
 done
 ```
-
-## See Also
-
-- [act command](./act) — Discovering and using templates
-- [configure command](./configure) — Setting up profiles and providers
-- [history command](./history) — Managing sessions and conversation history
-- [Act Templates Guide](../configure/act-templates) — Complete template reference
-- [Session Management](../advanced/sessions) — Advanced session features
-- [Shell Integration](../advanced/shell-integration) — Advanced automation patterns
 
 **Show details of a specific act template:**
 

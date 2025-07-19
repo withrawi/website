@@ -55,40 +55,49 @@ rawi ask "What security best practices should I follow with this JWT implementat
 **Code-Related Tasks:**
 
 ```bash
-# Code review and improvement
-rawi ask --act code-reviewer "Review this function for performance issues"
+# File-based code review
+rawi ask --file src/components/UserProfile.jsx --act code-reviewer "Review this React component for performance issues"
+
+# Batch code analysis
+rawi ask --batch "src/**/*.js" --act security-expert "Analyze all JavaScript files for security vulnerabilities"
 
 # Architecture decisions
 rawi ask --act software-architect "Design a scalable microservices architecture for e-commerce"
 
-# Debugging assistance
-rawi ask --act debugging-expert "Help me debug this memory leak in my Node.js application"
+# Debugging assistance with file context
+rawi ask --file src/utils/memory-intensive.js --act debugging-expert "Help me debug this memory leak in my Node.js application"
 ```
 
 **Writing and Documentation:**
 
 ```bash
-# Technical documentation
-rawi ask --act technical-writer "Document this REST API endpoint with examples"
+# Document source files directly
+rawi ask --file src/api/routes.js --act technical-writer "Document this REST API endpoint with examples"
 
-# User-facing content
-rawi ask --act copywriter "Create user onboarding emails for our SaaS product"
+# Process documentation files
+rawi ask --file requirements.docx --act copywriter "Create user onboarding emails based on these requirements"
 
-# Code comments
-rawi ask --act code-documenter "Generate comprehensive JSDoc comments for this module"
+# Generate comprehensive documentation
+rawi ask --files src/models/*.js --act code-documenter "Generate comprehensive JSDoc comments for all model files"
+
+# Batch process documentation
+rawi ask --batch "docs/**/*.md" --act editor "Review all documentation for consistency and clarity"
 ```
 
 **Analysis and Research:**
 
 ```bash
-# Data analysis
-rawi ask --act data-scientist "Analyze this user behavior dataset and find insights"
+# Data file analysis
+rawi ask --file user-behavior.csv --act data-scientist "Analyze this user behavior dataset and find insights"
 
-# Market research
-rawi ask --act business-analyst "Research competitors in the project management software space"
+# Document analysis
+rawi ask --file market-research.pdf --act business-analyst "Extract key findings about competitors in the project management software space"
 
-# Technology evaluation
-rawi ask --act technology-consultant "Compare React vs Vue.js for our team's next project"
+# Multi-file comparison
+rawi ask --files react-proposal.docx vue-proposal.docx --act technology-consultant "Compare these technology proposals for our team's next project"
+
+# Batch analyze research files
+rawi ask --batch "research/**/*.pdf" --parallel --act researcher "Summarize key findings from all research documents"
 ```
 
 ## Development Workflow Patterns
@@ -426,11 +435,3 @@ rawi ask "Why is this broken?"  # No code or error provided
 - Using generic templates for specialized tasks
 - Not exploring available templates
 - Mixing expertise levels inappropriately
-
-## See Also
-
-- [ask command](../reference/ask) — Command reference
-- [Act Templates Guide](../configure/act-templates) — Template details
-- [Session Management](./sessions) — Managing conversations
-- [Shell Integration](./shell-integration) — Automation patterns
-- [Workflows](../workflows) — Complete workflow examples

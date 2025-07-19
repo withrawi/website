@@ -114,6 +114,9 @@ import {Card, CardGrid, LinkButton} from '@astrojs/starlight/components';
 # Code review with AI
 git diff | rawi ask --act code-reviewer "Review these changes"
 
+# Review source files directly
+rawi ask --file src/app.js --act code-reviewer "Review this code"
+
 # Debug assistance
 cat error.log | rawi ask --act debugging-expert "Help me understand this error"
 
@@ -121,14 +124,20 @@ cat error.log | rawi ask --act debugging-expert "Help me understand this error"
 cat api.js | rawi ask --act technical-writer "Document this API"
 ```
 
-### Data Analysis
+### Document & Data Analysis
 
 ```bash
+# Process PDF reports
+rawi ask --file report.pdf "Summarize key findings"
+
+# Analyze Excel spreadsheets
+rawi ask --file data.xlsx --act data-scientist "Analyze trends in this data"
+
+# Review Word documents
+rawi ask --file requirements.docx "Extract functional requirements"
+
 # Log analysis
 tail -f app.log | rawi ask "Monitor for critical errors"
-
-# CSV data insights
-cat data.csv | rawi ask --act data-scientist "Analyze trends in this data"
 ```
 
 ### Content Creation
@@ -139,6 +148,9 @@ rawi ask --act technical-writer "Explain Docker containers for beginners"
 
 # Code examples
 rawi ask --act software-engineer "Show me Express.js authentication examples"
+
+# Process presentations
+rawi ask --file slides.pptx "Create speaker notes for this presentation"
 ```
 
 ---
