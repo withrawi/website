@@ -163,16 +163,55 @@ export default defineConfig({
               slug: 'workflows',
             },
             {
-              label: 'Development Workflow',
-              slug: 'workflows/development',
+              label: 'Development',
+              items: [
+                {
+                  label: 'Code Review',
+                  slug: 'workflows/code-review',
+                },
+                {
+                  label: 'Git Integration',
+                  slug: 'workflows/git-integration',
+                },
+                {
+                  label: 'API Development',
+                  slug: 'workflows/api-development',
+                },
+                {
+                  label: 'Testing',
+                  slug: 'workflows/testing',
+                },
+                {
+                  label: 'Documentation Generation',
+                  slug: 'workflows/documentation-generation',
+                },
+                {
+                  label: 'Development Workflow',
+                  slug: 'workflows/development',
+                },
+              ],
             },
             {
-              label: 'Content Creation',
-              slug: 'workflows/content-creation',
+              label: 'Data & Analysis',
+              items: [
+                {
+                  label: 'Data Analysis',
+                  slug: 'workflows/data-analysis',
+                },
+              ],
             },
             {
-              label: 'Research & Analysis',
-              slug: 'workflows/research',
+              label: 'Content & Research',
+              items: [
+                {
+                  label: 'Content Creation',
+                  slug: 'workflows/content-creation',
+                },
+                {
+                  label: 'Research',
+                  slug: 'workflows/research',
+                },
+              ],
             },
           ],
         },

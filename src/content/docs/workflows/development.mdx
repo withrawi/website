@@ -45,7 +45,16 @@ alias rwdebug='rawi ask --profile dev --act debugging-expert'
 
 ```bash
 # Review a specific file
-cat src/utils.ts | rawi ask --act code-reviewer "Review this TypeScript code for potential issues, best practices, and improvements"
+rawi ask --file src/app.js --act code-reviewer "Review this TypeScript code for potential issues, best practices, and improvements"
+
+# Review multiple files at once
+rawi ask --files src/utils.ts src/api.ts --act code-reviewer "Review these related files for consistency and best practices"
+
+# Batch review with glob patterns
+rawi ask --batch "src/**/*.{js,ts}" --act code-reviewer "Review all source files for security vulnerabilities"
+
+# Parallel processing for large codebases
+rawi ask --batch "src/**/*.py" --parallel --act code-reviewer "Review Python files for performance issues"
 
 # Review git diff
 git diff | rawi ask --act code-reviewer "Analyze these changes for potential issues, breaking changes, and improvement suggestions"
@@ -77,13 +86,19 @@ cat slow-query.log | rawi ask --act database-expert "Analyze these slow database
 
 ```bash
 # Generate README content
-cat package.json | rawi ask --act technical-writer "Create a comprehensive README for this project based on the package.json"
+rawi ask --file package.json --act technical-writer "Create a comprehensive README for this project based on the package.json"
 
 # Document API endpoints
-cat src/routes/api.js | rawi ask --act api-documentation-expert "Generate OpenAPI documentation for these Express.js routes"
+rawi ask --file src/routes/api.js --act api-documentation-expert "Generate OpenAPI documentation for these Express.js routes"
 
 # Create inline documentation
-cat src/utils.js | rawi ask --act code-documenter "Add comprehensive JSDoc comments to this JavaScript file"
+rawi ask --file src/utils.js --act code-documenter "Add comprehensive JSDoc comments to this JavaScript file"
+
+# Document multiple related files
+rawi ask --files src/models/User.js src/controllers/UserController.js --act technical-writer "Create comprehensive documentation for this user management system"
+
+# Batch document all API routes
+rawi ask --batch "src/routes/*.js" --act api-documentation-expert "Generate API documentation for all route files"
 
 # Generate changelog
 git log --oneline --since="1 month ago" | rawi ask --act technical-writer "Create a changelog from these git commits"
@@ -447,11 +462,3 @@ done
 SESSION_ID=$(rawi ask --new-session "Starting feature development" --get-session-id)
 rawi ask --session "$SESSION_ID" "Continue with implementation details"
 ```
-
-## See Also
-
-- [Code Review Workflow](../workflows) — Detailed review processes
-- [Shell Integration](../advanced/shell-integration) — Advanced automation
-- [act command](../reference/act) — Using expert templates
-- [Session Management](../advanced/sessions) — Managing development conversations
-- [Profile Management](../advanced/profiles) — Different configurations for different needs
