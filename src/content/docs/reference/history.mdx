@@ -1,35 +1,64 @@
 ---
 title: history — Conversation Management
-description: The history command lets you search, manage, export, and analyze your AI conversation history and sessions.
+description: The history command lets you search, manage, and analyze your AI conversation history with separate views for ask and chat sessions.
 ---
 
-The `history` command lets you search, manage, export, and analyze your AI conversation history and sessions.
+The `history` command lets you search, manage, and analyze your AI conversation history with separate views for ask and chat sessions.
 
 ## Basic Usage
 
 ```
-rawi history [options]
+rawi history <subcommand> [options]
+```
+
+View your AI conversation history organized by session type:
+
+```bash
+# Show ask session history
+rawi history ask
+
+# Show chat session history
+rawi history chat
 ```
 
 ### Quick Commands
 
 ```bash
-# Show recent conversations
-rawi history
+# Search ask sessions
+rawi history ask --search "docker"
 
-# Search conversations
-rawi history --search "docker"
+# Show recent chat sessions
+rawi history chat --limit 10
 
-# Show session details
-rawi history show abc123-def456
-
-# List all sessions
-rawi history sessions
+# Filter by profile
+rawi history ask --profile work
 ```
+
+## Subcommands
+
+### `ask`
+
+Show ask session history. View and search your ask sessions and messages.
+
+```bash
+rawi history ask [options]
+```
+
+**Purpose:** View all your one-off questions and quick interactions with AI models.
+
+### `chat`
+
+Show chat session history. View and search your chat sessions and messages.
+
+```bash
+rawi history chat [options]
+```
+
+**Purpose:** View all your interactive chat conversations and longer discussions.
 
 ## Options
 
-### Basic Options
+All options are available for both `ask` and `chat` subcommands:
 
 | Option                  | Alias | Description                                | Default   |
 | ----------------------- | ----- | ------------------------------------------ | --------- |
@@ -43,610 +72,257 @@ rawi history sessions
 | `--all`                 |       | Show all sessions without pagination limit |           |
 | `--all-profiles`        |       | Show sessions from all profiles            |           |
 
-## Subcommands
-
-### Session Management
-
-#### List Sessions
-
-```bash
-rawi history sessions [options]
-```
-
-List and manage chat sessions.
-
-**Options:**
-
-- `--profile <profile>` — Profile to show sessions for
-- `--limit <number>` — Number of sessions to show
-- `--all` — Show all sessions
-
-**Example:**
-
-```bash
-# List recent sessions
-rawi history sessions
-
-# List all sessions for work profile
-rawi history sessions --profile work --all
-
-# Show last 10 sessions
-rawi history sessions --limit 10
-```
-
-#### Show Specific Session
-
-```bash
-rawi history show <sessionId>
-```
-
-Display all messages in a specific session.
-
-**Example:**
-
-```bash
-# Show complete session
-rawi history show abc123-def456
-
-# Show session with formatting
-rawi history show abc123-def456 --format json
-```
-
-#### Delete Session
-
-```bash
-rawi history delete <sessionId>
-```
-
-Delete a specific session and all its messages.
-
-**Example:**
-
-```bash
-# Delete specific session
-rawi history delete abc123-def456
-
-# Delete with confirmation
-rawi history delete abc123-def456 --confirm
-```
-
-### Analytics and Statistics
-
-#### Usage Statistics
-
-```bash
-rawi history stats [options]
-```
-
-Show usage statistics for your chat history.
-
-**Options:**
-
-- `--profile <profile>` — Profile to show stats for
-- `--from <date>` — Statistics from date
-- `--to <date>` — Statistics to date
-- `--provider <provider>` — Filter by provider
-- `--detailed` — Show detailed breakdown
-
-**Example:**
-
-```bash
-# General statistics
-rawi history stats
-
-# Detailed stats for last month
-rawi history stats --from 2024-01-01 --to 2024-01-31 --detailed
-
-# Provider-specific stats
-rawi history stats --provider openai
-```
-
-### Data Export
-
-#### Export History
-
-```bash
-rawi history export [options]
-```
-
-Export conversation history in various formats.
-
-**Options:**
-
-- `--format <format>` — Export format (json, csv, markdown, html)
-- `--output <file>` — Output file path
-- `--profile <profile>` — Profile to export
-- `--from <date>` — Export from date
-- `--to <date>` — Export to date
-- `--include-metadata` — Include session metadata
-
-**Example:**
-
-```bash
-# Export as JSON
-rawi history export --format json --output my-history.json
-
-# Export specific date range as markdown
-rawi history export --format markdown --from 2024-01-01 --to 2024-01-31 --output january-chats.md
-
-# Export with metadata
-rawi history export --format json --include-metadata --output detailed-history.json
-```
-
-### Maintenance
-
-#### Clean History
-
-```bash
-rawi history clean [options]
-```
-
-Clean up old or unused chat sessions.
-
-**Options:**
-
-- `--older-than <days>` — Delete sessions older than N days
-- `--empty` — Delete empty sessions
-- `--profile <profile>` — Clean specific profile
-- `--dry-run` — Show what would be deleted without actually deleting
-
-**Example:**
-
-```bash
-# Clean sessions older than 30 days
-rawi history clean --older-than 30
-
-# Clean empty sessions (dry run)
-rawi history clean --empty --dry-run
-
-# Clean specific profile
-rawi history clean --profile old-profile --older-than 7
-```
-
 ## Search and Filtering
 
 ### Text Search
 
-Search through conversation content:
+Search for specific content in your ask or chat sessions:
 
 ```bash
-# Basic text search
-rawi history --search "docker container"
+# Search ask sessions
+rawi history ask --search "docker deployment"
 
-# Case-sensitive search
-rawi history --search "Docker" --case-sensitive
+# Search chat sessions
+rawi history chat --search "debugging"
 
-# Search with regex
-rawi history --search "error.*timeout" --regex
+# Case-insensitive search
+rawi history ask --search "TypeScript"
+```
+
+### Provider and Model Filtering
+
+Filter conversations by AI provider or model:
+
+```bash
+# Filter ask sessions by provider
+rawi history ask --provider openai
+rawi history chat --provider anthropic
+
+# Filter by model
+rawi history ask --model gpt-4o
+rawi history chat --model claude-3-5-sonnet
+
+# Combine filters
+rawi history ask --provider openai --model gpt-4o
+```
+
+### Date Range Filtering
+
+Filter conversations by date:
+
+```bash
+# Show ask sessions from specific date
+rawi history ask --from 2024-01-01
+
+# Show chat sessions within date range
+rawi history chat --from 2024-01-01 --to 2024-12-31
+```
+
+### Profile Filtering
+
+Filter by specific profiles:
+
+```bash
+# Show ask sessions from work profile
+rawi history ask --profile work
+
+# Show chat sessions from all profiles
+rawi history chat --all-profiles
+```
+
+## Examples
+
+### Basic Usage
+
+```bash
+# Show recent ask sessions
+rawi history ask
+
+# Show recent chat sessions
+rawi history chat
+
+# Limit results
+rawi history ask --limit 5
+rawi history chat --limit 10
+```
+
+**Example output:**
+
+```bash
+📚 Ask Session History (3 sessions):
+
+┌──────────────────────┬──────────────────────────────────────┬────────────┬──────────┬──────────────────┐
+│ Title                │ ID                                   │ Profile    │ Messages │ Updated          │
+├──────────────────────┼──────────────────────────────────────┼────────────┼──────────┼──────────────────┤
+│ Create React comp... │ abc123-def456-ghi789                 │ default    │ 2        │ 1 hour ago       │
+│ Docker deployment    │ def456-ghi789-jkl012                 │ work       │ 4        │ 2 hours ago      │
+│ TypeScript types     │ ghi789-jkl012-mno345                 │ default    │ 6        │ 1 day ago        │
+└──────────────────────┴──────────────────────────────────────┴────────────┴──────────┴──────────────────┘
+
+💡 Tips:
+  • Use --session <id> with ask command to continue a session
+  • Use --search <query> to search message content
+```
+
+### Search Examples
+
+```bash
+# Search for Docker-related ask sessions
+rawi history ask --search "docker"
+
+# Search for debugging in chat sessions
+rawi history chat --search "debugging"
+
+# Search across all profiles
+rawi history ask --search "react" --all-profiles
 ```
 
 ### Advanced Filtering
 
-Combine multiple filters for precise results:
-
 ```bash
-# Filter by provider and model
-rawi history --provider openai --model gpt-4
+# Ask sessions using OpenAI from January 2024
+rawi history ask --provider openai --from 2024-01-01
 
-# Filter by date range
-rawi history --from 2024-01-01 --to 2024-01-31
+# Chat sessions using GPT-4 in work profile
+rawi history chat --model gpt-4 --profile work
 
-# Complex filtering
-rawi history --provider anthropic --search "code review" --from 2024-01-15 --limit 20
+# Combine multiple filters
+rawi history ask --provider anthropic --search "security" --limit 5
 ```
 
-### Multi-Profile Search
-
-Search across multiple profiles:
+### Complex Queries
 
 ```bash
-# Search all profiles
-rawi history --all-profiles --search "deployment"
+# All ask sessions without pagination
+rawi history ask --all
+
+# All chat sessions without pagination
+rawi history chat --all
+
+# Recent ask sessions from specific date range
+rawi history ask --from 2024-01-01 --to 2024-01-31 --limit 20
+```
+
+### Cross-Session Type Analysis
+
+```bash
+# Compare ask vs chat activity
+rawi history ask --limit 10
+rawi history chat --limit 10
+
+# Search same topic across both types
+rawi history ask --search "kubernetes"
+rawi history chat --search "kubernetes"
+
+# Find all OpenAI interactions
+rawi history ask --provider openai
+rawi history chat --provider openai
+```
+
+## Use Cases
+
+### Development Workflow
+
+```bash
+# Review recent coding help
+rawi history ask --search "code review"
+rawi history chat --search "debugging"
+
+# Find specific technology discussions
+rawi history ask --search "typescript"
+rawi history chat --search "react"
+```
+
+### Project Organization
+
+```bash
+# Separate work and personal conversations
+rawi history ask --profile work
+rawi history chat --profile personal
+
+# Find discussions about specific projects
+rawi history ask --search "project-alpha"
+rawi history chat --search "project-alpha"
+```
+
+### Learning and Research
+
+```bash
+# Track learning sessions
+rawi history chat --search "tutorial"
+rawi history ask --search "how to"
+
+# Find AI model comparisons
+rawi history ask --provider anthropic
+rawi history ask --provider openai
+```
+
+### Data Analysis
+
+```bash
+# Usage patterns by provider
+rawi history ask --provider ollama --limit 100
+rawi history chat --provider gpt-4 --limit 100
+
+# Time-based analysis
+rawi history ask --from 2024-01-01 --to 2024-01-31
+rawi history chat --from 2024-01-01 --to 2024-01-31
+```
+
+## Interactive Features
+
+Both `ask` and `chat` history views support interactive navigation:
+
+- **Pagination**: Navigate through multiple pages of results
+- **Session details**: View complete session information
+- **Smart filtering**: Results update based on your criteria
+
+### Pagination Navigation
+
+When you have more sessions than the display limit, you'll see pagination options:
+
+```bash
+Page 1 of 3 | Total: 25 sessions
+
+? What would you like to do?
+❯ Next page
+  Previous page
+  Exit
+```
+
+### Session Information Display
+
+Each session shows:
+
+- **Title**: Auto-generated or custom session name
+- **ID**: Unique session identifier
+- **Profile**: The profile used for the session
+- **Messages**: Number of messages in the session
+- **Updated**: Last activity timestamp
+
+## Performance Tips
+
+### Optimizing Large Histories
+
+```bash
+# Use limits for faster results
+rawi history ask --limit 20
+
+# Filter by recent dates
+rawi history chat --from 2024-08-01
 
 # Search specific profiles
-rawi history --profile work,personal --search "meeting notes"
+rawi history ask --profile work
 ```
 
-## Session Management Examples
-
-### Viewing History
+### Efficient Searching
 
 ```bash
-# Recent conversations
-rawi history
-
-# Last 100 sessions
-rawi history --limit 100
-
-# All sessions (no limit)
-rawi history --all
-
-# Sessions from specific profile
-rawi history --profile work
-```
-
-### Session Details
-
-```bash
-# View complete session
-rawi history show abc123-def456
-
-# Session with timestamps
-rawi history show abc123-def456 --timestamps
-
-# Export single session
-rawi history show abc123-def456 --export session.json
-```
-
-### Session Cleanup
-
-```bash
-# List sessions to delete
-rawi history sessions --empty --dry-run
-
-# Delete old sessions
-rawi history clean --older-than 90
-
-# Interactive cleanup
-rawi history clean --interactive
-```
-
-## Analytics Examples
-
-### Usage Analysis
-
-```bash
-# Overall statistics
-rawi history stats
-
-# Monthly usage
-rawi history stats --from 2024-01-01 --to 2024-01-31
-
-# Provider comparison
-rawi history stats --detailed --all-profiles
-```
-
-### Cost Analysis
-
-```bash
-# Token usage by provider
-rawi history stats --provider openai --tokens
-
-# Monthly cost breakdown
-rawi history stats --from 2024-01-01 --to 2024-01-31 --cost-analysis
-
-# Model efficiency analysis
-rawi history stats --model-comparison
-```
-
-## Export Formats
-
-### JSON Export
-
-```bash
-rawi history export --format json --output history.json
-```
-
-**JSON Structure:**
-
-```json
-{
-  "metadata": {
-    "exported_at": "2024-01-15T10:30:00Z",
-    "total_sessions": 42,
-    "profile": "default"
-  },
-  "sessions": [
-    {
-      "id": "abc123-def456",
-      "created_at": "2024-01-15T09:00:00Z",
-      "profile": "default",
-      "provider": "openai",
-      "model": "gpt-4",
-      "messages": [
-        {
-          "role": "user",
-          "content": "Hello",
-          "timestamp": "2024-01-15T09:00:00Z"
-        },
-        {
-          "role": "assistant",
-          "content": "Hi there!",
-          "timestamp": "2024-01-15T09:00:05Z"
-        }
-      ]
-    }
-  ]
-}
-```
-
-### CSV Export
-
-```bash
-rawi history export --format csv --output history.csv
-```
-
-**CSV Columns:**
-
-- session_id
-- timestamp
-- profile
-- provider
-- model
-- role (user/assistant)
-- content
-- tokens_used
-
-### Markdown Export
-
-```bash
-rawi history export --format markdown --output history.md
-```
-
-**Markdown Format:**
-
-```markdown
-# Chat History Export
-
-## Session: abc123-def456
-
-**Date:** 2024-01-15  
-**Profile:** default  
-**Provider:** OpenAI (gpt-4)
-
-### User
-
-Hello
-
-### Assistant
-
-Hi there!
-
----
-```
-
-### HTML Export
-
-```bash
-rawi history export --format html --output history.html
-```
-
-Generates a styled HTML document with conversation history.
-
-## Configuration and Storage
-
-### History Storage
-
-Rawi stores conversation history in:
-
-- **Linux/macOS**: `~/.config/rawi/history/`
-- **Windows**: `%APPDATA%/rawi/history/`
-
-### Storage Structure
-
-```
-~/.config/rawi/history/
-├── default/                 # Default profile
-│   ├── sessions/
-│   │   ├── 2024-01/        # Monthly organization
-│   │   └── 2024-02/
-│   └── index.json          # Session index
-├── work/                   # Work profile
-│   ├── sessions/
-│   └── index.json
-└── metadata.json           # Global metadata
-```
-
-### Privacy and Retention
-
-```bash
-# Set retention policy
-rawi configure --history-retention 90  # 90 days
-
-# Disable history
-rawi configure --history-enabled false
-
-# Encrypt history
-rawi configure --history-encryption true
-```
-
-## Advanced Features
-
-### History Sync
-
-```bash
-# Export for backup
-rawi history export --format json --output backup.json
-
-# Import from backup
-rawi history import backup.json
-
-# Sync between machines
-rawi history sync --remote user@server:/backup/rawi-history.json
-```
-
-### History Analysis
-
-```bash
-# Find most used commands
-rawi history analyze --top-commands
-
-# Response time analysis
-rawi history analyze --response-times
-
-# Topic clustering
-rawi history analyze --topics --cluster
-```
-
-### Automation
-
-```bash
-# Auto-cleanup script
-rawi history clean --older-than 30 --empty --quiet
-
-# Daily stats
-rawi history stats --from yesterday --format json > daily-stats.json
-
-# Weekly summary
-rawi history stats --from "7 days ago" --summary
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**History not showing:**
-
-```bash
-# Check history location
-rawi history --debug
-
-# Verify profile
-rawi history --profile default --verbose
-
-# Check permissions
-ls -la ~/.config/rawi/history/
-```
-
-**Export failing:**
-
-```bash
-# Check disk space
-df -h
-
-# Verify output directory
-mkdir -p exports && rawi history export --output exports/history.json
-
-# Try smaller date range
-rawi history export --from 2024-01-01 --to 2024-01-07
-```
-
-**Search not working:**
-
-```bash
-# Rebuild search index
-rawi history reindex
-
-# Check search syntax
-rawi history --search "exact phrase" --debug
-
-# Try regex search
-rawi history --search "pattern.*" --regex
-```
-
-### Performance Optimization
-
-```bash
-# Compact history database
-rawi history compact
-
-# Rebuild indexes
-rawi history reindex
-
-# Analyze storage
-rawi history analyze --storage
-```
-
-## Best Practices
-
-### Organization
-
-1. **Use Meaningful Profiles**: Separate work, personal, and project-specific conversations
-2. **Regular Cleanup**: Remove old or irrelevant sessions
-3. **Descriptive Session Names**: Use session renaming for important conversations
-
-### Privacy
-
-1. **Sensitive Data**: Use `--no-history` flag for sensitive conversations
-2. **Regular Exports**: Backup important conversations
-3. **Retention Policies**: Set appropriate retention periods
-
-### Efficiency
-
-1. **Targeted Searches**: Use specific filters to reduce search time
-2. **Pagination**: Use `--limit` for large datasets
-3. **Index Maintenance**: Regular reindexing for search performance
-
-## Integration Examples
-
-### Shell Scripts
-
-```bash
-#!/bin/bash
-# Daily history summary
-TODAY=$(date +%Y-%m-%d)
-rawi history stats --from "$TODAY" --format json > "daily-summary-$TODAY.json"
-```
-
-### Automation
-
-```bash
-# Cron job for weekly cleanup
-0 0 * * 0 rawi history clean --older-than 30 --empty --quiet
-```
-
-### Analysis Scripts
-
-```python
-# Python script to analyze exported history
-import json
-
-with open('history.json') as f:
-    data = json.load(f)
-
-# Analyze conversation patterns
-for session in data['sessions']:
-    print(f"Session {session['id']}: {len(session['messages'])} messages")
-```
-
-- `sessions [options]`  
-  List and manage chat sessions.
-
-- `show <sessionId>`  
-  Show all messages in a specific session.
-
-- `delete <sessionId>`  
-  Delete a specific session.
-
-- `stats [options]`  
-  Show usage statistics.
-
-- `cleanup [options]`  
-  Clean up old sessions.
-
-- `export [options]`  
-  Export chat history to JSON.
-
-## Examples
-
-**Show chat history:**
-
-```bash
-$ rawi history
-```
-
-**Search messages containing text:**
-
-```bash
-$ rawi history --search "Node.js"
-```
-
-**Show all messages in a specific session:**
-
-```bash
-$ rawi history show 515e566d-146b-4d55-aaa5-b4a4c82f92c2
-```
-
-**Delete a specific session:**
-
-```bash
-$ rawi history delete 515e566d-146b-4d55-aaa5-b4a4c82f92c2
-```
-
-**Export chat history to JSON:**
-
-```bash
-$ rawi history export --profile default
+# Use specific search terms
+rawi history ask --search "docker compose"
+
+# Combine filters to narrow results
+rawi history chat --search "error" --provider openai --from 2024-08-01
 ```
 
 ---

@@ -1,0 +1,155 @@
+---
+title: chat — Interactive Chat Sessions
+description: The chat command provides enhanced session management for interactive conversations and long-form discussions with AI models.
+---
+
+The `chat` command provides enhanced session management for interactive conversations and long-form discussions with AI models.
+
+## Basic Usage
+
+```
+rawi chat [query] [options]
+```
+
+## Simple Usage
+
+```bash
+# List interactive sessions
+rawi chat --list-sessions
+
+# Rename current session
+rawi chat --rename-session "New Session Name"
+
+# Start interactive session
+rawi chat --session-name "Project Discussion"
+```
+
+## Session Management Options
+
+| Option                    | Description                             |
+| ------------------------- | --------------------------------------- |
+| `--list-sessions`         | List all available chat sessions        |
+| `--rename-session <name>` | Rename the current or specified session |
+| `--session-name <name>`   | Start a new session with given name     |
+| `--show-session-id`       | Display current session ID              |
+
+## Examples
+
+### Session Listing
+
+```bash
+# List all chat sessions with interactive selection
+rawi chat --list-sessions
+
+# Show session details in table format
+rawi chat --list-sessions --table
+```
+
+### Session Management
+
+```bash
+# Rename current active session
+rawi chat --rename-session "Updated Project Name"
+
+# Start new named session
+rawi chat --session-name "Architecture Planning"
+
+# Get current session ID
+rawi chat --show-session-id
+```
+
+### Interactive Features
+
+```bash
+# Interactive session selection with full IDs
+rawi chat --list-sessions
+# Displays: Complete session IDs, names, message counts, creation dates
+# Allows: Easy selection with arrow keys and enter
+
+# Enhanced session display
+rawi chat --list-sessions --detailed
+# Shows: Full session metadata and statistics
+```
+
+## Integration with History
+
+The chat command works alongside the history command for comprehensive session management:
+
+```bash
+# View chat session history
+rawi history chat
+
+# Search chat sessions
+rawi history chat --search "project planning"
+
+# Export chat session
+rawi history export <session-id> --output chat-backup.json
+```
+
+## Use Cases
+
+### Project Management
+
+```bash
+# Start project planning session
+rawi chat --session-name "Mobile App Planning"
+
+# Continue project discussion
+rawi chat --list-sessions  # Select mobile app session
+rawi ask "What about the user authentication?"
+```
+
+### Long-form Discussions
+
+```bash
+# Begin architecture discussion
+rawi chat --session-name "System Architecture Review"
+
+# Rename as discussion evolves
+rawi chat --rename-session "Microservices Architecture Deep Dive"
+```
+
+### Session Organization
+
+```bash
+# List sessions to find relevant discussion
+rawi chat --list-sessions
+
+# Organize by renaming
+rawi chat --rename-session "Sprint Planning - Week 1"
+```
+
+## Advanced Features
+
+### Interactive Selection
+
+The chat command provides enhanced interactive features:
+
+- **Full ID Display** — Complete session identifiers, no truncation
+- **Rich Metadata** — Creation dates, message counts, profile information
+- **Keyboard Navigation** — Arrow keys and enter for selection
+- **Search Integration** — Quick filtering of session lists
+
+### Session Analytics
+
+```bash
+# View session statistics
+rawi chat --list-sessions --stats
+
+# Detailed session information
+rawi chat --show-session-details <session-id>
+```
+
+## Related Commands
+
+- [`history`](/reference/history) — Comprehensive conversation history management
+- [`ask`](/reference/ask) — Primary AI interaction command
+- [`configure`](/reference/configure) — Profile and session configuration
+
+---
+
+**Tips:**
+
+- Use meaningful session names for better organization
+- Leverage interactive selection for easier navigation
+- Combine with history command for complete session management
