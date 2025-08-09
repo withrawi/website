@@ -1,0 +1,381 @@
+---
+title: File Reading & Document Processing
+description: Rawi provides powerful file reading capabilities that allow you to process and analyze various document formats seamlessly. Extract content from PDFs, Word documents, Excel spreadsheets, and text files to enhance your AI conversations with rich document context.
+---
+
+import {Tabs, TabItem, Code, Aside} from '@astrojs/starlight/components';
+
+# 📄 File Reading & Document Processing
+
+Rawi provides powerful file reading capabilities that allow you to process and analyze various document formats seamlessly. Extract content from PDFs, Word documents, Excel spreadsheets, and text files to enhance your AI conversations with rich document context.
+
+## 🚀 Quick Start
+
+```bash
+# Process a single file
+rawi ask --file document.pdf "Summarize this document"
+
+# Multiple files
+rawi ask --files config.json package.json "Compare these configurations"
+
+# Batch processing with patterns
+rawi ask --batch "src/**/*.js" "Review all JavaScript files"
+```
+
+## 📋 Supported File Formats
+
+### 📄 PDF Documents (.pdf)
+
+Extract text content from PDF documents for analysis and summarization.
+
+```bash
+# Basic PDF processing
+rawi ask --file report.pdf "What are the main conclusions?"
+
+# Detailed analysis
+rawi ask --file financial-report.pdf --act data-analyst "Analyze the financial trends"
+
+# Research paper review
+rawi ask --file research.pdf --act academic-researcher "Summarize the methodology and findings"
+```
+
+**Features:**
+
+- ✅ Text extraction from standard PDFs
+- ✅ Multi-page document support
+- ✅ Automatic content cleaning
+- ⚠️ Limited support for image-heavy PDFs
+- ⚠️ Encrypted PDFs require manual unlock
+
+### 📝 Microsoft Word Documents (.docx)
+
+Process Word documents with full text extraction and formatting awareness.
+
+```bash
+# Document analysis
+rawi ask --file requirements.docx "Extract all functional requirements"
+
+# Content review
+rawi ask --file proposal.docx --act tech-writer "Review this proposal for clarity"
+
+# Template generation
+rawi ask --file example.docx "Create a similar document template"
+```
+
+**Features:**
+
+- ✅ Complete text extraction
+- ✅ Table content preservation
+- ✅ Header and footer inclusion
+- ✅ Embedded formatting context
+- ⚠️ Images and charts not processed
+
+### 📊 Microsoft Excel Spreadsheets (.xlsx)
+
+Analyze Excel data with sheet selection and intelligent data formatting.
+
+```bash
+# Data analysis
+rawi ask --file sales-data.xlsx "Identify sales trends and patterns"
+
+# Specific sheet processing
+rawi ask --file workbook.xlsx --sheet "Q4 Results" "Analyze Q4 performance"
+
+# Financial modeling
+rawi ask --file budget.xlsx --act financial-analyst "Review this budget for accuracy"
+```
+
+**Features:**
+
+- ✅ Multiple sheet support
+- ✅ Automatic data formatting
+- ✅ Header row detection
+- ✅ Formula result extraction
+- ✅ Sheet name listing
+- ⚠️ Charts and pivot tables not processed
+
+### 📋 Text & Source Files
+
+Process various text-based files with intelligent content type detection.
+
+```bash
+# Source code review
+rawi ask --file app.js "Review this code for best practices"
+
+# Configuration analysis
+rawi ask --file docker-compose.yml "Optimize this Docker configuration"
+
+# Log file analysis
+rawi ask --file app.log "Identify and categorize errors"
+
+# Documentation review
+rawi ask --file README.md "Improve this documentation"
+```
+
+**Supported Extensions:**
+
+<Tabs>
+  <TabItem label="Source Code">
+    - `.js`, `.ts`, `.jsx`, `.tsx` - JavaScript/TypeScript
+    - `.py`, `.pyw` - Python
+    - `.java`, `.kt`, `.scala` - JVM languages
+    - `.cpp`, `.c`, `.h`, `.hpp` - C/C++
+    - `.rs` - Rust
+    - `.go` - Go
+    - `.rb` - Ruby
+    - `.php` - PHP
+    - `.swift` - Swift
+    - `.dart` - Dart
+  </TabItem>
+  <TabItem label="Web & Data">
+    - `.html`, `.htm`, `.xml` - Markup languages
+    - `.css`, `.scss`, `.sass` - Stylesheets
+    - `.json`, `.yaml`, `.yml` - Data formats
+    - `.toml`, `.ini`, `.env` - Configuration
+    - `.csv`, `.tsv` - Tabular data
+    - `.sql` - Database queries
+  </TabItem>
+  <TabItem label="Documentation">
+    - `.md`, `.markdown` - Markdown
+    - `.txt` - Plain text
+    - `.log` - Log files
+    - `.dockerfile` - Docker
+    - `.gitignore`, `.gitattributes` - Git
+    - `README`, `CHANGELOG`, `LICENSE` - Project files
+  </TabItem>
+</Tabs>
+
+## 🔧 File Processing Options
+
+### Single File Processing
+
+```bash
+# Basic file analysis
+rawi ask --file document.pdf "Summarize this document"
+
+# With expert template
+rawi ask --file code.js --act code-reviewer "Review this code"
+
+# Override file type detection
+rawi ask --file unknown-file --file-type txt "Process as text"
+```
+
+### Multiple File Processing
+
+```bash
+# Process specific files
+rawi ask --files file1.pdf file2.docx "Compare these documents"
+
+# Up to 10 files at once
+rawi ask --files *.json "Validate all JSON configurations"
+```
+
+### Batch Processing with Patterns
+
+```bash
+# Process all JavaScript files
+rawi ask --batch "src/**/*.js" "Find potential bugs"
+
+# Multiple patterns
+rawi ask --batch "*.{json,yml,yaml}" "Validate all config files"
+
+# Exclude patterns
+rawi ask --batch "src/**/*.js" --exclude "**/node_modules/**" "Review source code only"
+```
+
+### Parallel Processing
+
+```bash
+# Process files in parallel for speed
+rawi ask --batch "docs/**/*.md" --parallel "Create documentation index"
+
+# Control concurrency
+rawi ask --batch "**/*.py" --parallel --max-concurrency 3 "Analyze Python code"
+
+# Continue on errors
+rawi ask --batch "**/*.json" --parallel --continue-on-error "Validate JSON files"
+```
+
+## 💡 Advanced Usage Patterns
+
+### Document Analysis Workflow
+
+<Tabs>
+  <TabItem label="PDF Reports">
+    ```bash
+    # 1. Overview
+    rawi ask --file report.pdf "Provide executive summary"
+    
+    # 2. Detailed analysis
+    rawi ask --file report.pdf --act business-analyst "Extract key metrics and trends"
+    
+    # 3. Action items
+    rawi ask --file report.pdf "What actions should be taken based on this report?"
+    ```
+  </TabItem>
+  <TabItem label="Code Review">
+    ```bash
+    # 1. General review
+    rawi ask --file src/app.js --act code-reviewer "Review this code"
+    
+    # 2. Security audit
+    rawi ask --file src/app.js --act security-expert "Check for vulnerabilities"
+    
+    # 3. Performance analysis
+    rawi ask --file src/app.js --act performance-engineer "Identify bottlenecks"
+    ```
+  </TabItem>
+  <TabItem label="Data Analysis">
+    ```bash
+    # 1. Data overview
+    rawi ask --file data.xlsx "Describe the dataset structure"
+    
+    # 2. Statistical analysis
+    rawi ask --file data.xlsx --act data-scientist "Perform statistical analysis"
+    
+    # 3. Business insights
+    rawi ask --file data.xlsx --act business-analyst "Extract business insights"
+    ```
+  </TabItem>
+</Tabs>
+
+### Combining Files and Templates
+
+```bash
+# Technical documentation
+rawi ask --file api.py --act technical-writer "Generate API documentation"
+
+# Financial analysis
+rawi ask --file budget.xlsx --act financial-analyst "Analyze budget variance"
+
+# Research review
+rawi ask --file paper.pdf --act academic-researcher "Critique methodology"
+
+# Legal document review
+rawi ask --file contract.docx --act legal-expert "Identify key terms and risks"
+```
+
+### Shell Integration
+
+```bash
+# Pipe content to Rawi
+cat config.json | rawi ask "Optimize this configuration"
+
+# Process command output
+ls -la | rawi ask "Explain these file permissions"
+
+# Generate files from analysis
+rawi ask --file data.csv "Create Python script to visualize this data" > visualize.py
+
+# Batch process with shell
+for file in reports/*.pdf; do
+    rawi ask --file "$file" "Extract key metrics" >> summary.md
+done
+```
+
+## ⚠️ Limitations and Considerations
+
+### File Size Limits
+
+<Aside type="caution">
+Large files may hit provider token limits or timeout restrictions:
+
+- **PDFs**: Generally work well up to 50-100 pages
+- **Excel**: Up to ~10,000 rows typically process well  
+- **Text files**: Around 50,000 lines maximum
+- **Word docs**: Most documents process without issues
+</Aside>
+
+### Unsupported Content
+
+```bash
+# These won't be processed:
+# - Images within documents
+# - Charts and graphs in Excel
+# - Embedded objects
+# - Protected/encrypted files
+# - Binary files without text content
+```
+
+### Performance Tips
+
+```bash
+# For large files, extract specific sections
+rawi ask --file large-report.pdf "Focus only on the executive summary section"
+
+# Use batch processing for multiple files
+rawi ask --batch "reports/*.pdf" --parallel "Extract key findings from each report"
+
+# Filter before processing
+grep ERROR app.log | rawi ask "Categorize these errors"
+```
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+**File not found:**
+```bash
+# Use absolute paths
+rawi ask --file "$(pwd)/document.pdf" "Analyze this"
+
+# Check file exists
+ls -la document.pdf
+```
+
+**Permission denied:**
+```bash
+# Fix file permissions
+chmod 644 document.pdf
+```
+
+**Empty content:**
+```bash
+# Verify file integrity
+file document.pdf
+
+# Check file size
+ls -lh document.pdf
+```
+
+**Unsupported format:**
+```bash
+# Override file type detection
+rawi ask --file data.backup --file-type txt "Process as text"
+
+# Convert to supported format first
+pandoc document.rtf -o document.docx
+rawi ask --file document.docx "Analyze this"
+```
+
+### Performance Issues
+
+**Timeout errors:**
+```bash
+# Process in smaller chunks
+split -l 100 large-file.txt chunk_
+for chunk in chunk_*; do
+    cat "$chunk" | rawi ask "Analyze this section"
+done
+```
+
+**Memory issues:**
+```bash
+# Use head/tail for samples
+head -500 large-file.txt | rawi ask "Analyze this sample"
+
+# Filter content first
+grep -v DEBUG app.log | rawi ask "Analyze non-debug entries"
+```
+
+## 📚 Related Documentation
+
+- [ask Command Reference](/reference/ask) - Complete command options
+- [Advanced Usage Patterns](/advanced/usage) - Effective usage strategies  
+- [Shell Integration](/advanced/shell-integration) - Terminal workflow integration
+- [Workflow Examples](/workflows) - Real-world usage patterns
+- [Troubleshooting](/help/troubleshooting) - Common issues and solutions
+
+---
+
+**Ready to process your documents?** Start with a simple `rawi ask --file yourfile.pdf "Summarize this"` and explore the possibilities!

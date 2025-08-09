@@ -59,14 +59,14 @@ Each top-level key is a profile name (e.g., `default`, `openai`, `gemini`, etc.)
 ```json
 {
   "default": {
-    "provider": "qwen",
-    "model": "qwen-plus",
+    "provider": "openai",
+    "model": "gpt-4o",
     "apiKey": "test_api_key",
     "temperature": 0.7,
     "maxTokens": 2048,
     "language": "english",
     "providerSettings": {
-      "baseURL": "https://custom.qwen.endpoint.com/v1"
+      "baseURL": "https://api.openai.com/v1"
     }
   },
   "openai": {

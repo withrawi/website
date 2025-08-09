@@ -113,6 +113,10 @@ export default defineConfig({
               slug: 'reference/ask',
             },
             {
+              label: 'chat',
+              slug: 'reference/chat',
+            },
+            {
               label: 'configure',
               slug: 'reference/configure',
             },
@@ -152,6 +156,10 @@ export default defineConfig({
             {
               label: 'Usage Patterns',
               slug: 'advanced/usage',
+            },
+            {
+              label: 'File Reading & Document Processing',
+              slug: 'advanced/file-reading',
             },
           ],
         },

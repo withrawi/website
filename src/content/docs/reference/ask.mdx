@@ -26,20 +26,26 @@ rawi ask "Explain async/await in JavaScript with examples"
 
 ## Options
 
-| Option                       | Alias | Description                                  | Default   |
-| ---------------------------- | ----- | -------------------------------------------- | --------- |
-| `--profile <profile>`        | `-p`  | Profile to use for AI configuration          | `default` |
-| `--session <sessionId>`      | `-s`  | Continue an existing chat session            |           |
-| `--new-session`              | `-n`  | Start a new chat session                     |           |
-| `--act <template>`           |       | Use an act template by ID                    |           |
-| `--file <path>`              | `-f`  | Process content from a file                  |           |
-| `--files <paths...>`         | `-F`  | Process content from multiple files          |           |
-| `--batch <patterns...>`      | `-b`  | Process files matching glob patterns         |           |
-| `--file-type <type>`         |       | Override automatic file type detection       |           |
-| `--parallel`                 |       | Process multiple files in parallel           |           |
-| `--max-concurrency <number>` |       | Maximum concurrent files to process          | `5`       |
-| `--continue-on-error`        |       | Continue processing other files if one fails |           |
-| `--verbose`                  |       | Show detailed status and debug information   |           |
+| Option                       | Alias | Description                                                          | Default   |
+| ---------------------------- | ----- | -------------------------------------------------------------------- | --------- |
+| `--profile <profile>`        | `-p`  | Profile to use for AI configuration                                  | `default` |
+| `--session <sessionId>`      | `-s`  | Continue an existing chat session                                    |           |
+| `--new-session`              | `-n`  | Start a new chat session                                             |           |
+| `--act <template>`           |       | Use an act template by ID                                            |           |
+| `--file <path>`              | `-f`  | Process content from a file                                          |           |
+| `--files <paths...>`         | `-F`  | Process content from multiple files                                  |           |
+| `--batch <patterns...>`      | `-b`  | Process files matching glob patterns                                 |           |
+| `--file-type <type>`         |       | Override automatic file type detection                               |           |
+| `--parallel`                 |       | Process multiple files in parallel                                   |           |
+| `--max-concurrency <number>` |       | Maximum concurrent files to process                                  | `5`       |
+| `--continue-on-error`        |       | Continue processing other files if one fails                         |           |
+| `--verbose`                  |       | Show detailed status and debug information                           |           |
+| `--filter-sensitive`         |       | Filter sensitive information from prompts and responses              |           |
+| `--filter-types <types>`     |       | Comma-separated list of information types to filter                  |           |
+| `--show-filtered`            |       | Show which information was filtered and display filtering statistics |           |
+| `--highlight-filtered`       |       | Show filtered content with highlighting in terminal output           |           |
+| `--save-filter-config`       |       | Save current filtering configuration as default for future use       |           |
+| `--reset-filter-config`      |       | Reset filtering configuration to defaults (enables all filter types) |           |
 
 ### File Processing Options
 
@@ -72,6 +78,72 @@ rawi ask --file document --file-type pdf "Extract text from this"
 # Override auto-detection for config files
 rawi ask --file config.custom --file-type yaml "Parse this YAML configuration"
 ```
+
+## Sensitive Information Filtering
+
+Rawi includes built-in filtering to protect sensitive information in your prompts and AI responses.
+
+### Basic Filtering
+
+```bash
+# Enable sensitive information filtering
+rawi ask --filter-sensitive "Review this log file with user data"
+
+# Process files with filtering enabled
+rawi ask --file user-data.txt --filter-sensitive "Analyze this data"
+```
+
+### Custom Filter Types
+
+```bash
+# Filter specific types of information
+rawi ask --filter-types "email,phone" "Process this customer contact list"
+
+# Filter multiple types
+rawi ask --filter-types "email,phone,creditcard,ssn" --file sensitive-data.csv "Analyze patterns"
+
+# Combine with file processing
+rawi ask --files logs/*.log --filter-types "ip,email" "Check for security issues"
+```
+
+### Filter Visibility and Debugging
+
+```bash
+# Show what was filtered
+rawi ask --filter-sensitive --show-filtered "Analyze this user database"
+
+# Highlight filtered content in output
+rawi ask --filter-sensitive --highlight-filtered "Review this authentication log"
+
+# Combine visibility options
+rawi ask --filter-types "email,phone" --show-filtered --highlight-filtered "Process contacts"
+```
+
+### Filter Configuration Management
+
+```bash
+# Save current filter settings as default
+rawi ask --filter-types "email,phone,creditcard" --save-filter-config "Set up my preferred filtering"
+
+# Reset to default filter configuration
+rawi ask --reset-filter-config "Reset filtering to defaults"
+
+# Use saved configuration (automatic)
+rawi ask "Process data with my saved filter settings"
+```
+
+### Common Filter Types
+
+| Filter Type  | Description             | Examples                              |
+| ------------ | ----------------------- | ------------------------------------- |
+| `email`      | Email addresses         | `user@example.com`, `test@domain.org` |
+| `phone`      | Phone numbers           | `(555) 123-4567`, `+1-800-555-0199`   |
+| `creditcard` | Credit card numbers     | `4111-1111-1111-1111`                 |
+| `ssn`        | Social Security Numbers | `123-45-6789`                         |
+| `ip`         | IP addresses            | `192.168.1.1`, `10.0.0.1`             |
+| `url`        | URLs and web addresses  | `https://example.com/private`         |
+| `api_key`    | API keys and tokens     | `sk-1234567890abcdef`                 |
+| `password`   | Password-like strings   | `password123`, `secretkey`            |
 
 ## Session Management
 
@@ -254,38 +326,33 @@ cat data.csv | rawi ask --act data-scientist "Analyze this data" | tee analysis.
 
 ## Advanced Usage
 
-### File Processing
+### File Processing with Filtering
 
 ```bash
-# Process PDF documents
-rawi ask --file report.pdf "Summarize the key findings in this report"
+# Process sensitive documents safely
+rawi ask --file employee-data.xlsx --filter-sensitive "Create summary statistics"
 
-# Analyze Excel spreadsheets
-rawi ask --file sales-data.xlsx "What trends do you see in this quarterly data?"
+# Analyze logs with IP and email filtering
+rawi ask --file access.log --filter-types "ip,email" --show-filtered "Find unusual access patterns"
 
-# Review source code files
-rawi ask --file src/app.js --act code-reviewer "Review this code for best practices"
+# Batch process with filtering
+rawi ask --batch "logs/**/*.log" --filter-sensitive --parallel "Analyze all logs for security issues"
 
-# Process Word documents
-rawi ask --file requirements.docx "Extract all functional requirements"
+# Review code with API key filtering
+rawi ask --files src/**/*.js --filter-types "api_key,password" --act code-reviewer "Security review"
+```
 
-# Multiple file comparison
-rawi ask --files package.json composer.json "Compare these dependency configurations"
+### Security-Focused Analysis
 
-# Batch processing with glob patterns
-rawi ask --batch "src/**/*.{js,ts}" "Find potential security vulnerabilities"
+```bash
+# Audit configuration files
+rawi ask --file .env --filter-types "password,api_key" --act security-expert "Review configuration security"
 
-# Override file type detection
-rawi ask --file data.unknown --file-type txt "Process this as plain text"
+# Process database dumps safely
+rawi ask --file backup.sql --filter-sensitive --show-filtered "Analyze schema structure"
 
-# Parallel processing for speed
-rawi ask --batch "docs/**/*.md" --parallel "Create a comprehensive documentation index"
-
-# Continue on errors for large batches
-rawi ask --batch "**/*.json" --continue-on-error "Validate all JSON configuration files"
-
-# Combine file processing with templates
-rawi ask --file database-schema.sql --act database-admin "Optimize this schema"
+# Review application logs
+rawi ask --file app.log --filter-types "email,ip,creditcard" --highlight-filtered "Check for data leaks"
 ```
 
 ### File Analysis
@@ -358,6 +425,25 @@ done
 1. **Choose Appropriate Models**: Use lighter models for simple tasks
 2. **Limit Input Size**: Process large files in chunks if needed
 3. **Use Local Providers**: For speed and privacy when possible
+
+### Security and Privacy
+
+1. **Filter Sensitive Data**: Use `--filter-sensitive` when processing sensitive files
+
+   ```bash
+   rawi ask --file user-data.csv --filter-sensitive "Analyze user behavior patterns"
+   ```
+
+2. **Custom Filtering**: Specify exactly what to filter for better control
+
+   ```bash
+   rawi ask --filter-types "email,phone,ssn" --file contacts.txt "Process contact information"
+   ```
+
+3. **Verify Filtering**: Use `--show-filtered` to see what was filtered
+   ```bash
+   rawi ask --filter-sensitive --show-filtered --file logs.txt "Review application logs"
+   ```
 
 ## Error Handling
 

@@ -1,15 +1,19 @@
----
-title: history — Conversation Management
-description: The history command lets you search, manage, and analyze your AI conversation history with separate views for ask and chat sessions.
----
+# history — Conversation Management
 
 The `history` command lets you search, manage, and analyze your AI conversation history with separate views for ask and chat sessions.
 
-## Basic Usage
+## 📋 Table of Contents
 
-```
-rawi history <subcommand> [options]
-```
+- [Basic Usage](#basic-usage)
+- [Subcommands](#subcommands)
+- [Options](#options)
+- [Search and Filtering](#search-and-filtering)
+- [Examples](#examples)
+- [Use Cases](#use-cases)
+
+---
+
+## Basic Usage
 
 View your AI conversation history organized by session type:
 
@@ -34,6 +38,8 @@ rawi history chat --limit 10
 rawi history ask --profile work
 ```
 
+---
+
 ## Subcommands
 
 ### `ask`
@@ -56,6 +62,8 @@ rawi history chat [options]
 
 **Purpose:** View all your interactive chat conversations and longer discussions.
 
+---
+
 ## Options
 
 All options are available for both `ask` and `chat` subcommands:
@@ -71,6 +79,8 @@ All options are available for both `ask` and `chat` subcommands:
 | `--to <date>`           |       | Show sessions to date (YYYY-MM-DD)         |           |
 | `--all`                 |       | Show all sessions without pagination limit |           |
 | `--all-profiles`        |       | Show sessions from all profiles            |           |
+
+---
 
 ## Search and Filtering
 
@@ -130,6 +140,8 @@ rawi history ask --profile work
 rawi history chat --all-profiles
 ```
 
+---
+
 ## Examples
 
 ### Basic Usage
@@ -186,16 +198,6 @@ rawi history ask --provider openai --from 2024-01-01
 # Chat sessions using GPT-4 in work profile
 rawi history chat --model gpt-4 --profile work
 
-# Combine multiple filters
-rawi history ask --provider anthropic --search "security" --limit 5
-```
-
-### Complex Queries
-
-```bash
-# All ask sessions without pagination
-rawi history ask --all
-
 # All chat sessions without pagination
 rawi history chat --all
 
@@ -218,6 +220,8 @@ rawi history chat --search "kubernetes"
 rawi history ask --provider openai
 rawi history chat --provider openai
 ```
+
+---
 
 ## Use Cases
 
@@ -269,6 +273,8 @@ rawi history ask --from 2024-01-01 --to 2024-01-31
 rawi history chat --from 2024-01-01 --to 2024-01-31
 ```
 
+---
+
 ## Interactive Features
 
 Both `ask` and `chat` history views support interactive navigation:
@@ -300,6 +306,8 @@ Each session shows:
 - **Messages**: Number of messages in the session
 - **Updated**: Last activity timestamp
 
+---
+
 ## Performance Tips
 
 ### Optimizing Large Histories
@@ -327,4 +335,13 @@ rawi history chat --search "error" --provider openai --from 2024-08-01
 
 ---
 
-For more information, see the Rawi documentation or run `rawi history --help`.
+## Navigation
+
+- [← Back to Commands](./README.md)
+- [Next: ask Command →](./ask.md)
+
+Related Pages:
+
+- [Sessions Management](../sessions.md)
+- [Chat Command](./chat.md)
+- [Profiles](../profiles.md)
