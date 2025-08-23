@@ -144,6 +144,30 @@ rawi info --providers
 - Support information gathering
 - Setup verification
 
+### [exec](./exec) — Command Execution
+
+Convert natural language descriptions into executable CLI commands with safety validation and confirmation prompts.
+
+**Quick Examples:**
+
+```bash
+# Simple file operations
+rawi exec "list all files in current directory"
+
+# Preview dangerous operations
+rawi exec "delete old log files" --dry-run
+
+# System operations
+rawi exec "check memory usage"
+```
+
+**Use Cases:**
+
+- Server management and monitoring
+- Complex file operations and data processing
+- Development workflows and git operations
+- Learning CLI tools and best practices
+
 ## Supported AI Providers
 
 | Provider      | Models Available       | API Key Required | Local | Best For                     |

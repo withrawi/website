@@ -487,16 +487,3 @@ git log --oneline -10 | while read commit; do
     sleep 2
 done
 ```
-
-## Related Workflows
-
-- [Code Review Workflow](code-review.md) - Comprehensive code review
-- [Development Workflow](development.md) - Full development process
-- [CI/CD Integration](cicd-integration.md) - Automated pipelines
-
----
-
-**Navigation:**
-
-- [← Back to Workflows](README.md)
-- [Next: Documentation Generation →](documentation-generation.md)

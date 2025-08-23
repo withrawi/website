@@ -42,4 +42,4 @@
 
 ---
 
-**Rawi (راوي)** is the developer-friendly AI CLI that brings the power of 12 major AI providers directly to your terminal. With seamless shell integration, persistent conversations, and 200+ specialized prompt templates, Rawi transforms your command line into an intelligent development workspace.
+**Rawi (راوي)** is the developer-friendly AI CLI that brings the power of 11 major AI providers directly to your terminal. With seamless shell integration, persistent conversations, and 200+ specialized prompt templates, Rawi transforms your command line into an intelligent development workspace.

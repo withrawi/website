@@ -47,6 +47,32 @@ rawi ask --act python-developer "Create FastAPI endpoints for CRUD operations on
 rawi ask "Create Express.js middleware for request logging, error handling, and CORS configuration"
 ```
 
+### 2.1. API Development Commands
+
+Generate commands for API development tasks:
+
+```bash
+# Project setup and initialization
+rawi exec "create new Node.js project with Express and TypeScript"
+rawi exec "install dependencies for REST API with authentication"
+rawi exec "set up project structure for scalable API"
+
+# Development server management
+rawi exec "start API development server with hot reload"
+rawi exec "run API server with environment variables loaded"
+rawi exec "start API server in debug mode"
+
+# Database operations
+rawi exec "run database migrations for development environment"
+rawi exec "seed database with sample data for testing"
+rawi exec "create new database migration for user table"
+
+# Testing and validation
+rawi exec "run API integration tests with coverage"
+rawi exec "test API endpoints with Postman collection"
+rawi exec "validate OpenAPI specification"
+```
+
 ### 3. Database Integration
 
 Design and implement database layers:
@@ -552,8 +578,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          cache: "npm"
+          node-version: '18'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -582,16 +608,3 @@ jobs:
       - name: Deploy to staging
         run: echo "Deploy to staging"
 ```
-
-## Related Workflows
-
-- [Code Review Workflow](code-review.md) - Review API code
-- [Documentation Generation](documentation-generation.md) - API documentation
-- [Testing Workflow](testing.md) - Comprehensive testing strategies
-
----
-
-**Navigation:**
-
-- [← Back to Workflows](README.md)
-- [Next: Testing Workflow →](testing.md)
