@@ -329,16 +329,3 @@ find src -name "*.js" | head -10 | xargs -I {} rawi ask --file {} --act code-rev
 5. **Integrate with CI/CD** for automated quality gates
 6. **Use appropriate models** for different complexity levels
 7. **Batch similar files** for consistency analysis
-
-## Related Workflows
-
-- [Development Workflow](development.md) - Complete development process
-- [Git Integration Workflow](git-integration.md) - Advanced Git workflows
-- [Documentation Generation](documentation-generation.md) - Auto-generate docs
-
----
-
-**Navigation:**
-
-- [← Back to Workflows](README.md)
-- [Next: Git Integration →](git-integration.md)

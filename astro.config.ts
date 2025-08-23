@@ -117,6 +117,10 @@ export default defineConfig({
               slug: 'reference/chat',
             },
             {
+              label: 'exec',
+              slug: 'reference/exec',
+            },
+            {
               label: 'configure',
               slug: 'reference/configure',
             },
@@ -135,6 +139,10 @@ export default defineConfig({
             {
               label: 'provider',
               slug: 'reference/provider',
+            },
+            {
+              label: 'completion',
+              slug: 'reference/completion',
             },
           ],
         },

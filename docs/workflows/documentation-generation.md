@@ -518,16 +518,3 @@ jobs:
           # Auto-generate missing documentation
           bash scripts/generate-docs.sh
 ```
-
-## Related Workflows
-
-- [Code Review Workflow](code-review.md) - Review generated documentation
-- [Development Workflow](development.md) - Integrate with development process
-- [Content Creation Workflow](content-creation.md) - Advanced writing techniques
-
----
-
-**Navigation:**
-
-- [← Back to Workflows](README.md)
-- [Next: API Development →](api-development.md)

@@ -45,6 +45,32 @@ rawi ask --act python-developer "Create FastAPI endpoints for CRUD operations on
 rawi ask "Create Express.js middleware for request logging, error handling, and CORS configuration"
 ```
 
+### 2.1. API Development Commands
+
+Generate commands for API development tasks:
+
+```bash
+# Project setup and initialization
+rawi exec "create new Node.js project with Express and TypeScript"
+rawi exec "install dependencies for REST API with authentication"
+rawi exec "set up project structure for scalable API"
+
+# Development server management
+rawi exec "start API development server with hot reload"
+rawi exec "run API server with environment variables loaded"
+rawi exec "start API server in debug mode"
+
+# Database operations
+rawi exec "run database migrations for development environment"
+rawi exec "seed database with sample data for testing"
+rawi exec "create new database migration for user table"
+
+# Testing and validation
+rawi exec "run API integration tests with coverage"
+rawi exec "test API endpoints with Postman collection"
+rawi exec "validate OpenAPI specification"
+```
+
 ### 3. Database Integration
 
 Design and implement database layers:
@@ -120,9 +146,160 @@ if [ "$API_TYPE" = "rest" ]; then
     - Security definitions
     - Rate limiting documentation
     " > docs/api-spec.yml
+elif [ "$API_TYPE" = "graphql" ]; then
+    rawi ask --act graphql-expert "
+    Create GraphQL schema definition for '$API_NAME' including:
+    - Type definitions
+    - Query and mutation operations
+    - Authentication directives
+    - Input types and enums
+    - Subscription support
+    " > docs/schema.graphql
 fi
 
-echo "✅ API development setup complete!"
+# 3. Generate server setup
+echo "🖥️  Creating server configuration..."
+rawi ask --act backend-developer "
+Create Express.js server setup for '$API_NAME' with:
+- Environment configuration
+- Database connection ($DATABASE)
+- Security middleware (helmet, cors, rate limiting)
+- Request logging
+- Error handling middleware
+- Graceful shutdown
+- Health check endpoint
+" > src/server.js
+
+# 4. Generate authentication system
+echo "🔐 Creating authentication system..."
+rawi ask --act security-expert "
+Create complete JWT authentication system including:
+- User registration with validation
+- Login with password hashing (bcrypt)
+- JWT token generation and validation
+- Password reset functionality
+- Role-based access control
+- Session management
+" > src/auth.js
+
+# 5. Generate database models
+echo "🗄️  Creating database models..."
+if [ "$DATABASE" = "mongodb" ]; then
+    rawi ask --act database-admin "
+    Create Mongoose models for '$API_NAME' including:
+    - User model with authentication fields
+    - Main business entity models
+    - Relationship definitions
+    - Validation schemas
+    - Indexing strategies
+    - Middleware hooks
+    " > src/models/index.js
+elif [ "$DATABASE" = "postgresql" ]; then
+    rawi ask --act database-admin "
+    Create PostgreSQL schema and Sequelize models for '$API_NAME' including:
+    - User table with constraints
+    - Main business entity tables
+    - Foreign key relationships
+    - Indexes for performance
+    - Migration files
+    " > src/models/index.js
+fi
+
+# 6. Generate API routes
+echo "🛣️  Creating API routes..."
+rawi ask --act backend-developer "
+Create Express.js routes for '$API_NAME' including:
+- RESTful CRUD operations
+- Input validation middleware
+- Authentication guards
+- Error handling
+- Pagination support
+- Filtering and sorting
+- Response formatting
+" > src/routes/index.js
+
+# 7. Generate middleware
+echo "⚙️  Creating middleware..."
+rawi ask --act backend-developer "
+Create Express.js middleware collection including:
+- Authentication verification
+- Input validation
+- Error handling
+- Request logging
+- Rate limiting
+- CORS configuration
+- Request timeout
+- Response compression
+" > src/middleware/index.js
+
+# 8. Generate services layer
+echo "🔧 Creating services layer..."
+rawi ask --act backend-developer "
+Create service layer for '$API_NAME' including:
+- Business logic separation
+- Database operations
+- External API integrations
+- Email services
+- File upload handling
+- Caching strategies
+- Error handling
+" > src/services/index.js
+
+# 9. Generate configuration
+echo "📝 Creating configuration..."
+rawi ask "
+Create configuration management for '$API_NAME' including:
+- Environment variables definition
+- Database configuration
+- JWT secrets management
+- Email service config
+- Rate limiting settings
+- CORS origins
+- Logging configuration
+" > config/index.js
+
+# 10. Generate tests
+echo "🧪 Creating test suite..."
+rawi ask --act test-engineer "
+Create comprehensive test suite for '$API_NAME' including:
+- Unit tests for models and services
+- Integration tests for API endpoints
+- Authentication flow tests
+- Error handling tests
+- Performance tests
+- Test database setup
+- Mock data generators
+" > tests/index.test.js
+
+# 11. Generate documentation
+echo "📚 Creating documentation..."
+rawi ask --act tech-writer "
+Create comprehensive API documentation including:
+- Getting started guide
+- Authentication documentation
+- Endpoint documentation with examples
+- Error codes reference
+- Rate limiting information
+- Deployment guide
+- Development setup
+" > docs/README.md
+
+# 12. Generate deployment configuration
+echo "🚀 Creating deployment configuration..."
+rawi ask --act devops-engineer "
+Create deployment configuration for '$API_NAME' including:
+- Dockerfile for containerization
+- Docker Compose for development
+- Environment variables template
+- PM2 configuration for production
+- Nginx configuration
+- Health check scripts
+- Monitoring setup
+" > docker-compose.yml
+
+echo "✅ API development complete!"
+echo "📄 Generated project structure:"
+tree -I node_modules
 ```
 
 ### 6. API Testing and Validation
@@ -420,10 +597,12 @@ jobs:
       - name: Security audit
         run: |
           rawi ask --batch "src/**/*.js" --act security-expert "Perform security audit" > security-report.md
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to staging
+        run: echo "Deploy to staging"
 ```
-
-## Related Workflows
-
-- [Code Review Workflow](code-review) - Review API code
-- [Documentation Generation](documentation-generation) - API documentation
-- [Testing Workflow](testing) - Comprehensive testing strategies

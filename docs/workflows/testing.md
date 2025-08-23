@@ -48,6 +48,27 @@ rawi ask --file src/models.py --act test-engineer "Create pytest unit tests with
 rawi ask --file src/components/Button.tsx --act test-engineer "Create React Testing Library tests with accessibility checks"
 ```
 
+### 2.1. Test Command Generation
+
+Generate and execute testing commands:
+
+```bash
+# Run specific test suites
+rawi exec "run all unit tests for authentication module"
+rawi exec "run integration tests with coverage report"
+rawi exec "execute end-to-end tests in headless mode"
+
+# Test setup and configuration
+rawi exec "install Jest and testing dependencies for React project"
+rawi exec "configure Cypress for e2e testing"
+rawi exec "set up test database for integration tests"
+
+# Test execution with different configurations
+rawi exec "run tests in watch mode for development"
+rawi exec "run tests with verbose output and coverage"
+rawi exec "execute tests in CI environment with XML output"
+```
+
 ### 3. Integration Test Generation
 
 Create integration test suites:
@@ -625,7 +646,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
       - run: npm ci
       - run: npm run test:unit
       - run: npm run test:coverage
@@ -647,8 +668,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          cache: "npm"
+          node-version: '18'
+          cache: 'npm'
       - run: npm ci
       - run: npm run test:integration
         env:
@@ -661,8 +682,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          cache: "npm"
+          node-version: '18'
+          cache: 'npm'
       - run: npm ci
       - run: npx playwright install
       - run: npm run build
@@ -675,8 +696,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          cache: "npm"
+          node-version: '18'
+          cache: 'npm'
       - run: npm ci
       - run: npm run test:performance
       - name: Upload performance results
@@ -692,22 +713,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          cache: "npm"
+          node-version: '18'
+          cache: 'npm'
       - run: npm ci
       - run: npm audit
       - run: npm run test:security
 ```
-
-## Related Workflows
-
-- [Code Review Workflow](code-review.md) - Review test code quality
-- [API Development Workflow](api-development.md) - API-specific testing
-- [Development Workflow](development.md) - Integrate testing in development
-
----
-
-**Navigation:**
-
-- [← Back to Workflows](README.md)
-- [Next: CI/CD Integration →](cicd-integration.md)

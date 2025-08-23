@@ -1,0 +1,137 @@
+# Completion Command
+
+Setup shell completion for the `rawi` CLI tool.
+
+## Syntax
+
+```bash
+rawi completion [options]
+```
+
+## Description
+
+The completion command copies advanced shell completion scripts to `~/.rawi/completion/` and optionally installs them to your shell profile for automatic loading. This enables intelligent tab completion for commands, options, and values.
+
+## Options
+
+- `-s, --shell <shell>` - Shell type (bash, zsh, fish, or auto-detect) (default: auto)
+- `--install` - Install completion script to shell profile (default: false)
+
+## Examples
+
+### Basic Usage
+
+```bash
+# Copy completion for current shell
+rawi completion
+
+# Copy for specific shell
+rawi completion --shell bash
+rawi completion --shell zsh
+```
+
+### Automatic Installation
+
+```bash
+# Copy and install to shell profile automatically
+rawi completion --install
+rawi completion --shell bash --install
+```
+
+### Files Created
+
+The completion command creates these files:
+
+- `~/.rawi/completion/rawi-completion.bash` - Bash completion script
+- `~/.rawi/completion/rawi-completion.zsh` - Zsh completion script
+- `~/.rawi/completion/rawi-completion.fish` - Fish completion script
+
+## How It Works
+
+1. **Copy Template**: Advanced completion scripts are copied from the rawi installation to your `~/.rawi/completion/` directory
+2. **Install (Optional)**: With `--install`, a source line is added to your shell profile
+3. **Load**: The completion functions are loaded when you start a new shell session
+
+## Manual Installation
+
+If you prefer manual installation:
+
+```bash
+# For Bash
+echo '[ -f "$HOME/.rawi/completion/rawi-completion.bash" ] && source "$HOME/.rawi/completion/rawi-completion.bash"' >> ~/.bashrc
+source ~/.bashrc
+
+# For Zsh
+echo '[ -f "$HOME/.rawi/completion/rawi-completion.zsh" ] && source "$HOME/.rawi/completion/rawi-completion.zsh"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+## Completion Features
+
+Once installed, you get intelligent completion for:
+
+### Commands
+
+```bash
+rawi <TAB>
+# Shows: ask, chat, exec, act, configure, provider, history, info, completion
+```
+
+### Options
+
+```bash
+rawi ask --<TAB>
+# Shows: --profile, --session, --act, --file, --verbose, etc.
+```
+
+### Values
+
+```bash
+rawi ask --provider <TAB>
+# Shows: openai, anthropic, google, ollama, etc.
+
+rawi ask --profile <TAB>
+# Shows: default, work, personal (your actual profiles)
+```
+
+## Supported Shells
+
+- **Bash** - Full completion support with dynamic values
+- **Zsh** - Enhanced completion with descriptions and smart parsing
+- **Fish** - Advanced completion with rich descriptions (if installed)
+
+## Troubleshooting
+
+### Completion Not Working
+
+1. Verify files exist:
+
+   ```bash
+   ls ~/.rawi/completion/
+   ```
+
+2. Check if completion is loaded:
+
+   ```bash
+   type _rawi  # Should show completion function
+   ```
+
+3. Reload shell:
+   ```bash
+   source ~/.bashrc  # or ~/.zshrc
+   ```
+
+### Update Completions
+
+When rawi is updated with new commands:
+
+```bash
+# Recopy the updated completion scripts
+rawi completion --shell bash
+source ~/.bashrc
+```
+
+## See Also
+
+- [Shell Integration Guide](../shell-integration.md)
+- [Configuration](../installation.md)

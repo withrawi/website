@@ -183,6 +183,44 @@ git diff | rawi ask "Review these changes for potential issues"
 cat server.js | rawi ask --act code-reviewer "Optimize this Express.js code"
 ```
 
+### `rawi exec` — Command Generation
+
+Convert natural language descriptions into executable CLI commands.
+
+**Basic Usage:**
+
+```bash
+rawi exec [description] [options]
+```
+
+**Options:**
+
+- `-p, --profile <profile>` — Use specific profile (default: default)
+- `--dry-run` — Show command without executing
+- `--confirm` — Always prompt for confirmation
+- `--timeout <seconds>` — Set custom execution timeout
+- `--verbose` — Show detailed information
+- `--copy-command` — Copy the command to clipboard before execution (default: false)
+
+**Examples:**
+
+```bash
+# Generate and execute commands
+rawi exec "list all files in current directory"
+rawi exec "show disk usage for home directory"
+
+# Safety options
+rawi exec "restart service" --dry-run
+rawi exec "delete old files" --confirm
+
+# Clipboard control
+rawi exec "find large files" --copy-command     # Default behavior
+
+# Pipe and interactive
+echo "compress log files" | rawi exec
+rawi exec  # Interactive prompt
+```
+
 ### `rawi configure` — Setup & Management
 
 Configure AI providers and manage profiles.
