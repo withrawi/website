@@ -1,5 +1,4 @@
 import starlight from '@astrojs/starlight';
-import {pluginCodeOutput} from '@fujocoded/expressive-code-output';
 import {defineConfig} from 'astro/config';
 
 // import starlightVersions from 'starlight-versions';
@@ -7,9 +6,6 @@ import {defineConfig} from 'astro/config';
 export default defineConfig({
   integrations: [
     starlight({
-      expressiveCode: {
-        plugins: [pluginCodeOutput()],
-      },
       plugins: [
         // starlightVersions({
         //   versions: [

@@ -24,11 +24,10 @@
     "fmt:fix": "prettier --config prettier.config.mjs --write ./src"
   },
   "dependencies": {
-    "@astrojs/starlight": "0.35.2",
-    "@fujocoded/expressive-code-output": "0.0.1",
-    "astro": "5.13.3",
-    "sharp": "0.34.3",
-    "starlight-versions": "0.5.4"
+    "@astrojs/starlight": "0.36.0",
+    "astro": "5.14.1",
+    "sharp": "0.34.4",
+    "starlight-versions": "0.5.5"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "5.2.2",
@@ -36,7 +35,7 @@
     "prettier-plugin-astro": "0.14.1"
   },
   "engines": {
-    "node": ">=22.x"
+    "node": ">=22"
   },
   "packageManager": "pnpm@10.13.1"
 }
